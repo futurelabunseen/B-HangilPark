@@ -38,13 +38,16 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> DodgeAction;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> LockOnAction;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> GuardAction;
 	/*
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> Equip;
+	*/
 
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UInputAction> LockOn;
 
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UInputAction> Guard;*/
 };

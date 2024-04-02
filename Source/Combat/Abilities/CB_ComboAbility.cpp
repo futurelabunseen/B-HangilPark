@@ -41,7 +41,8 @@ void UCB_ComboAbility::OnCompleteCallback()
 
 void UCB_ComboAbility::PlayMontage(FGameplayEventData Data)
 {
-	ImmediateRotateActor();
+	if (!BaseCharacter->IsLocked())
+		ImmediateRotateActor();
 
 	UAbilityTask_PlayMontageAndWait* PlayAttackTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
 		this, TEXT("None"), ComboAttackMontage);

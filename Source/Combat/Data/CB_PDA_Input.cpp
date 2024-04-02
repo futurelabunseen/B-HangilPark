@@ -37,4 +37,14 @@ UCB_PDA_Input::UCB_PDA_Input()
 		TEXT("/Game/Data/InputAction/IA_Dodge.IA_Dodge"));
 	if (IADodgeRef.Succeeded())
 		DodgeAction = IADodgeRef.Object;
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> IALockOnRef(
+		TEXT("/Game/Data/InputAction/IA_LockOn.IA_LockOn"));
+	if (IALockOnRef.Succeeded())
+		LockOnAction = IALockOnRef.Object;
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> IAGuardRef(
+		TEXT("/Game/Data/InputAction/IA_Guard.IA_Guard"));
+	if (IAGuardRef.Succeeded())
+		GuardAction = IAGuardRef.Object;
 }

@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "AbilitySystemComponent.h"
 #include "../State/CB_PlayerState.h"
+#include "../Controller/CB_PlayerController.h"
 
 ACB_PlayerCharacter::ACB_PlayerCharacter()
 {
@@ -16,6 +17,7 @@ ACB_PlayerCharacter::ACB_PlayerCharacter()
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
+
 }
 
 void ACB_PlayerCharacter::PossessedBy(AController* NewController)
@@ -34,8 +36,9 @@ void ACB_PlayerCharacter::PossessedBy(AController* NewController)
 			ASC->GiveAbility(Spec);
 		}
 
-		APlayerController* PlayerController = CastChecked<APlayerController>(NewController);
+		ACB_PlayerController* PlayerController = CastChecked<ACB_PlayerController>(NewController);
 		PlayerController->ConsoleCommand(TEXT("showdebug abilitysystem"));
+		PlayerController->LockChangeDelegate.BindUFunction(this, FName("LockChange"));
 	}
 }
 
@@ -53,3 +56,4 @@ void ACB_PlayerCharacter::InputPressed(const FGameplayTagContainer& GameplayTagC
 void ACB_PlayerCharacter::InputReleased(const FGameplayTagContainer& GameplayTagContainer)
 {
 }
+

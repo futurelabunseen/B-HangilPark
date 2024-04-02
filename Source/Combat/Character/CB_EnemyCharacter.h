@@ -16,5 +16,5 @@ class COMBAT_API ACB_EnemyCharacter : public ACB_BaseCharacter
 public:
 	ACB_EnemyCharacter();
 
-	
+	void SetOutLine(bool bIsShow);
 };

@@ -38,5 +38,5 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> CameraComponent;
 
-	
+
 };

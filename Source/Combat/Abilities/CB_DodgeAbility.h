@@ -28,7 +28,7 @@ protected:
 
 private:
 	void ImmediateRotateActor();
-
+	
 private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAnimMontage> DodgeMontage;

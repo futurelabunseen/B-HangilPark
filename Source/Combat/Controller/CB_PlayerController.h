@@ -5,9 +5,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "GameplayTagContainer.h"
+#include "../Tags/StateTag.h"
 #include "CB_PlayerController.generated.h"
 
-
+DECLARE_DELEGATE_OneParam(FLockChangeDelegate, float);
 
 struct FInputActionValue;
 class UCB_PDA_Input;
@@ -27,9 +28,13 @@ protected:
 private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+	void LockOn();
 
-	void InputPressed(FName TagName);
-	void InputReleased(FName TagName);
+	void InputPressed(FGameplayTag Tag);
+	void InputReleased(FGameplayTag Tag);
+
+public:
+	FLockChangeDelegate LockChangeDelegate;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Data")

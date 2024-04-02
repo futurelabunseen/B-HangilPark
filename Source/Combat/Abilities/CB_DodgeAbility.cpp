@@ -27,11 +27,17 @@ void UCB_DodgeAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 
 void UCB_DodgeAbility::OnCompleteCallback()
 {
+	if (BaseCharacter->IsLocked())
+		BaseCharacter->bUseControllerRotationYaw = true;
+
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 }
 
 void UCB_DodgeAbility::ImmediateRotateActor()
 {
+	if (BaseCharacter->IsLocked())
+		BaseCharacter->bUseControllerRotationYaw = false;
+
 	if (BaseCharacter->GetLastMovementInputVector().Size() > 0.f)
 	{
 		FRotator Rotate = BaseCharacter->GetLastMovementInputVector().Rotation();

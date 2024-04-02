@@ -6,3 +6,8 @@
 ACB_EnemyCharacter::ACB_EnemyCharacter()
 {
 }
+
+void ACB_EnemyCharacter::SetOutLine(bool bIsShow)
+{
+	GetMesh()->SetRenderCustomDepth(bIsShow);
+}
