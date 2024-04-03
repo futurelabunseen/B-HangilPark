@@ -38,6 +38,8 @@ void ACB_PlayerController::SetupInputComponent()
 			&ACB_PlayerController::InputPressed, STATE_DODGE);
 
 		EIC->BindAction(InputData->LockOnAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::LockOn);
+		EIC->BindAction(InputData->EquipAction, ETriggerEvent::Triggered, this, 
+			&ACB_PlayerController::InputPressed, STATE_EQUIPMENT);
 
 	}
 }
@@ -71,7 +73,7 @@ void ACB_PlayerController::LockOn()
 	PlayerCharacter->LockOn();
 }
 
-void ACB_PlayerController::InputPressed(FGameplayTag Tag)
+void ACB_PlayerController::InputPressed(const FGameplayTag Tag)
 {
 	FGameplayTagContainer Container;
 	Container.AddTag(Tag);
@@ -79,7 +81,7 @@ void ACB_PlayerController::InputPressed(FGameplayTag Tag)
 	PlayerCharacter->InputPressed(Container);
 }
 
-void ACB_PlayerController::InputReleased(FGameplayTag Tag)
+void ACB_PlayerController::InputReleased(const FGameplayTag Tag)
 {
 	// 추후 가드에서 사용할듯?
 	FGameplayTagContainer Container;

@@ -47,4 +47,9 @@ UCB_PDA_Input::UCB_PDA_Input()
 		TEXT("/Game/Data/InputAction/IA_Guard.IA_Guard"));
 	if (IAGuardRef.Succeeded())
 		GuardAction = IAGuardRef.Object;
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> IAEquipRef(
+		TEXT("/Game/Data/InputAction/IA_Equip.IA_Equip"));
+	if (IAEquipRef.Succeeded())
+		EquipAction = IAEquipRef.Object;
 }

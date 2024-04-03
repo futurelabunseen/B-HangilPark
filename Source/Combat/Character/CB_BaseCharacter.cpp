@@ -4,7 +4,10 @@
 #include "CB_BaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "../Components/LockOnComponent.h"
+#include "../Components/CB_LockOnComponent.h"
+#include "AbilitySystemComponent.h"
+#include "../Tags/StateTag.h"
+#include "../Weapon/CB_BaseWeapon.h"
 
 ACB_BaseCharacter::ACB_BaseCharacter()
 {
@@ -20,14 +23,18 @@ ACB_BaseCharacter::ACB_BaseCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->MaxWalkSpeed = 450.f;
 
-
-	LockOnComponent = CreateDefaultSubobject<ULockOnComponent>(TEXT("LockOnComponent"));
+	LockOnComponent = CreateDefaultSubobject<UCB_LockOnComponent>(TEXT("LockOnComponent"));
 }
 
 void ACB_BaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (WeaponClass)
+	{
+		Weapon = GetWorld()->SpawnActor<ACB_BaseWeapon>(WeaponClass);
+		Weapon->Equip(GetMesh(), FName("HolsterSocket"), this, this);
+	}
 }
 
 void ACB_BaseCharacter::LockOn()
@@ -42,5 +49,16 @@ bool ACB_BaseCharacter::IsLocked()
 
 void ACB_BaseCharacter::LockChange(float Axis)
 {
-	LockOnComponent->TargetActorWithAxisInput(Axis);
+	if (!ASC->HasMatchingGameplayTag(STATE_DODGE))
+		LockOnComponent->TargetActorWithAxisInput(Axis);
+}
+
+void ACB_BaseCharacter::AddGameplayTag(FGameplayTag Tag)
+{
+	ASC->AddLooseGameplayTag(Tag);
+}
+
+void ACB_BaseCharacter::RemoveGameplayTag(FGameplayTag Tag)
+{
+	ASC->RemoveLooseGameplayTag(Tag);
 }

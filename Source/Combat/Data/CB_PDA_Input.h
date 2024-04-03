@@ -44,10 +44,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> GuardAction;
-	/*
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UInputAction> Equip;
-	*/
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> EquipAction;
 
 
 };

@@ -30,8 +30,8 @@ private:
 	void Look(const FInputActionValue& Value);
 	void LockOn();
 
-	void InputPressed(FGameplayTag Tag);
-	void InputReleased(FGameplayTag Tag);
+	void InputPressed(const FGameplayTag Tag);
+	void InputReleased(const FGameplayTag Tag);
 
 public:
 	FLockChangeDelegate LockChangeDelegate;

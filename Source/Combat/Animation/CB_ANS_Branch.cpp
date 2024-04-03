@@ -3,10 +3,7 @@
 
 #include "CB_ANS_Branch.h"
 #include "AbilitySystemBlueprintLibrary.h"
-
-
-#define STATE_ATTACK_LIGHT_NEXT FGameplayTag::RequestGameplayTag(FName("State.Attack.Light.Next"))
-
+#include "../Tags/StateTag.h"
 
 void UCB_ANS_Branch::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 	float FrameDeltaTime, const FAnimNotifyEventReference& EventReference)
