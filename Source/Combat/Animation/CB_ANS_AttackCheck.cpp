@@ -2,24 +2,36 @@
 
 
 #include "CB_ANS_AttackCheck.h"
+#include "../Character/CB_BaseCharacter.h"
+#include "../Weapon/CB_Sword.h"
 
 void UCB_ANS_AttackCheck::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, 
 	float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {
-	Super::NotifyBegin(MeshComp, Animation, TotalDuration, EventReference);
-	// 무기 콜리전 활성화
+	ACB_BaseCharacter* Character = Cast<ACB_BaseCharacter>(MeshComp->GetOwner());
+	if (Character)
+	{
+		ACB_Sword* Sword = Cast<ACB_Sword>(Character->GetWeapon());
+		Sword->CollisionOn();
+		Sword->TrailStart();
+	}
 }
 
 void UCB_ANS_AttackCheck::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, 
 	float FrameDeltaTime, const FAnimNotifyEventReference& EventReference)
 {
-	Super::NotifyTick(MeshComp, Animation, FrameDeltaTime, EventReference);
-	// 플레이어 공격 입력 검사
 }
 
 void UCB_ANS_AttackCheck::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, 
 	const FAnimNotifyEventReference& EventReference)
 {
-	Super::NotifyEnd(MeshComp, Animation, EventReference);
 	// 무기 콜리전 비활성화
+	ACB_BaseCharacter* Character = Cast<ACB_BaseCharacter>(MeshComp->GetOwner());
+	
+	if (Character)
+	{
+		ACB_Sword* Sword = Cast<ACB_Sword>(Character->GetWeapon());
+		Sword->CollisionOff();
+		Sword->TrailEnd();
+	}
 }

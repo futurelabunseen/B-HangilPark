@@ -14,6 +14,9 @@ class COMBAT_API ACB_BaseWeapon : public AActor
 	
 public:	
 	ACB_BaseWeapon();
+
+	//virtual void Tick(float DeltaTime) override;
+
 	void Equip(USceneComponent* InParent, FName InSocketName, AActor* NewOwner, APawn* NewInstigator);
 	void AttachMeshToSocket(USceneComponent* InParent, const FName& InSocketName);
 

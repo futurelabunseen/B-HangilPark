@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+#include "../Tags/StateTag.h"
 #include "CB_EquipAbility.generated.h"
 
 class UAnimMontage;
@@ -22,7 +23,9 @@ public:
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
 		const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
-	FName GetSectionName();
+public:
+	void SetValue();
+
 protected:
 	UFUNCTION()
 	void OnCompleteCallback();
@@ -34,6 +37,6 @@ private:
 	UPROPERTY()
 	TObjectPtr<ACB_BaseCharacter> BaseCharacter;
 
-private:
-
+	UPROPERTY()
+	FName SectionName;
 };

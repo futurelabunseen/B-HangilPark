@@ -5,7 +5,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "../Components/CB_LockOnComponent.h"
-#include "AbilitySystemComponent.h"
 #include "../Tags/StateTag.h"
 #include "../Weapon/CB_BaseWeapon.h"
 
@@ -49,16 +48,14 @@ bool ACB_BaseCharacter::IsLocked()
 
 void ACB_BaseCharacter::LockChange(float Axis)
 {
-	if (!ASC->HasMatchingGameplayTag(STATE_DODGE))
+	if (!HasGameplayTag(STATE_DODGE))
 		LockOnComponent->TargetActorWithAxisInput(Axis);
 }
 
-void ACB_BaseCharacter::AddGameplayTag(FGameplayTag Tag)
+bool ACB_BaseCharacter::HasGameplayTag(FGameplayTag Tag) const
 {
-	ASC->AddLooseGameplayTag(Tag);
-}
-
-void ACB_BaseCharacter::RemoveGameplayTag(FGameplayTag Tag)
-{
-	ASC->RemoveLooseGameplayTag(Tag);
+	if (IsValid(ASC))
+		return ASC->HasMatchingGameplayTag(Tag);
+	else
+		return false;
 }

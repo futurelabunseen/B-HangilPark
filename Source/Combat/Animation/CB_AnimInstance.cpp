@@ -2,15 +2,18 @@
 
 
 #include "CB_AnimInstance.h"
-#include "GameFramework/Character.h"
+#include "../Character/CB_BaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 void UCB_AnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
-	Character = Cast<ACharacter>(TryGetPawnOwner());
+	// Character에서 BaseCharacter로 구체화됨
+	Character = Cast<ACB_BaseCharacter>(TryGetPawnOwner());
 	if (Character)
+	{
 		CharacterMovement = Character->GetCharacterMovement();
+	}
 }
 
 void UCB_AnimInstance::NativeUpdateAnimation(float DeltaTime)
@@ -24,5 +27,7 @@ void UCB_AnimInstance::NativeUpdateAnimation(float DeltaTime)
 		bShouldMove = (CharacterMovement->GetCurrentAcceleration() != FVector(0, 0, 0));
 		MoveForward = FVector::DotProduct(Character->GetActorForwardVector(), Velocity);
 		MoveRight = FVector::DotProduct(Character->GetActorRightVector(), Velocity);
+		// 의존성?
+		IsEquip = Character->HasGameplayTag(STATE_EQUIPMENT_ON);
 	}
 }

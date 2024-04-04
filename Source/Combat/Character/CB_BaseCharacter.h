@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
 #include "GameplayTagContainer.h"
+#include "AbilitySystemComponent.h"
 #include "CB_BaseCharacter.generated.h"
 
 class UAbilitySystemComponent;
@@ -26,14 +27,14 @@ public:
 	UFUNCTION()
 	void LockChange(float Axis);
 	
-	void AddGameplayTag(FGameplayTag Tag);
-	void RemoveGameplayTag(FGameplayTag Tag);
+	UFUNCTION()
+	bool HasGameplayTag(FGameplayTag Tag) const;
+
 public:
-	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override 
-	{ return ASC; }
+	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return ASC; }
 	FORCEINLINE ACB_BaseWeapon* GetWeapon() const { return Weapon; }
-	FORCEINLINE bool GetIsEquipped() const { return bIsEquipped; }
-	FORCEINLINE void FlipIsEquipped() { bIsEquipped = !bIsEquipped; }
+	FORCEINLINE void AddGameplayTag(FGameplayTag Tag) { ASC->AddLooseGameplayTag(Tag); }
+	FORCEINLINE void RemoveGameplayTag(FGameplayTag Tag) { ASC->RemoveLooseGameplayTag(Tag); }
 
 protected:
 	virtual void BeginPlay() override;
@@ -54,7 +55,4 @@ protected:
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<ACB_BaseWeapon> WeaponClass;
 
-	// 나중에 지울 것
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	bool bIsEquipped = false;
 };

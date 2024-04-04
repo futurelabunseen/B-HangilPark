@@ -21,8 +21,5 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	FGameplayTagContainer AttackBeginTags;
-
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	FName SocketName;
 };

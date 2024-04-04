@@ -4,8 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "../Tags/StateTag.h"
 #include "CB_AnimInstance.generated.h"
 
+class ACB_BaseCharacter;
+class UCharacterMovementComponent;
+class UAbilitySystemComponent;
 /**
  * 
  */
@@ -20,11 +24,11 @@ public:
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,
 		Category = "Character", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class ACharacter> Character;
+	TObjectPtr<ACB_BaseCharacter> Character;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,
 		Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UCharacterMovementComponent> CharacterMovement;
+	TObjectPtr<UCharacterMovementComponent> CharacterMovement;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, 
 		Category = "Movement", meta = (AllowPrivateAccess = "true"))
@@ -45,4 +49,11 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,
 		Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float MoveRight;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,
+		Category = "Flag", meta = (AllowPrivateAccess = "true"))
+	bool IsEquip;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAbilitySystemComponent> ASC = nullptr;
 };

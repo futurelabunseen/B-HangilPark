@@ -9,8 +9,7 @@
 void UCB_AN_EquipCheck::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, 
 	const FAnimNotifyEventReference& EventReference)
 {
-	ACB_BaseCharacter* Character = Cast< ACB_BaseCharacter>(MeshComp->GetOwner());
+	ACB_BaseCharacter* Character = Cast<ACB_BaseCharacter>(MeshComp->GetOwner());
 	if (Character)
 		Character->GetWeapon()->AttachMeshToSocket(Character->GetMesh(), SocketName);
-
 }
