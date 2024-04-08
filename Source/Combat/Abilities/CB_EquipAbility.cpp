@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Abilities/CB_EquipAbility.h"
-#include "../Character/CB_BaseCharacter.h"
+#include "Character/CB_BaseCharacter.h"
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -39,11 +39,6 @@ void UCB_EquipAbility::SetValue()
 }
 
 void UCB_EquipAbility::OnCompleteCallback()
-{
-	/*if (BaseCharacter->HasGameplayTag(STATE_EQUIPMENT_ON))
-		BaseCharacter->RemoveGameplayTag(STATE_EQUIPMENT_ON);
-	else
-		BaseCharacter->AddGameplayTag(STATE_EQUIPMENT_ON);*/
-		
+{		
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 }

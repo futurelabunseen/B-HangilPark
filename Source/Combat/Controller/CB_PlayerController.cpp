@@ -8,7 +8,6 @@
 #include "GameFramework/Character.h"
 #include "../Character/CB_PlayerCharacter.h"
 
-
 void ACB_PlayerController::BeginPlay()
 {
 	Super::BeginPlay();

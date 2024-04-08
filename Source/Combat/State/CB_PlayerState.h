@@ -8,6 +8,7 @@
 #include "CB_PlayerState.generated.h"
 
 class UAbilitySystemComponent;
+class UCB_CharacterAttributeSet;
 /**
  * 
  */
@@ -26,4 +27,7 @@ public:
 private:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UAbilitySystemComponent> ASC;
+
+	UPROPERTY()
+	TObjectPtr<UCB_CharacterAttributeSet> AttributeSet;
 };

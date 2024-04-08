@@ -11,3 +11,5 @@
 #define STATE_EQUIPMENT FGameplayTag::RequestGameplayTag(FName("State.Equipment"))
 #define STATE_EQUIPMENT_ON FGameplayTag::RequestGameplayTag(FName("State.Equipment.On"))
 #define STATE_EQUIPMENT_OFF FGameplayTag::RequestGameplayTag(FName("State.Equipment.Off"))
+
+#define DATA_DAMAGE FGameplayTag::RequestGameplayTag(FName("Data.Damage"))

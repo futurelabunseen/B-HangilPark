@@ -4,8 +4,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "AbilitySystemComponent.h"
-#include "../State/CB_PlayerState.h"
-#include "../Controller/CB_PlayerController.h"
+#include "State/CB_PlayerState.h"
+#include "Controller/CB_PlayerController.h"
 
 ACB_PlayerCharacter::ACB_PlayerCharacter()
 {

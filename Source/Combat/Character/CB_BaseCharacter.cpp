@@ -1,12 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "CB_BaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "../Components/CB_LockOnComponent.h"
-#include "../Tags/StateTag.h"
-#include "../Weapon/CB_BaseWeapon.h"
+#include "Components/CB_LockOnComponent.h"
+#include "Tags/StateTag.h"
+#include "Weapon/CB_BaseWeapon.h"
 
 ACB_BaseCharacter::ACB_BaseCharacter()
 {
@@ -17,6 +16,7 @@ ACB_BaseCharacter::ACB_BaseCharacter()
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+	GetMesh()->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;

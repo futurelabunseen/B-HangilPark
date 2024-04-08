@@ -2,7 +2,7 @@
 
 
 #include "CB_DodgeAbility.h"
-#include "../Character/CB_BaseCharacter.h"
+#include "Character/CB_BaseCharacter.h"
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "GameFramework/CharacterMovementComponent.h"
 

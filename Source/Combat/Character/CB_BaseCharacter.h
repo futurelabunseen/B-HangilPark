@@ -13,6 +13,7 @@ class UAbilitySystemComponent;
 class UGameplayAbility;
 class UCB_LockOnComponent;
 class ACB_BaseWeapon;
+class UCB_CharacterAttributeSet;
 
 UCLASS()
 class COMBAT_API ACB_BaseCharacter : public ACharacter, public IAbilitySystemInterface
@@ -43,10 +44,10 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UAbilitySystemComponent> ASC = nullptr;
 
-	UPROPERTY(EditAnywhere, Category = "GAS", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TArray<TSubclassOf<UGameplayAbility>> Abilities;
 
-	UPROPERTY(VisibleAnywhere, Category = "LockOn", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCB_LockOnComponent> LockOnComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -55,4 +56,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<ACB_BaseWeapon> WeaponClass;
 
+	UPROPERTY()
+	TObjectPtr<UCB_CharacterAttributeSet> AttributeSet = nullptr;
 };
