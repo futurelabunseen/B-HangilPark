@@ -7,6 +7,9 @@
 #include "Components/CapsuleComponent.h"
 #include "DrawDebugHelpers.h"
 
+#include "Interface/CB_CombatInterface.h"
+#include "Kismet/KismetSystemLibrary.h"
+
 void ACB_TraceTargetActor::StartTargeting(UGameplayAbility* Ability)
 {
 	Super::StartTargeting(Ability);
@@ -25,36 +28,26 @@ void ACB_TraceTargetActor::ConfirmTargetingAndContinue()
 FGameplayAbilityTargetDataHandle ACB_TraceTargetActor::MakeTargetData() const
 {
 	ACharacter* Character = CastChecked<ACharacter>(SourceActor);
+	ICB_CombatInterface* Interface = Cast<ICB_CombatInterface>(Character);
 
-	FHitResult OutHitResult;
-	const float AttackRange = 100.0f;
-	const float AttackRadius = 50.f;
+	const FVector Start = Interface->GetCombatSocketLocation("Start");
+	const FVector End = Interface->GetCombatSocketLocation("EndSocket");
 
-	FCollisionQueryParams Params(SCENE_QUERY_STAT(UACB_TraceTargetActor), false, Character);
-	const FVector Forward = Character->GetActorForwardVector();
-	const FVector Start = Character->GetActorLocation() + Forward * Character->GetCapsuleComponent()->GetScaledCapsuleRadius();
-	const FVector End = Start + Forward * AttackRange;
+	FHitResult HitResult;
+	ETraceTypeQuery MyTraceType = UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1);
+	
+	TArray<AActor*> ActorsToIgnore;
+	ActorsToIgnore.Add(Character);
 
-	bool HitDetected = GetWorld()->SweepSingleByChannel(OutHitResult, Start, End, FQuat::Identity, ECC_GameTraceChannel1, FCollisionShape::MakeSphere(AttackRadius), Params);
+	bool HitDetected = UKismetSystemLibrary::BoxTraceSingle(this, Start, End, FVector(10.f),
+		Start.Rotation(), MyTraceType, false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult, true);
 
 	FGameplayAbilityTargetDataHandle DataHandle;
 	if (HitDetected)
 	{
-		FGameplayAbilityTargetData_SingleTargetHit* TargetData = new FGameplayAbilityTargetData_SingleTargetHit(OutHitResult);
+		FGameplayAbilityTargetData_SingleTargetHit* TargetData = new
+			FGameplayAbilityTargetData_SingleTargetHit(HitResult);
 		DataHandle.Add(TargetData);
 	}
-
-#if ENABLE_DRAW_DEBUG
-
-	if (bShowDebug)
-	{
-		FVector CapsuleOrigin = Start + (End - Start) * 0.5f;
-		float CapsuleHalfHeight = AttackRange * 0.5f;
-		FColor DrawColor = HitDetected ? FColor::Green : FColor::Red;
-		DrawDebugCapsule(GetWorld(), CapsuleOrigin, CapsuleHalfHeight, AttackRadius, FRotationMatrix::MakeFromZ(Forward).ToQuat(), DrawColor, false, 2.0f);
-	}
-
-#endif
-
-	return DataHandle;
+	return DataHandle;	
 }

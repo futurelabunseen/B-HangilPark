@@ -33,6 +33,7 @@ void UCB_AttackHitCheckAbility::OnTraceResultCallback(const FGameplayAbilityTarg
 		FGameplayEffectSpecHandle EffectSpecHandle = MakeOutgoingGameplayEffectSpec(AttackDamageEffect);
 		if (EffectSpecHandle.IsValid())
 		{
+			// 데미지 수치 전달
 			EffectSpecHandle.Data->SetSetByCallerMagnitude(DATA_DAMAGE, -20.f);
 			ApplyGameplayEffectSpecToTarget(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, EffectSpecHandle, TargetDataHandle);
 		}

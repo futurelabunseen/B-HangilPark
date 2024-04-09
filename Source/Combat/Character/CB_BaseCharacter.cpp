@@ -59,3 +59,8 @@ bool ACB_BaseCharacter::HasGameplayTag(FGameplayTag Tag) const
 	else
 		return false;
 }
+
+FVector ACB_BaseCharacter::GetCombatSocketLocation(const FName SocketName)
+{
+	return Weapon->GetWeaponMesh()->GetSocketLocation(SocketName);
+}

@@ -31,7 +31,11 @@ void UCB_TraceTask::OnDestroy(bool AbilityEnded)
 
 void UCB_TraceTask::SpawnAndInitializeTargetActor()
 {
-	SpawnedTargetActor = Cast<ACB_TraceTargetActor>(Ability->GetWorld()->SpawnActorDeferred<AGameplayAbilityTargetActor>(TargetActorClass, FTransform::Identity, nullptr, nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn));
+	SpawnedTargetActor = Cast<ACB_TraceTargetActor>(
+		Ability->GetWorld()->SpawnActorDeferred<AGameplayAbilityTargetActor>(
+			TargetActorClass, FTransform::Identity, nullptr, nullptr, 
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn));
+
 	if (SpawnedTargetActor)
 	{
 		SpawnedTargetActor->SetShowDebug(true);

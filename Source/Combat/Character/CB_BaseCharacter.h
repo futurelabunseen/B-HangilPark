@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "GameplayTagContainer.h"
 #include "AbilitySystemComponent.h"
+#include "Interface/CB_CombatInterface.h"
 #include "CB_BaseCharacter.generated.h"
 
 class UAbilitySystemComponent;
@@ -16,7 +17,7 @@ class ACB_BaseWeapon;
 class UCB_CharacterAttributeSet;
 
 UCLASS()
-class COMBAT_API ACB_BaseCharacter : public ACharacter, public IAbilitySystemInterface
+class COMBAT_API ACB_BaseCharacter : public ACharacter, public IAbilitySystemInterface, public ICB_CombatInterface
 {
 	GENERATED_BODY()
 
@@ -31,6 +32,7 @@ public:
 	UFUNCTION()
 	bool HasGameplayTag(FGameplayTag Tag) const;
 
+	virtual FVector GetCombatSocketLocation(const FName SocketName) override;
 public:
 	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return ASC; }
 	FORCEINLINE ACB_BaseWeapon* GetWeapon() const { return Weapon; }
