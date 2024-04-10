@@ -38,9 +38,9 @@ FGameplayAbilityTargetDataHandle ACB_TraceTargetActor::MakeTargetData() const
 	
 	TArray<AActor*> ActorsToIgnore;
 	ActorsToIgnore.Add(Character);
-
+	// EDrawDebugTrace::ForDuration
 	bool HitDetected = UKismetSystemLibrary::BoxTraceSingle(this, Start, End, FVector(10.f),
-		Start.Rotation(), MyTraceType, false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult, true);
+		Start.Rotation(), MyTraceType, false, ActorsToIgnore, EDrawDebugTrace::None, HitResult, true);
 
 	FGameplayAbilityTargetDataHandle DataHandle;
 	if (HitDetected)
@@ -49,5 +49,6 @@ FGameplayAbilityTargetDataHandle ACB_TraceTargetActor::MakeTargetData() const
 			FGameplayAbilityTargetData_SingleTargetHit(HitResult);
 		DataHandle.Add(TargetData);
 	}
+
 	return DataHandle;	
 }

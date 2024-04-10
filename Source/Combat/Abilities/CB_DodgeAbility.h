@@ -6,6 +6,14 @@
 #include "Abilities/GameplayAbility.h"
 #include "CB_DodgeAbility.generated.h"
 
+USTRUCT()
+struct FData
+{
+	GENERATED_BODY()
+	TPair<float, float> Range;
+	FName Name;
+};
+
 class UAnimMontage;
 class ACB_BaseCharacter;
 /**
@@ -27,12 +35,14 @@ protected:
 	void OnCompleteCallback();
 
 private:
-	void ImmediateRotateActor();
-	
+	float CheckTheta();
+	FName CheckSectionName(float Theta);
+
 private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAnimMontage> DodgeMontage;
 
 	UPROPERTY()
-	TObjectPtr<ACB_BaseCharacter> BaseCharacter;
+	TObjectPtr<ACharacter> Character;
+
 };

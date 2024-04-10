@@ -5,14 +5,33 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "DrawDebugHelpers.h"
 
+#include "NiagaraComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+
 ACB_Sword::ACB_Sword()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
 	TrailParticle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("TrailParticle"));
 	TrailParticle->AttachToComponent(GetWeaponMesh(), FAttachmentTransformRules::KeepRelativeTransform);
+
+	TrailEffect = CreateDefaultSubobject<UNiagaraComponent>(TEXT("TrailEffect"));
+	TrailEffect->SetupAttachment(GetRootComponent());
 }
 
+void ACB_Sword::BeginPlay()
+{
+	Super::BeginPlay();
+
+	const FVector BotPos = GetWeaponMesh()->GetSocketLocation("StartSocket");
+	const FVector TopPos = GetWeaponMesh()->GetSocketLocation("EndSocket");
+	
+	TrailEffect->SetFloatParameter("RibbonWidth", (TopPos - BotPos).Length());
+	TrailEffect->SetWorldRotation(UKismetMathLibrary::MakeRotFromZ(BotPos - TopPos));
+	TrailEffect->SetWorldLocation((TopPos + BotPos) / 2);
+
+	TrailEffect->Deactivate();
+}
 void ACB_Sword::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -20,12 +39,12 @@ void ACB_Sword::Tick(float DeltaTime)
 
 void ACB_Sword::TrailStart()
 {
-	if (TrailParticle)
-		TrailParticle->BeginTrails("StartSocket", "EndSocket", ETrailWidthMode_FromCentre, 1.f);
+	TrailParticle->BeginTrails("StartSocket", "EndSocket", ETrailWidthMode_FromCentre, 1.f);
+	TrailEffect->Activate();
 }
 
 void ACB_Sword::TrailEnd()
 {
-	if (TrailParticle)
-		TrailParticle->EndTrails();
+	TrailParticle->EndTrails();
+	TrailEffect->Deactivate();
 }

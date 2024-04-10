@@ -7,6 +7,7 @@
 #include "CB_Sword.generated.h"
 
 class UBoxComponent;
+class UNiagaraComponent;
 /**
  * 
  */
@@ -21,9 +22,13 @@ public:
 
 	void TrailStart();
 	void TrailEnd();
+protected:
+	virtual void BeginPlay() override;
 
 private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UParticleSystemComponent> TrailParticle;
 
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UNiagaraComponent> TrailEffect;
 };

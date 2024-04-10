@@ -21,7 +21,8 @@ public class Combat : ModuleRules
             "UMG",
 	        "GameplayAbilities",
             "GameplayTasks",
-            "GameplayTags"
+            "GameplayTags",
+            "Niagara",
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

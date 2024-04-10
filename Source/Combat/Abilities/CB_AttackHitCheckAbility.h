@@ -26,4 +26,7 @@ protected:
 private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UGameplayEffect> AttackDamageEffect;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	float Damage = 20.f;
 };

@@ -28,6 +28,7 @@ public:
 	UFUNCTION()
 	void InputReleased(const FGameplayTagContainer& GameplayTagContainer);
 
+	virtual void Tick(float DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
 
@@ -37,6 +38,5 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> CameraComponent;
-
 
 };

@@ -48,6 +48,11 @@ void ACB_PlayerCharacter::BeginPlay()
 
 }
 
+void ACB_PlayerCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
 void ACB_PlayerCharacter::InputPressed(const FGameplayTagContainer& GameplayTagContainer)
 {
 	ASC->TryActivateAbilitiesByTag(GameplayTagContainer);
