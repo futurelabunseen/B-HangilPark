@@ -37,7 +37,7 @@ void ACB_PlayerCharacter::PossessedBy(AController* NewController)
 		}
 
 		ACB_PlayerController* PlayerController = CastChecked<ACB_PlayerController>(NewController);
-		PlayerController->ConsoleCommand(TEXT("showdebug abilitysystem"));
+		//PlayerController->ConsoleCommand(TEXT("showdebug abilitysystem"));
 		PlayerController->LockChangeDelegate.BindUFunction(this, FName("LockChange"));
 	}
 }
