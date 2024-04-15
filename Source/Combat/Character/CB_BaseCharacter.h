@@ -10,7 +10,7 @@
 #include "Interface/CB_CombatInterface.h"
 #include "CB_BaseCharacter.generated.h"
 
-class UAbilitySystemComponent;
+class UGameplayEffect;
 class UGameplayAbility;
 class UCB_LockOnComponent;
 class ACB_BaseWeapon;
@@ -48,6 +48,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TArray<TSubclassOf<UGameplayAbility>> Abilities;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	TArray<TSubclassOf<UGameplayEffect>> Effects;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCB_LockOnComponent> LockOnComponent;

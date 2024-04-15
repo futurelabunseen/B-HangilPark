@@ -4,7 +4,8 @@
 #include "Character/CB_BaseCharacter.h"
 #include "Weapon/CB_Sword.h"
 
-void UCB_ANS_Trail::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, 
+// 수정 필요
+void UCB_ANS_Trail::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 	float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {
 	ACB_BaseCharacter* Character = Cast<ACB_BaseCharacter>(MeshComp->GetOwner());
@@ -15,7 +16,7 @@ void UCB_ANS_Trail::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceB
 	}
 }
 
-void UCB_ANS_Trail::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, 
+void UCB_ANS_Trail::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 	const FAnimNotifyEventReference& EventReference)
 {
 	ACB_BaseCharacter* Character = Cast<ACB_BaseCharacter>(MeshComp->GetOwner());

@@ -7,9 +7,6 @@
 #include "GameplayTagContainer.h"
 #include "CB_ANS_Ready.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class COMBAT_API UCB_ANS_Ready : public UAnimNotifyState
 {

@@ -13,18 +13,18 @@ void UCB_CharacterAttributeSet::PreAttributeChange(const FGameplayAttribute& Att
 {
 	if (Attribute == GetHealthAttribute())
 		NewValue = FMath::Clamp(NewValue, 0.0f, GetMaxHealth());
+
+	if (Attribute == GetStaminaAttribute())
+		NewValue = FMath::Clamp(NewValue, 0.0f, GetMaxStamina());
 }
 
 void UCB_CharacterAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
 
-	float MinimumHealth = 0.0f;
-
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Direct Health Access : %f"), GetHealth());
-		SetHealth(FMath::Clamp(GetHealth(), MinimumHealth, GetMaxHealth()));
-	}
+		SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetMaxHealth()));
 
+	if (Data.EvaluatedData.Attribute == GetStaminaAttribute())
+		SetStamina(FMath::Clamp(GetStamina(), 0.0f, GetMaxStamina()));
 }

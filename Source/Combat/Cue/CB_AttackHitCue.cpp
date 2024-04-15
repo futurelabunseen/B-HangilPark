@@ -7,7 +7,6 @@
 UCB_AttackHitCue::UCB_AttackHitCue()
 {
 	ParticleSystem = CreateDefaultSubobject<UParticleSystem>(TEXT("ParticleSystem"));
-
 }
 
 bool UCB_AttackHitCue::OnExecute_Implementation(AActor* Target, const FGameplayCueParameters& Parameters) const

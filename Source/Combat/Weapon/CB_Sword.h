@@ -8,9 +8,7 @@
 
 class UBoxComponent;
 class UNiagaraComponent;
-/**
- * 
- */
+
 UCLASS()
 class COMBAT_API ACB_Sword : public ACB_BaseWeapon
 {

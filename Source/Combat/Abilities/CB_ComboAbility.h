@@ -8,9 +8,7 @@
 
 class UAnimMontage;
 class ACB_BaseCharacter;
-/**
- * 
- */
+
 UCLASS()
 class COMBAT_API UCB_ComboAbility : public UGameplayAbility
 {

@@ -22,38 +22,27 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaTime) override;
 
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,
-		Category = "Character", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<ACB_BaseCharacter> Character;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,
-		Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCharacterMovementComponent> CharacterMovement;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, 
-		Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	FVector Velocity;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,
-		Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	uint8 bIsFalling : 1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,
-		Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	uint8 bShouldMove : 1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,
-		Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float MoveForward;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,
-		Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,meta = (AllowPrivateAccess = "true"))
 	float MoveRight;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,
-		Category = "Flag", meta = (AllowPrivateAccess = "true"))
-	bool IsEquip;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UAbilitySystemComponent> ASC = nullptr;
+	bool IsEquip;
 };

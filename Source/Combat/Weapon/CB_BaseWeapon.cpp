@@ -11,7 +11,6 @@ ACB_BaseWeapon::ACB_BaseWeapon()
 	WeaponMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 }
 
-
 void ACB_BaseWeapon::Equip(USceneComponent* InParent, FName InSocketName, AActor* NewOwner, APawn* NewInstigator)
 {
 	SetOwner(NewOwner);

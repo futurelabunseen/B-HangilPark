@@ -8,9 +8,7 @@
 
 class USkeletalMeshComponent;
 class UAnimSequenceBase;
-/**
- * 
- */
+
 UCLASS()
 class COMBAT_API UCB_ANS_Trail : public UAnimNotifyState
 {

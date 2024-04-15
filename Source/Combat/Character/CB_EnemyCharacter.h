@@ -7,9 +7,7 @@
 #include "CB_EnemyCharacter.generated.h"
 
 class UGameplayEffect;
-/**
- * 
- */
+
 UCLASS()
 class COMBAT_API ACB_EnemyCharacter : public ACB_BaseCharacter
 {

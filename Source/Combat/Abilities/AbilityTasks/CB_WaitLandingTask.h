@@ -7,9 +7,7 @@
 #include "CB_WaitLandingTask.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FWaitLandingDelegate);
-/**
- * 
- */
+
 UCLASS()
 class COMBAT_API UCB_WaitLandingTask : public UAbilityTask
 {

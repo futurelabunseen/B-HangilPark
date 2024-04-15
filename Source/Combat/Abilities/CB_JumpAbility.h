@@ -6,9 +6,6 @@
 #include "Abilities/GameplayAbility.h"
 #include "CB_JumpAbility.generated.h"
 
-/**
- * 테스트용 Ability
- */
 UCLASS()
 class COMBAT_API UCB_JumpAbility : public UGameplayAbility
 {

@@ -7,9 +7,7 @@
 #include "CB_AttackHitCheckAbility.generated.h"
 
 class UGameplayEffect;
-/**
- * 
- */
+
 UCLASS()
 class COMBAT_API UCB_AttackHitCheckAbility : public UGameplayAbility
 {

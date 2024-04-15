@@ -15,10 +15,7 @@ struct FData
 };
 
 class UAnimMontage;
-class ACB_BaseCharacter;
-/**
- * 
- */
+
 UCLASS()
 class COMBAT_API UCB_DodgeAbility : public UGameplayAbility
 {

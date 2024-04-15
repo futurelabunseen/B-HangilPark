@@ -7,9 +7,6 @@
 #include "GameplayTagContainer.h"
 #include "CB_AN_AttackHitCheck.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class COMBAT_API UCB_AN_AttackHitCheck : public UAnimNotify
 {

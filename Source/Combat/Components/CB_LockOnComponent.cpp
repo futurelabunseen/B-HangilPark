@@ -10,7 +10,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/PlayerController.h"
-#include "../Character/CB_EnemyCharacter.h"
+#include "Character/CB_EnemyCharacter.h"
 
 UCB_LockOnComponent::UCB_LockOnComponent()
 {

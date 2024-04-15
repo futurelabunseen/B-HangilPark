@@ -8,10 +8,8 @@
 #include "CB_PlayerState.generated.h"
 
 class UAbilitySystemComponent;
-class UCB_CharacterAttributeSet;
-/**
- * 
- */
+class UAttributeSet;
+
 UCLASS()
 class COMBAT_API ACB_PlayerState : public APlayerState, public IAbilitySystemInterface
 {
@@ -23,11 +21,12 @@ public:
 public:
 	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override
 	{ return ASC; }
-
+	FORCEINLINE UAttributeSet* GetAttributeSet() const { return AttributeSet; }
+	
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> ASC;
 
 	UPROPERTY()
-	TObjectPtr<UCB_CharacterAttributeSet> AttributeSet;
+	TObjectPtr<UAttributeSet> AttributeSet;
 };

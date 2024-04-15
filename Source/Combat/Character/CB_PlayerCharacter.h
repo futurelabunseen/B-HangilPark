@@ -9,9 +9,7 @@
 class USpringArmComponent;
 class UCameraComponent;
 class UGameplayAbility;
-/**
- * 
- */
+
 UCLASS()
 class COMBAT_API ACB_PlayerCharacter : public ACB_BaseCharacter
 {

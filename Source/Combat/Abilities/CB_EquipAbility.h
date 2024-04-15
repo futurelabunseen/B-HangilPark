@@ -10,9 +10,7 @@
 class UAnimMontage;
 class ACB_BaseCharacter;
 struct FGameplayTag;
-/**
- * 
- */
+
 UCLASS()
 class COMBAT_API UCB_EquipAbility : public UGameplayAbility
 {

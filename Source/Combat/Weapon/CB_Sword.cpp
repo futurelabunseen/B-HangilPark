@@ -1,10 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Weapon/CB_Sword.h"
-#include "Components/BoxComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "DrawDebugHelpers.h"
-
 #include "NiagaraComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 

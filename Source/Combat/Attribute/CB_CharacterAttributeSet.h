@@ -12,9 +12,7 @@
 	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
-/**
- * 
- */
+
 UCLASS()
 class COMBAT_API UCB_CharacterAttributeSet : public UAttributeSet
 {
@@ -31,6 +29,7 @@ public:
 	ATTRIBUTE_ACCESSORS(UCB_CharacterAttributeSet, MaxHealth);
 	ATTRIBUTE_ACCESSORS(UCB_CharacterAttributeSet, Stamina);
 	ATTRIBUTE_ACCESSORS(UCB_CharacterAttributeSet, MaxStamina);
+	ATTRIBUTE_ACCESSORS(UCB_CharacterAttributeSet, StaminaRegenRate);
 
 private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
@@ -45,4 +44,6 @@ private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData MaxStamina = 100.f;
 
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	FGameplayAttributeData StaminaRegenRate = .5f;
 };

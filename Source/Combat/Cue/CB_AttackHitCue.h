@@ -8,9 +8,6 @@
 
 class UParticleSystem;
 
-/**
- * 
- */
 UCLASS()
 class COMBAT_API UCB_AttackHitCue : public UGameplayCueNotify_Static
 {

@@ -6,16 +6,12 @@ void UCB_ANS_DodgeCheck::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequ
 	float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration, EventReference);
-	// 콜리전 off
-	if (MeshComp)
-		MeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	MeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void UCB_ANS_DodgeCheck::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 	const FAnimNotifyEventReference& EventReference)
 {
 	Super::NotifyEnd(MeshComp, Animation, EventReference);
-	// 콜리전 on
-	if (MeshComp)
-		MeshComp->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	MeshComp->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 }

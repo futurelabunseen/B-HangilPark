@@ -5,17 +5,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "GameplayTagContainer.h"
-#include "../Tags/StateTag.h"
+#include "Tags/StateTag.h"
 #include "CB_PlayerController.generated.h"
-
-DECLARE_DELEGATE_OneParam(FLockChangeDelegate, float);
 
 struct FInputActionValue;
 class UCB_PDA_Input;
 
-/**
- * 
- */
+DECLARE_DELEGATE_OneParam(FLockChangeDelegate, float);
+
 UCLASS()
 class COMBAT_API ACB_PlayerController : public APlayerController
 {

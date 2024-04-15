@@ -16,7 +16,8 @@ void UCB_DodgeAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	const FGameplayEventData* TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
-	// BaseCharacter에서 Character로 추상화
+	CommitAbility(Handle, ActorInfo, ActivationInfo);
+
 	Character = CastChecked<ACharacter>(ActorInfo->AvatarActor.Get());
 
 	UAbilityTask_PlayMontageAndWait* PlayDodgeTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(

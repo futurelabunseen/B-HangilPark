@@ -37,10 +37,7 @@ void UCB_TraceTask::SpawnAndInitializeTargetActor()
 			ESpawnActorCollisionHandlingMethod::AlwaysSpawn));
 
 	if (SpawnedTargetActor)
-	{
-		SpawnedTargetActor->SetShowDebug(true);
 		SpawnedTargetActor->TargetDataReadyDelegate.AddUObject(this, &UCB_TraceTask::OnTargetDataReadyCallback);
-	}
 }
 
 void UCB_TraceTask::FinalizeTargetActor()

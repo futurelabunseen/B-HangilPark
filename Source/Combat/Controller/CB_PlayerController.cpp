@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CB_PlayerController.h"
-#include "../Data/CB_PDA_Input.h"
+#include "Data/CB_PDA_Input.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "InputActionValue.h"
 #include "GameFramework/Character.h"
-#include "../Character/CB_PlayerCharacter.h"
+#include "Character/CB_PlayerCharacter.h"
 
 void ACB_PlayerController::BeginPlay()
 {
@@ -24,24 +24,25 @@ void ACB_PlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	if (UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(InputComponent))
-	{
-		EIC->BindAction(InputData->MoveAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Move);
-		EIC->BindAction(InputData->LookAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Look);
-		
-		EIC->BindAction(InputData->JumpAction, ETriggerEvent::Triggered, this,
-			&ACB_PlayerController::InputPressed, STATE_JUMP);
-		EIC->BindAction(InputData->AttackAction, ETriggerEvent::Triggered, this,
-			&ACB_PlayerController::InputPressed, STATE_ATTACK_LIGHT);
-		EIC->BindAction(InputData->DodgeAction, ETriggerEvent::Triggered, this,
-			&ACB_PlayerController::InputPressed, STATE_DODGE);
+	UEnhancedInputComponent* EIC = CastChecked<UEnhancedInputComponent>(InputComponent);
 
-		EIC->BindAction(InputData->LockOnAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::LockOn);
-		EIC->BindAction(InputData->EquipAction, ETriggerEvent::Triggered, this, 
-			&ACB_PlayerController::InputPressed, STATE_EQUIPMENT);
+	EIC->BindAction(InputData->MoveAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Move);
+	EIC->BindAction(InputData->LookAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::Look);
 
+	EIC->BindAction(InputData->JumpAction, ETriggerEvent::Triggered, this,
+		&ACB_PlayerController::InputPressed, STATE_JUMP);
+	EIC->BindAction(InputData->AttackAction, ETriggerEvent::Triggered, this,
+		&ACB_PlayerController::InputPressed, STATE_ATTACK_LIGHT);
+	EIC->BindAction(InputData->DodgeAction, ETriggerEvent::Triggered, this,
+		&ACB_PlayerController::InputPressed, STATE_DODGE);
+
+	EIC->BindAction(InputData->LockOnAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::LockOn);
+	EIC->BindAction(InputData->EquipAction, ETriggerEvent::Triggered, this,
+		&ACB_PlayerController::InputPressed, STATE_EQUIPMENT);
+
+	EIC->BindAction(InputData->GuardAction, ETriggerEvent::Started, 
+		this, &ACB_PlayerController::InputPressed, STATE_GUARD);
 	}
-}
 
 void ACB_PlayerController::Move(const FInputActionValue& Value)
 {

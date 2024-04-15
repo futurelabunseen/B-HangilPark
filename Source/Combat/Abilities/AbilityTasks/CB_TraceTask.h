@@ -6,12 +6,10 @@
 #include "Abilities/Tasks/AbilityTask.h"
 #include "CB_TraceTask.generated.h"
 
+class ACB_TraceTargetActor;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTraceResultDelegate, const FGameplayAbilityTargetDataHandle&, TargetDataHandle);
 
-class ACB_TraceTargetActor;
-/**
- * 
- */
 UCLASS()
 class COMBAT_API UCB_TraceTask : public UAbilityTask
 {
