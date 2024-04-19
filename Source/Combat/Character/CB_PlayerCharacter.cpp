@@ -68,30 +68,3 @@ void ACB_PlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 
 }
-
-void ACB_PlayerCharacter::InputPressed(const FGameplayTagContainer& GameplayTagContainer)
-{
-	ASC->TryActivateAbilitiesByTag(GameplayTagContainer);
-}
-
-void ACB_PlayerCharacter::InputReleased(const FGameplayTagContainer& GameplayTagContainer)
-{
-}
-
-void ACB_PlayerCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	/*const FVector Forward = GetActorForwardVector();
-	FVector Start = GetActorLocation();
-	Start.Z = 0.f;
-	FVector End = (GetCharacterMovement()->Velocity).GetSafeNormal();
-	End.Z = 0.f;
-
-	DrawDebugDirectionalArrow(GetWorld(), Start, Start + Forward * 100.f,
-		5.f, FColor::Red, false, -1.f, 0, 2.f);
-
-	DrawDebugDirectionalArrow(GetWorld(), Start, Start + End * 100.f,
-		5.f, FColor::Yellow, false, -1.f, 0, 2.f);*/
-}
-

@@ -63,4 +63,12 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UCB_CharacterAttributeSet> AttributeSet = nullptr;
+
+public:
+	FORCEINLINE bool GetIsGuard() const { return bIsGuard; }
+	FORCEINLINE void SetIsGuard(const bool IsGaurd) { bIsGuard = IsGaurd; }
+
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	bool bIsGuard = false;
 };

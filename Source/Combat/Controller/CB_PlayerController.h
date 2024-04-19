@@ -26,6 +26,7 @@ private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	void LockOn();
+	void Guard(bool bIsActiave);
 
 	void InputPressed(const FGameplayTag Tag);
 	void InputReleased(const FGameplayTag Tag);

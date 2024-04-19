@@ -27,5 +27,6 @@ void UCB_AnimInstance::NativeUpdateAnimation(float DeltaTime)
 		MoveRight = FVector::DotProduct(Character->GetActorRightVector(), Velocity);
 		// ÀÇÁ¸¼º?
 		IsEquip = Character->HasGameplayTag(STATE_EQUIPMENT_ON);
+		IsGuard = Character->GetIsGuard();
 	}
 }

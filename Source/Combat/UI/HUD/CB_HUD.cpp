@@ -4,6 +4,8 @@
 #include "UI/Widgets/CB_UserWidget.h"
 #include "UI/Controller/CB_OverlayWidgetController.h"
 
+#include "Kismet/GameplayStatics.h"
+
 UCB_OverlayWidgetController* ACB_HUD::GetOverlayWidgetController(const FWidgetControllerParams& WCParams)
 {
 	if (OverlayWidgetController == nullptr)

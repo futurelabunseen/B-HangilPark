@@ -7,7 +7,7 @@
 #include "CB_DodgeAbility.generated.h"
 
 USTRUCT()
-struct FData
+struct FData 
 {
 	GENERATED_BODY()
 	TPair<float, float> Range;

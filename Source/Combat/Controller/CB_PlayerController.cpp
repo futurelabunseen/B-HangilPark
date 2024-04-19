@@ -7,6 +7,7 @@
 #include "InputActionValue.h"
 #include "GameFramework/Character.h"
 #include "Character/CB_PlayerCharacter.h"
+#include "AbilitySystemComponent.h"
 
 void ACB_PlayerController::BeginPlay()
 {
@@ -40,9 +41,11 @@ void ACB_PlayerController::SetupInputComponent()
 	EIC->BindAction(InputData->EquipAction, ETriggerEvent::Triggered, this,
 		&ACB_PlayerController::InputPressed, STATE_EQUIPMENT);
 
-	EIC->BindAction(InputData->GuardAction, ETriggerEvent::Started, 
-		this, &ACB_PlayerController::InputPressed, STATE_GUARD);
-	}
+	EIC->BindAction(InputData->GuardAction, ETriggerEvent::Started, this,
+		&ACB_PlayerController::Guard, true);
+	EIC->BindAction(InputData->GuardAction, ETriggerEvent::Completed, this,
+		&ACB_PlayerController::Guard, false);
+}
 
 void ACB_PlayerController::Move(const FInputActionValue& Value)
 {
@@ -69,23 +72,49 @@ void ACB_PlayerController::Look(const FInputActionValue& Value)
 
 void ACB_PlayerController::LockOn()
 {
+	// 인터페이스로 처리
 	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
 	PlayerCharacter->LockOn();
+}
+
+void ACB_PlayerController::Guard(bool bIsActiave)
+{
+	// Delegate.Execute(bIsAcitve)로 처리할 예정
+	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
+	PlayerCharacter->SetIsGuard(bIsActiave);
 }
 
 void ACB_PlayerController::InputPressed(const FGameplayTag Tag)
 {
 	FGameplayTagContainer Container;
 	Container.AddTag(Tag);
+
 	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
-	PlayerCharacter->InputPressed(Container);
+	UAbilitySystemComponent* ASC = PlayerCharacter->GetAbilitySystemComponent();
+
+	TArray<FGameplayAbilitySpec*> AbilitiesToActivate;
+	ASC->GetActivatableGameplayAbilitySpecsByAllMatchingTags(Container, AbilitiesToActivate);
+	for (auto GameplayAbilitySpec : AbilitiesToActivate)
+	{
+		if (GameplayAbilitySpec->IsActive())
+			ASC->AbilitySpecInputPressed(*GameplayAbilitySpec);
+		else
+			ASC->TryActivateAbility(GameplayAbilitySpec->Handle);
+	}
 }
 
 void ACB_PlayerController::InputReleased(const FGameplayTag Tag)
 {
-	// 추후 가드에서 사용할듯?
 	FGameplayTagContainer Container;
 	Container.AddTag(Tag);
 	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
-	PlayerCharacter->InputReleased(Container);
+	UAbilitySystemComponent* ASC = PlayerCharacter->GetAbilitySystemComponent();
+
+	TArray<FGameplayAbilitySpec*> AbilitiesToActivate;
+	ASC->GetActivatableGameplayAbilitySpecsByAllMatchingTags(Container, AbilitiesToActivate);
+	for (auto GameplayAbilitySpec : AbilitiesToActivate)
+	{
+		if (GameplayAbilitySpec->IsActive())
+			ASC->AbilitySpecInputReleased(*GameplayAbilitySpec);
+	}
 }

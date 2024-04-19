@@ -9,6 +9,6 @@ void UCB_AN_AttackHitCheck::Notify(USkeletalMeshComponent* MeshComp, UAnimSequen
 	if (MeshComp)
 	{
 		FGameplayEventData PayloadData;
-		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(MeshComp->GetOwner(), TriggetGameplayTag, PayloadData);
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(MeshComp->GetOwner(), TriggerGameplayTag, PayloadData);
 	}
 }

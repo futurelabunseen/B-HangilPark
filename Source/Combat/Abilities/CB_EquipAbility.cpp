@@ -13,15 +13,16 @@ UCB_EquipAbility::UCB_EquipAbility()
 void UCB_EquipAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
+	CommitAbility(Handle, ActorInfo, ActivationInfo);
+
 	BaseCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
 	SetValue();
 
-	UAbilityTask_PlayMontageAndWait* PlayDodgeTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
+	UAbilityTask_PlayMontageAndWait* PlayEquipTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
 		this, NAME_None, EquipMontage,1.f, SectionName);
-
-	PlayDodgeTask->OnCompleted.AddDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
-	PlayDodgeTask->OnInterrupted.AddDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
-	PlayDodgeTask->ReadyForActivation();
+	PlayEquipTask->OnCompleted.AddDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
+	PlayEquipTask->OnInterrupted.AddDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
+	PlayEquipTask->ReadyForActivation();
 }
 
 void UCB_EquipAbility::SetValue()
@@ -39,6 +40,6 @@ void UCB_EquipAbility::SetValue()
 }
 
 void UCB_EquipAbility::OnCompleteCallback()
-{		
+{	
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 }

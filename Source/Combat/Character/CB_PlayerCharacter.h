@@ -19,14 +19,9 @@ public:
 	ACB_PlayerCharacter();
 
 	virtual void PossessedBy(AController* NewController) override;
+
 	
-	UFUNCTION()
-	void InputPressed(const FGameplayTagContainer& GameplayTagContainer);
 
-	UFUNCTION()
-	void InputReleased(const FGameplayTagContainer& GameplayTagContainer);
-
-	virtual void Tick(float DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
 
