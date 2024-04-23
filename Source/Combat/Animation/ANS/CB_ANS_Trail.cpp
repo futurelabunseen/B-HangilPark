@@ -12,7 +12,7 @@ void UCB_ANS_Trail::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceB
 	if (Character)
 	{
 		ACB_Sword* Sword = Cast<ACB_Sword>(Character->GetWeapon());
-		Sword->TrailStart();
+		Sword->AttackCheck(true);
 	}
 }
 
@@ -23,6 +23,6 @@ void UCB_ANS_Trail::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBas
 	if (Character)
 	{
 		ACB_Sword* Sword = Cast<ACB_Sword>(Character->GetWeapon());
-		Sword->TrailEnd();
+		Sword->AttackCheck(false);
 	}
 }

@@ -18,15 +18,31 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	void AttackCheck(bool IsActive);
+
 	void TrailStart();
 	void TrailEnd();
 protected:
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+	void BoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 private:
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	void BoxTrace(FHitResult& BoxHit);
+
+private:
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UParticleSystemComponent> TrailParticle;
 
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UNiagaraComponent> TrailEffect;
+
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UBoxComponent> BoxCollision;
+	
+	UPROPERTY()
+	TArray<TObjectPtr<AActor>> IgnoreActors;
+
 };
