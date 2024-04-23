@@ -7,8 +7,9 @@
 void UCB_ANS_Branch::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 	float FrameDeltaTime, const FAnimNotifyEventReference& EventReference)
 {
+	Super::NotifyTick(MeshComp, Animation, FrameDeltaTime, EventReference);
+
 	FGameplayEventData Payload;
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
-		MeshComp->GetOwner(), STATE_ATTACK_LIGHT_NEXT, Payload);
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(MeshComp->GetOwner(), STATE_ATTACK_LIGHT_NEXT, Payload);
 }
 

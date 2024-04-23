@@ -22,5 +22,7 @@ void UCB_AN_FootStep::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase
 
 		MeshComp->GetWorld()->LineTraceSingleByChannel(HitResult, Start, End,
 			ECollisionChannel::ECC_Visibility, QueryParams);
+		if (HitResult.GetActor())
+			MatName = HitResult.GetActor()->GetName();
 	}
 }

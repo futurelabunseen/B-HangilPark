@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Weapon/CB_BaseWeapon.h"
+#include "Tags/StateTag.h"
 #include "CB_Sword.generated.h"
 
 class UBoxComponent;
@@ -16,21 +17,11 @@ class COMBAT_API ACB_Sword : public ACB_BaseWeapon
 public:
 	ACB_Sword();
 
-	virtual void Tick(float DeltaTime) override;
-
-	void AttackCheck(bool IsActive);
-
 	void TrailStart();
 	void TrailEnd();
+
 protected:
 	virtual void BeginPlay() override;
-
-	UFUNCTION()
-	void BoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-private:
-	void BoxTrace(FHitResult& BoxHit);
 
 private:
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
@@ -38,11 +29,4 @@ private:
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UNiagaraComponent> TrailEffect;
-
-	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UBoxComponent> BoxCollision;
-	
-	UPROPERTY()
-	TArray<TObjectPtr<AActor>> IgnoreActors;
-
 };

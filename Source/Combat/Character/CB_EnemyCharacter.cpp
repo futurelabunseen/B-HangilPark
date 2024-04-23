@@ -27,4 +27,11 @@ void ACB_EnemyCharacter::PossessedBy(AController* NewController)
 	FGameplayEffectSpecHandle EffectSpecHandle = ASC->MakeOutgoingSpec(InitStatEffect, Level, EffectContextHandle);
 	if (EffectSpecHandle.IsValid())
 		ASC->BP_ApplyGameplayEffectSpecToSelf(EffectSpecHandle);
+
+
+	for (const auto& Ability : Abilities)
+	{
+		FGameplayAbilitySpec Spec(Ability);
+		ASC->GiveAbility(Spec);
+	}
 }
