@@ -28,8 +28,8 @@ FGameplayAbilityTargetDataHandle ACB_TraceTargetActor::MakeTargetData() const
 	ACharacter* Character = CastChecked<ACharacter>(SourceActor);
 	ICB_CombatInterface* Interface = Cast<ICB_CombatInterface>(Character);
 
-	const FVector Start = Interface->GetCombatSocketLocation("StartSocket");
-	const FVector End = Interface->GetCombatSocketLocation("EndSocket");
+	const FVector Start = Interface->GetWeaponSocketLocation("StartSocket");
+	const FVector End = Interface->GetWeaponSocketLocation("EndSocket");
 
 	FHitResult HitResult;
 	ETraceTypeQuery MyTraceType = UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1);
@@ -43,8 +43,7 @@ FGameplayAbilityTargetDataHandle ACB_TraceTargetActor::MakeTargetData() const
 	FGameplayAbilityTargetDataHandle DataHandle;
 	if (HitDetected)
 	{
-		FGameplayAbilityTargetData_SingleTargetHit* TargetData = new
-			FGameplayAbilityTargetData_SingleTargetHit(HitResult);
+		FGameplayAbilityTargetData_SingleTargetHit* TargetData = new FGameplayAbilityTargetData_SingleTargetHit(HitResult);
 		DataHandle.Add(TargetData);
 	}
 

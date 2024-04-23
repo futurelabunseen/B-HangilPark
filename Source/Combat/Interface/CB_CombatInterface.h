@@ -17,5 +17,6 @@ class COMBAT_API ICB_CombatInterface
 	GENERATED_BODY()
 
 public:
-	virtual FVector GetCombatSocketLocation(const FName SocketName) = 0;
+	virtual FVector GetSocketLocation(const FName SocketName) = 0;
+	virtual FVector GetWeaponSocketLocation(const FName SocketName) = 0;
 };

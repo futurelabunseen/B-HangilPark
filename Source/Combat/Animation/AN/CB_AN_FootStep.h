@@ -4,18 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotify.h"
-#include "CB_AN_EquipCheck.generated.h"
+#include "CB_AN_FootStep.generated.h"
 
+/**
+ * 
+ */
 UCLASS()
-class COMBAT_API UCB_AN_EquipCheck : public UAnimNotify
+class COMBAT_API UCB_AN_FootStep : public UAnimNotify
 {
 	GENERATED_BODY()
-
 protected:
 	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 		const FAnimNotifyEventReference& EventReference) override;
 
-private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	FName SocketName;
 };

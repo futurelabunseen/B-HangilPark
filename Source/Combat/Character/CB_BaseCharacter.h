@@ -32,7 +32,8 @@ public:
 	UFUNCTION()
 	bool HasGameplayTag(FGameplayTag Tag) const;
 
-	virtual FVector GetCombatSocketLocation(const FName SocketName) override;
+	virtual FVector GetSocketLocation(const FName SocketName) override;
+	virtual FVector GetWeaponSocketLocation(const FName SocketName) override;
 public:
 	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return ASC; }
 	FORCEINLINE ACB_BaseWeapon* GetWeapon() const { return Weapon; }
@@ -68,7 +69,13 @@ public:
 	FORCEINLINE bool GetIsGuard() const { return bIsGuard; }
 	FORCEINLINE void SetIsGuard(const bool IsGaurd) { bIsGuard = IsGaurd; }
 
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool bIsGuard = false;
+
+public:
+	void PlayMontage();
+
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	TObjectPtr<UAnimMontage> HitMontage;
 };

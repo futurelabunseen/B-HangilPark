@@ -5,7 +5,7 @@
 #include "Abilities/AbilityTasks/CB_TraceTask.h"
 #include "Abilities/TargetActor/CB_TraceTargetActor.h"
 #include "Attribute/CB_CharacterAttributeSet.h"
-#include "Tags/StateTag.h"
+#include "Character/CB_BaseCharacter.h"
 
 UCB_AttackHitCheckAbility::UCB_AttackHitCheckAbility()
 {
@@ -26,9 +26,13 @@ void UCB_AttackHitCheckAbility::OnTraceResultCallback(const FGameplayAbilityTarg
 	if (UAbilitySystemBlueprintLibrary::TargetDataHasHitResult(TargetDataHandle, 0))
 	{
 		FHitResult HitResult = UAbilitySystemBlueprintLibrary::GetHitResultFromTargetData(TargetDataHandle, 0);
+		UE_LOG(LogTemp, Warning, TEXT("Target %s Detected"), *(HitResult.GetActor()->GetName()));
 		UAbilitySystemComponent* SourceASC = GetAbilitySystemComponentFromActorInfo_Checked();
 		UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(HitResult.GetActor());
-		
+
+		ACB_BaseCharacter* Character = CastChecked<ACB_BaseCharacter>(HitResult.GetActor());
+		Character->PlayMontage();
+
 		FGameplayEffectSpecHandle EffectSpecHandle = MakeOutgoingGameplayEffectSpec(AttackDamageEffect);
 		if (EffectSpecHandle.IsValid())
 		{

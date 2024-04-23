@@ -15,8 +15,7 @@ bool UCB_JumpAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Handle
 	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayTagContainer* SourceTags, 
 	const FGameplayTagContainer* TargetTags, OUT FGameplayTagContainer* OptionalRelevantTags) const
 {
-	bool bResult = Super::CanActivateAbility(Handle, ActorInfo, SourceTags, TargetTags, OptionalRelevantTags);
-	if (!bResult)
+	if (!Super::CanActivateAbility(Handle, ActorInfo, SourceTags, TargetTags, OptionalRelevantTags))
 		return false;
 
 	const ACharacter* Character = Cast<ACharacter>(ActorInfo->AvatarActor.Get());

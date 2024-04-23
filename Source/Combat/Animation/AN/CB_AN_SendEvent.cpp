@@ -6,14 +6,9 @@
 void UCB_AN_SendEvent::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
 	Super::Notify(MeshComp, Animation, EventReference);
-	
-	if (MeshComp)
-	{
-		if (bIsActive)
-			UAbilitySystemBlueprintLibrary::AddLooseGameplayTags(MeshComp->GetOwner(), TriggerGameplayTag);
-		else
-			UAbilitySystemBlueprintLibrary::RemoveLooseGameplayTags(MeshComp->GetOwner(), TriggerGameplayTag);
 
-	}
+	FGameplayEventData Payload;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(MeshComp->GetOwner(), TriggerGameplayTag, Payload);
+
 	
 }

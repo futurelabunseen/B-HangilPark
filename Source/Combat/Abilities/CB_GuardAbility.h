@@ -4,37 +4,30 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
-#include "Tags/StateTag.h"
-#include "CB_EquipAbility.generated.h"
+#include "GameplayTagContainer.h"
+#include "CB_GuardAbility.generated.h"
 
-class UAnimMontage;
 class ACB_BaseCharacter;
-struct FGameplayTag;
-
+/**
+ * 
+ */
 UCLASS()
-class COMBAT_API UCB_EquipAbility : public UGameplayAbility
+class COMBAT_API UCB_GuardAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
 public:
-	UCB_EquipAbility();
+	UCB_GuardAbility();
 
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
 		const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
-
-public:
-	void SetValue();
-
-protected:
-	UFUNCTION()
-	void OnCompleteCallback();
+	
+	virtual void CancelAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, 
+		const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateCancelAbility) override;
 
 private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UAnimMontage> EquipMontage;
+	FGameplayTagContainer TagContainer;
 
 	UPROPERTY()
 	TObjectPtr<ACB_BaseCharacter> BaseCharacter;
-
-	UPROPERTY()
-	FName SectionName;
 };

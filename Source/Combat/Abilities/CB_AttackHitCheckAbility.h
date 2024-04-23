@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+#include "Tags/StateTag.h"
 #include "CB_AttackHitCheckAbility.generated.h"
 
 class UGameplayEffect;

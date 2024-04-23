@@ -18,10 +18,7 @@ protected:
 	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 
 protected:
-
-	UPROPERTY(EditAnywhere, Meta = (Categories = Event))
-	FGameplayTagContainer TriggerGameplayTag;
-
 	UPROPERTY(EditAnywhere)
-	bool bIsActive;
+	FGameplayTag TriggerGameplayTag;
+
 };

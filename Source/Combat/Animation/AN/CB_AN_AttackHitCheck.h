@@ -12,7 +12,8 @@ class COMBAT_API UCB_AN_AttackHitCheck : public UAnimNotify
 {
 	GENERATED_BODY()
 protected:
-	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
+	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, 
+		const FAnimNotifyEventReference& EventReference) override;
 
 protected:
 	UPROPERTY(EditAnywhere)
