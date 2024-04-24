@@ -13,6 +13,7 @@
 
 #define STATE_GUARD FGameplayTag::RequestGameplayTag(FName("State.Guard"))
 #define STATE_HIT FGameplayTag::RequestGameplayTag(FName("State.Hit"))
+#define STATE_DEAD FGameplayTag::RequestGameplayTag(FName("State.Dead"))
 
 #define DATA_DAMAGE FGameplayTag::RequestGameplayTag(FName("Data.Damage"))
 #define GAMEPLAYCUE_ATTACKHIT FGameplayTag::RequestGameplayTag(FName("GameplayCue.AttackHit"))

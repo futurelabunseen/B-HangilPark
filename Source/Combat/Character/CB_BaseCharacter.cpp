@@ -9,6 +9,7 @@
 
 ACB_BaseCharacter::ACB_BaseCharacter()
 {
+
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 
@@ -68,13 +69,4 @@ FVector ACB_BaseCharacter::GetSocketLocation(const FName SocketName)
 FVector ACB_BaseCharacter::GetWeaponSocketLocation(const FName SocketName)
 {
 	return Weapon->GetWeaponMesh()->GetSocketLocation(SocketName);
-}
-
-void ACB_BaseCharacter::PlayMontage()
-{
-	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if (AnimInstance && HitMontage)
-	{
-		AnimInstance->Montage_Play(HitMontage);
-	}
 }

@@ -10,6 +10,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UGameplayAbility;
 
+
 UCLASS()
 class COMBAT_API ACB_PlayerCharacter : public ACB_BaseCharacter
 {
@@ -19,8 +20,6 @@ public:
 	ACB_PlayerCharacter();
 
 	virtual void PossessedBy(AController* NewController) override;
-
-	
 
 protected:
 	virtual void BeginPlay() override;

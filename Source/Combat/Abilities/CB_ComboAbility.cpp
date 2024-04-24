@@ -38,6 +38,7 @@ void UCB_ComboAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	CommitAbility(Handle, ActorInfo, ActivationInfo);
+
 	BaseCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
 	FGameplayEventData Data;
 	if (!IsFirstAttack)

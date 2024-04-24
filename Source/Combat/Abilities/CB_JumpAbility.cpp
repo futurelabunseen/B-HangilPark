@@ -27,6 +27,7 @@ void UCB_JumpAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	const FGameplayEventData* TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
+	CommitAbility(Handle, ActorInfo, ActivationInfo);
 }
 
 void UCB_JumpAbility::OnLandedCallback()

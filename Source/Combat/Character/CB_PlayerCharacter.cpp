@@ -57,6 +57,7 @@ void ACB_PlayerCharacter::PossessedBy(AController* NewController)
 		PC->LockChangeDelegate.BindUFunction(this, FName("LockChange"));
 
 		UCB_CharacterAttributeSet* AS = CastChecked<UCB_CharacterAttributeSet>(PS->GetAttributeSet());
+
 		// 나중에 컨트롤러에서 관리하도록 설정
 		if (ACB_HUD* Hud = Cast<ACB_HUD>(PC->GetHUD()))
 			Hud->InitOverlay(PC, PS, ASC, AS);

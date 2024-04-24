@@ -11,7 +11,12 @@ UCB_AttackHitCue::UCB_AttackHitCue()
 
 bool UCB_AttackHitCue::OnExecute_Implementation(AActor* Target, const FGameplayCueParameters& Parameters) const
 {
-	const FHitResult* HitResult = Parameters.EffectContext.GetHitResult();
+	//UE_LOG(LogTemp, Warning, TEXT("%s"), *Target->GetName());
+
+	UGameplayStatics::SpawnEmitterAtLocation(Target, ParticleSystem,
+		Target->GetActorLocation(), FRotator::ZeroRotator, true);
+
+	/*const FHitResult* HitResult = Parameters.EffectContext.GetHitResult();
 	if (HitResult)
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(Target, ParticleSystem,
@@ -25,7 +30,6 @@ bool UCB_AttackHitCue::OnExecute_Implementation(AActor* Target, const FGameplayC
 				UGameplayStatics::SpawnEmitterAtLocation(Target, ParticleSystem,
 					TargetActor.Get()->GetActorLocation(), FRotator::ZeroRotator, true);
 		}
-	}
-
+	}*/
 	return false;
 }

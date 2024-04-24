@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
+#include "Tags/StateTag.h"
 #include "CB_CharacterAttributeSet.generated.h"
 
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
@@ -31,6 +32,7 @@ public:
 	ATTRIBUTE_ACCESSORS(UCB_CharacterAttributeSet, MaxStamina);
 	ATTRIBUTE_ACCESSORS(UCB_CharacterAttributeSet, StaminaRegenRate);
 
+	
 private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData Health;
@@ -46,4 +48,7 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData StaminaRegenRate = .5f;
+
+private:
+	bool bOutOfHealth = false;
 };

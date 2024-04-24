@@ -3,6 +3,9 @@
 #include "Attribute/CB_CharacterAttributeSet.h"
 #include "GameplayEffectExtension.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
+#include "Tags/StateTag.h"
+
 UCB_CharacterAttributeSet::UCB_CharacterAttributeSet()
 {
 	InitHealth(GetMaxHealth());
@@ -27,4 +30,15 @@ void UCB_CharacterAttributeSet::PostGameplayEffectExecute(const FGameplayEffectM
 
 	if (Data.EvaluatedData.Attribute == GetStaminaAttribute())
 		SetStamina(FMath::Clamp(GetStamina(), 0.0f, GetMaxStamina()));
+
+	if((GetHealth() <= 0.f)&& !bOutOfHealth) 
+	{
+		// 강의에선 태그 추가 및 사망 몽타주 실행(델리게이트)
+		// 어빌리티 시도 실패
+		// 델리게이트로 처리해야 될 것 같다
+		/*FGameplayEventData Payload;
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Data.Target.GetAvatarActor(), STATE_DEAD, Payload);*/
+	}
+
+	bOutOfHealth = (GetHealth() <= 0.0f);
 }

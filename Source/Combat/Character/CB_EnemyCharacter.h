@@ -17,6 +17,7 @@ public:
 	void SetOutLine(bool bIsShow);
 	virtual void PossessedBy(AController* NewController) override;
 
+
 protected:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UGameplayEffect> InitStatEffect;

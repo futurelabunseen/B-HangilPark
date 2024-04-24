@@ -6,6 +6,7 @@
 
 #include "Kismet/GameplayStatics.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "DrawDebugHelpers.h"
 
 // 수정 필요
 void UCB_ANS_Activate::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
@@ -46,7 +47,10 @@ void UCB_ANS_Activate::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenc
 			false, ActorsToIgnore, EDrawDebugTrace::None, OutHit, true);
 
 		if (bResult)
+		{
 			HitActors.AddUnique(OutHit.GetActor());
+			//DrawDebugSphere(Character->GetWorld(), OutHit.ImpactPoint, 10.f, 5, FColor::Orange, true, 2.f);
+		}
 	}
 }
 
@@ -61,10 +65,8 @@ void UCB_ANS_Activate::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequence
 		Sword->TrailEnd();
 	}
 
-	//UE_LOG(LogTemp, Warning, TEXT("Count : %d"), HitActors.Num());
 	for (const auto& HitActor : HitActors)
 	{
-		//UE_LOG(LogTemp, Log, TEXT("Actor : %s"), *HitActor->GetName());
 		FGameplayEventData Payload;
 		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitActor, STATE_HIT, Payload);
 	}
