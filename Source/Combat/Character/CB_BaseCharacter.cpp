@@ -9,7 +9,6 @@
 
 ACB_BaseCharacter::ACB_BaseCharacter()
 {
-
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 
@@ -36,6 +35,7 @@ void ACB_BaseCharacter::BeginPlay()
 		Weapon->Equip(GetMesh(), FName("HolsterSocket"), this, this);
 	}
 }
+
 
 void ACB_BaseCharacter::LockOn()
 {

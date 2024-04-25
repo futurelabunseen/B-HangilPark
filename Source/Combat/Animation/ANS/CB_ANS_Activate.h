@@ -8,6 +8,8 @@
 
 class USkeletalMeshComponent;
 class UAnimSequenceBase;
+class ACB_BaseCharacter;
+class ACB_Sword;
 
 UCLASS()
 class COMBAT_API UCB_ANS_Activate : public UAnimNotifyState
@@ -25,5 +27,12 @@ public:
 
 private:
 	UPROPERTY()
-	TArray<AActor*> HitActors;
+	TMap<FString, FHitResult> HitActors;
+	
+	UPROPERTY()
+	TObjectPtr<ACB_BaseCharacter> Character;
+	
+	UPROPERTY()
+	TObjectPtr<ACB_Sword> Sword;
+
 };

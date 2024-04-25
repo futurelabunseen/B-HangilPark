@@ -33,4 +33,5 @@ void ACB_EnemyCharacter::PossessedBy(AController* NewController)
 		FGameplayAbilitySpec Spec(Ability);
 		ASC->GiveAbility(Spec);
 	}
+
 }

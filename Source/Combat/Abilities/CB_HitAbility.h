@@ -23,6 +23,19 @@ public:
 		const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
 protected:
+	void PlayGameplayCue(const FGameplayEventData* TriggerEventData);
+
+	UFUNCTION()
+	void OnCompleteCallback();
+
+	UFUNCTION()
+	void OnBlendOutCallback();
+
+	UFUNCTION()
+	void OnCancelledCallback();
+
+	UFUNCTION()
+	void OnInterruptedCallback();
 
 private:
 	UPROPERTY()

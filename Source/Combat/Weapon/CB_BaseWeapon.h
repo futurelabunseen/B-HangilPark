@@ -17,8 +17,8 @@ public:
 
 	void Equip(USceneComponent* InParent, FName InSocketName, AActor* NewOwner, APawn* NewInstigator);
 	void AttachMeshToSocket(USceneComponent* InParent, const FName& InSocketName);
-
 	FORCEINLINE UStaticMeshComponent* GetWeaponMesh() const { return WeaponMesh; }
+
 protected:
 	virtual void BeginPlay() override;
 

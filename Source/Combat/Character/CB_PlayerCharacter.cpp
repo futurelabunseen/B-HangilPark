@@ -64,8 +64,3 @@ void ACB_PlayerCharacter::PossessedBy(AController* NewController)
 	}
 }
 
-void ACB_PlayerCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-
-}

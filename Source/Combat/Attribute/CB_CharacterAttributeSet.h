@@ -14,6 +14,8 @@
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOutOfHealthDelegate);
+
 UCLASS()
 class COMBAT_API UCB_CharacterAttributeSet : public UAttributeSet
 {
@@ -32,7 +34,6 @@ public:
 	ATTRIBUTE_ACCESSORS(UCB_CharacterAttributeSet, MaxStamina);
 	ATTRIBUTE_ACCESSORS(UCB_CharacterAttributeSet, StaminaRegenRate);
 
-	
 private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData Health;
@@ -49,6 +50,8 @@ private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData StaminaRegenRate = .5f;
 
+public:
+	mutable FOutOfHealthDelegate OnOutOfHealth;
 private:
 	bool bOutOfHealth = false;
 };

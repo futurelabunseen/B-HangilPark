@@ -21,9 +21,6 @@ public:
 
 	virtual void PossessedBy(AController* NewController) override;
 
-protected:
-	virtual void BeginPlay() override;
-
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent>	SpringArmComponent;

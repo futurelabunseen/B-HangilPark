@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
-#include "CB_DeathAbility.generated.h"
+#include "CB_DeadAbility.generated.h"
 
 class ACB_BaseCharacter;
 class UAnimMontage;
@@ -13,24 +13,20 @@ class UAnimMontage;
  * 
  */
 UCLASS()
-class COMBAT_API UCB_DeathAbility : public UGameplayAbility
+class COMBAT_API UCB_DeadAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
 
 public:
-	UCB_DeathAbility();
+	UCB_DeadAbility();
 
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
 		const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
-
-protected:
-	UFUNCTION()
-	void OnCompleteCallback();
 
 private:
 	UPROPERTY()
 	TObjectPtr<ACB_BaseCharacter> BaseCharacter;
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UAnimMontage> DeathMontage;
+	TObjectPtr<UAnimMontage> DeadMontage;
 };
