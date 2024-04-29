@@ -20,8 +20,8 @@ void UCB_EquipAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 
 	UAbilityTask_PlayMontageAndWait* PlayEquipTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
 		this, NAME_None, EquipMontage,1.f, SectionName);
-	PlayEquipTask->OnCompleted.AddDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
-	PlayEquipTask->OnInterrupted.AddDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
+	PlayEquipTask->OnCompleted.AddUniqueDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
+	PlayEquipTask->OnInterrupted.AddUniqueDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
 	PlayEquipTask->ReadyForActivation();
 }
 

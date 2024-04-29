@@ -29,13 +29,11 @@ protected:
 	void OnCompleteCallback();
 
 	UFUNCTION()
-	void OnBlendOutCallback();
+	void OnCancelCallback();
 
-	UFUNCTION()
-	void OnCancelledCallback();
-
-	UFUNCTION()
-	void OnInterruptedCallback();
+private:
+	float CheckTheta(const FGameplayAbilityTargetDataHandle& TargetDataHandle);
+	FORCEINLINE FName CheckSectionName(const float Theta) { return (0 <= Theta && Theta < 90.f) ? "Fwd" : "Bwd"; }
 
 private:
 	UPROPERTY()

@@ -22,7 +22,7 @@ void UCB_DodgeAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 
 	UAbilityTask_PlayMontageAndWait* PlayDodgeTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
 		this, NAME_None, DodgeMontage, 1.f, CheckSectionName(CheckTheta()));
-	PlayDodgeTask->OnCompleted.AddDynamic(this, &UCB_DodgeAbility::OnCompleteCallback);
+	PlayDodgeTask->OnCompleted.AddUniqueDynamic(this, &UCB_DodgeAbility::OnCompleteCallback);
 	PlayDodgeTask->ReadyForActivation();
 }
 
@@ -51,13 +51,13 @@ FName UCB_DodgeAbility::CheckSectionName(float Theta)
 {
 	// 컴파일 시 한 번만 초기화, MakeTuple(Min, Max)로도 가능
 	static const FData Sections[] = {
-		{MakeTuple(-22.5, 22.5), FName("Fwd")},
-		{MakeTuple(22.5, 67.5), FName("FR")},
-		{MakeTuple(67.5, 112.5), FName("Right")},
-		{MakeTuple(112.5, 157.5), FName("BR")},
-		{MakeTuple(-67.5, -22.5), FName("FL")},
-		{MakeTuple(-112.5, -67.5), FName("Left")},
-		{MakeTuple(-157.5, -112.5), FName("BL")}
+		{ MakeTuple(-22.5, 22.5), FName("Fwd")},
+		{ MakeTuple(22.5, 67.5), FName("FR")},
+		{ MakeTuple(67.5, 112.5), FName("Right")},
+		{ MakeTuple(112.5, 157.5), FName("BR")},
+		{ MakeTuple(-67.5, -22.5), FName("FL")},
+		{ MakeTuple(-112.5, -67.5), FName("Left")},
+		{ MakeTuple(-157.5, -112.5), FName("BL")}
 	};
 
 	for (const auto& Section : Sections)

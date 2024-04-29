@@ -6,10 +6,13 @@
 
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "Tags/StateTag.h"
+#include "Kismet/KismetMathLibrary.h"
 
 UCB_HitAbility::UCB_HitAbility()
 {
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
+	bRetriggerInstancedAbility = true;
+
 }
 
 void UCB_HitAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, 
@@ -17,22 +20,19 @@ void UCB_HitAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	CommitAbility(Handle, ActorInfo, ActivationInfo);
-
 	BaseCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
-	
-	UAnimInstance* AnimInstance = BaseCharacter->GetMesh()->GetAnimInstance();
-	AnimInstance->Montage_Play(HitMontage);
 
-	PlayGameplayCue(TriggerEventData);	// 순서 바꾸니 해결
-	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, true);
+	PlayGameplayCue(TriggerEventData);
+
+	FName SectionName = CheckSectionName(CheckTheta(TriggerEventData->TargetData));
+	UAbilityTask_PlayMontageAndWait* PlayHitTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
+		this, NAME_None, HitMontage, 1.f, SectionName);
+	PlayHitTask->OnCompleted.AddUniqueDynamic(this, &UCB_HitAbility::OnCompleteCallback);
+	PlayHitTask->OnBlendOut.AddUniqueDynamic(this, &UCB_HitAbility::OnCancelCallback);
+	PlayHitTask->OnCancelled.AddUniqueDynamic(this, &UCB_HitAbility::OnCancelCallback);
+	PlayHitTask->OnInterrupted.AddUniqueDynamic(this, &UCB_HitAbility::OnCancelCallback);
+	PlayHitTask->ReadyForActivation(); 
 	
-	/*UAbilityTask_PlayMontageAndWait* PlayHitTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
-		this,NAME_None, HitMontage);
-	PlayHitTask->OnCompleted.AddDynamic(this, &UCB_HitAbility::OnCompleteCallback);
-	PlayHitTask->OnBlendOut.AddDynamic(this, &UCB_HitAbility::OnBlendOutCallback);
-	PlayHitTask->OnCancelled.AddDynamic(this, &UCB_HitAbility::OnCancelledCallback);
-	PlayHitTask->OnInterrupted.AddDynamic(this, &UCB_HitAbility::OnInterruptedCallback);
-	PlayHitTask->ReadyForActivation();*/
 }
 
 void UCB_HitAbility::PlayGameplayCue(const FGameplayEventData* TriggerEventData)
@@ -58,25 +58,24 @@ void UCB_HitAbility::PlayGameplayCue(const FGameplayEventData* TriggerEventData)
 
 void UCB_HitAbility::OnCompleteCallback()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Hit : OnCompleteCallback"));
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 }
 
-void UCB_HitAbility::OnBlendOutCallback()
+void UCB_HitAbility::OnCancelCallback()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Hit : OnBlendOutCallback"));
-	//CancelAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true);
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, true);
 }
 
-void UCB_HitAbility::OnCancelledCallback()
+float UCB_HitAbility::CheckTheta(const FGameplayAbilityTargetDataHandle& TargetDataHandle)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Hit : OnCancelledCallback"));
-	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, true);
-}
+	const FVector Forward = BaseCharacter->GetActorForwardVector();
 
-void UCB_HitAbility::OnInterruptedCallback()
-{
-	UE_LOG(LogTemp, Warning, TEXT("Hit : OnInterruptedCallback"));
-	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, true);
+	FHitResult HitResult = UAbilitySystemBlueprintLibrary::GetHitResultFromTargetData(TargetDataHandle, 0);
+	FVector Start = BaseCharacter->GetActorLocation();
+	Start.Z = 0.f;
+	const FVector ImpactLowered(HitResult.ImpactPoint.X, HitResult.ImpactPoint.Y, Start.Z);
+	const FVector ToHit = (ImpactLowered - Start).GetSafeNormal();
+	const double CosTheta = FVector::DotProduct(Forward, ToHit);
+	
+	return UKismetMathLibrary::DegAcos(CosTheta);
 }

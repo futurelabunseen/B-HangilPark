@@ -3,6 +3,9 @@
 #include "Abilities/CB_DeadAbility.h"
 #include "Character/CB_BaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
+#include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
+#include "Tags/StateTag.h"
 
 UCB_DeadAbility::UCB_DeadAbility()
 {
@@ -20,9 +23,21 @@ void UCB_DeadAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	BaseCharacter->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
 	BaseCharacter->SetActorEnableCollision(false);
 
-	UAnimInstance* AnimInstance = BaseCharacter->GetMesh()->GetAnimInstance();
-	AnimInstance->StopAllMontages(0.0f);
-	AnimInstance->Montage_Play(DeadMontage);
+	FGameplayEventData Data;
+	UAbilityTask_WaitGameplayEvent* WaitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this,
+		STATE_HIT, nullptr, true, true);
+	WaitEvent->EventReceived.AddUniqueDynamic(this, &UCB_DeadAbility::PlayMontage);
+	WaitEvent->ReadyForActivation();
+}
 
-	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, true);
+void UCB_DeadAbility::OnCompleteCallback()
+{
+	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
+}
+
+void UCB_DeadAbility::PlayMontage(FGameplayEventData Data)
+{
+	UAbilityTask_PlayMontageAndWait* PlayHitTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(this, NAME_None, DeadMontage);
+	PlayHitTask->OnCompleted.AddUniqueDynamic(this, &UCB_DeadAbility::OnCompleteCallback);
+	PlayHitTask->ReadyForActivation();
 }

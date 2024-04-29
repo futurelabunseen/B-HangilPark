@@ -35,9 +35,6 @@ public:
 	virtual FVector GetSocketLocation(const FName SocketName) override;
 	virtual FVector GetWeaponSocketLocation(const FName SocketName) override;
 
-	UFUNCTION(BlueprintCallable)
-	EPhysicalSurface GetSurfaceType();
-
 public:
 	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return ASC; }
 	FORCEINLINE ACB_BaseWeapon* GetWeapon() const { return Weapon; }

@@ -70,21 +70,3 @@ FVector ACB_BaseCharacter::GetWeaponSocketLocation(const FName SocketName)
 {
 	return Weapon->GetWeaponMesh()->GetSocketLocation(SocketName);
 }
-
-// 메시의 로컬 -> 월드로의 시간이 있나봄?
-EPhysicalSurface ACB_BaseCharacter::GetSurfaceType()
-{
-	FHitResult HitResult;
-	const FVector Start = GetMesh()->GetSocketLocation("StepSocket");;
-	const FVector End = Start + FVector(0.f, 0.f, -400.f);
-
-	FCollisionQueryParams QueryParams;
-	QueryParams.AddIgnoredActor(this);
-	QueryParams.bTraceComplex = true;
-	QueryParams.bReturnPhysicalMaterial = true;
-
-	GetWorld()->LineTraceSingleByChannel(HitResult, Start, End,
-		ECollisionChannel::ECC_Visibility, QueryParams);
-
-	return UPhysicalMaterial::DetermineSurfaceType(HitResult.PhysMaterial.Get());
-}

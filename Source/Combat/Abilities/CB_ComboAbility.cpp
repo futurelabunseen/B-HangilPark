@@ -45,7 +45,7 @@ void UCB_ComboAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 	{
 		UAbilityTask_WaitGameplayEvent* WaitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this,
 			STATE_ATTACK_LIGHT_NEXT, nullptr, true, true);
-		WaitEvent->EventReceived.AddDynamic(this, &UCB_ComboAbility::PlayMontage);
+		WaitEvent->EventReceived.AddUniqueDynamic(this, &UCB_ComboAbility::PlayMontage);
 		WaitEvent->ReadyForActivation();	
 	}
 	else
@@ -64,10 +64,10 @@ void UCB_ComboAbility::PlayMontage(FGameplayEventData Data)
 
 	UAbilityTask_PlayMontageAndWait* PlayAttackTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
 		this, TEXT("None"), ComboAttackMontage);
-	PlayAttackTask->OnCompleted.AddDynamic(this, &UCB_ComboAbility::OnCompleteCallback);
-	PlayAttackTask->OnBlendOut.AddDynamic(this, &UCB_ComboAbility::OnCompleteCallback);
-	PlayAttackTask->OnInterrupted.AddDynamic(this, &UCB_ComboAbility::OnCompleteCallback);
-	PlayAttackTask->OnCancelled.AddDynamic(this, &UCB_ComboAbility::OnCompleteCallback);
+	PlayAttackTask->OnCompleted.AddUniqueDynamic(this, &UCB_ComboAbility::OnCompleteCallback);
+	PlayAttackTask->OnBlendOut.AddUniqueDynamic(this, &UCB_ComboAbility::OnCompleteCallback);
+	PlayAttackTask->OnInterrupted.AddUniqueDynamic(this, &UCB_ComboAbility::OnCompleteCallback);
+	PlayAttackTask->OnCancelled.AddUniqueDynamic(this, &UCB_ComboAbility::OnCompleteCallback);
 	PlayAttackTask->ReadyForActivation();
 }
 

@@ -40,12 +40,18 @@ void UCB_ANS_Activate::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenc
 
 		// ForDuration, None
 		bool bResult = UKismetSystemLibrary::BoxTraceSingle(Sword,
-			Start, End, FVector(5.f), Start.Rotation(),
+			Start, End, FVector(15.f), Start.Rotation(),
 			UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1),
 			false, ActorsToIgnore, EDrawDebugTrace::None, OutHit, true);
 
 		if (bResult)
-			HitActors.Add(OutHit.GetActor()->GetName(), OutHit);
+		{
+			// 기존 짝과 일치하는 키로 새 키-값 짝을 TMap에 추가하면 기존 것이 대체됩니다.
+			HitActors.Emplace(OutHit.GetActor()->GetName(), OutHit);
+			// DrawDebugSphere(Character->GetWorld(), OutHit.ImpactPoint, 3.f, 5, FColor::Cyan, false, 1.f); 
+			// UE_LOG(LogTemp, Warning, TEXT("HitResult : %f, %f, %f"), OutHit.ImpactPoint.X, OutHit.ImpactPoint.Y, OutHit.ImpactPoint.Z);
+
+		}
 	}
 }
 
@@ -59,7 +65,7 @@ void UCB_ANS_Activate::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequence
 
 	for (const auto& HitActor : HitActors)
 	{
-		// UE_LOG(LogTemp, Warning, TEXT("Actor : %s, HitResult : %f, %f, %f"), *HitActor.Key, HitActor.Value.ImpactPoint.X, HitActor.Value.ImpactPoint.Y, HitActor.Value.ImpactPoint.Z);
+		// UE_LOG(LogTemp, Error, TEXT("Actor : %s, HitResult : %f, %f, %f"), *HitActor.Key, HitActor.Value.ImpactPoint.X, HitActor.Value.ImpactPoint.Y, HitActor.Value.ImpactPoint.Z);
 		// DrawDebugSphere(Character->GetWorld(), HitActor.Value.ImpactPoint, 10.f, 5, FColor::Orange, false, 1.f);
 		FHitResult HitResult = HitActor.Value;
 		FGameplayAbilityTargetDataHandle DataHandle;

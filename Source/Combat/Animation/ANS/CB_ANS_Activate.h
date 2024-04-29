@@ -28,7 +28,10 @@ public:
 private:
 	UPROPERTY()
 	TMap<FString, FHitResult> HitActors;
-	
+	// 마지막 ImpactPoint를 저장
+	// 1. TMultiMap
+	// 2. TArray<TPair<FString, FHitResult>>
+
 	UPROPERTY()
 	TObjectPtr<ACB_BaseCharacter> Character;
 	
