@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Animation/AnimNotifies/AnimNotifyState.h"
+#include "Animation/AnimNotifies/AnimNotifyState.h"	
 #include "CB_ANS_Activate.generated.h"
 
 class USkeletalMeshComponent;

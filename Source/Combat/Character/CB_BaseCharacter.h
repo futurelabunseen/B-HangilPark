@@ -63,7 +63,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<ACB_BaseWeapon> WeaponClass;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UCB_CharacterAttributeSet> AttributeSet = nullptr;
 
 public:

@@ -47,7 +47,7 @@ float UCB_DodgeAbility::CheckTheta()
 	return Theta;
 }
 
-FName UCB_DodgeAbility::CheckSectionName(float Theta)
+FName UCB_DodgeAbility::CheckSectionName(const float Theta)
 {
 	// 컴파일 시 한 번만 초기화, MakeTuple(Min, Max)로도 가능
 	static const FData Sections[] = {
@@ -61,8 +61,8 @@ FName UCB_DodgeAbility::CheckSectionName(float Theta)
 	};
 
 	for (const auto& Section : Sections)
-		if (Section.Range.Key <= Theta && Theta <= Section.Range.Value)
+		if (Section.Range.Key <= Theta && Theta < Section.Range.Value)
 			return Section.Name;
 
-	return "Bwd";
+	return FName("Bwd");
 }

@@ -75,7 +75,7 @@ float UCB_HitAbility::CheckTheta(const FGameplayAbilityTargetDataHandle& TargetD
 	Start.Z = 0.f;
 	const FVector ImpactLowered(HitResult.ImpactPoint.X, HitResult.ImpactPoint.Y, Start.Z);
 	const FVector ToHit = (ImpactLowered - Start).GetSafeNormal();
+
 	const double CosTheta = FVector::DotProduct(Forward, ToHit);
-	
 	return UKismetMathLibrary::DegAcos(CosTheta);
 }

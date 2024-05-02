@@ -6,6 +6,14 @@
 #include "Abilities/GameplayAbility.h"
 #include "CB_HitAbility.generated.h"
 
+USTRUCT()
+struct FHitData
+{
+	GENERATED_BODY()
+	TPair<float, float> Range;
+	FName Name;
+};
+
 class ACB_BaseCharacter;
 class UAnimMontage;
 class UGameplayEffect;
@@ -33,7 +41,7 @@ protected:
 
 private:
 	float CheckTheta(const FGameplayAbilityTargetDataHandle& TargetDataHandle);
-	FORCEINLINE FName CheckSectionName(const float Theta) { return (0 <= Theta && Theta < 90.f) ? "Fwd" : "Bwd"; }
+	FORCEINLINE FName CheckSectionName(const float Theta) { return (0 <= Theta && Theta <= 90.f) ? FName("Fwd") : FName("Bwd"); }
 
 private:
 	UPROPERTY()

@@ -23,6 +23,8 @@ void UCB_DeadAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	BaseCharacter->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
 	BaseCharacter->SetActorEnableCollision(false);
 
+	// 델리게이트를 통해 LockOn 및 HUD 해제
+
 	FGameplayEventData Data;
 	UAbilityTask_WaitGameplayEvent* WaitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this,
 		STATE_HIT, nullptr, true, true);

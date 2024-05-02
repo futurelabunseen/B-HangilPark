@@ -33,7 +33,7 @@ protected:
 
 private:
 	float CheckTheta();
-	FName CheckSectionName(float Theta);
+	FName CheckSectionName(const float Theta);
 
 private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))

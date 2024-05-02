@@ -8,7 +8,6 @@
 #include "CB_EnemyCharacter.generated.h"
 
 class UGameplayEffect;
-class UWidgetComponent;
 
 UCLASS()
 class COMBAT_API ACB_EnemyCharacter : public ACB_BaseCharacter
@@ -35,6 +34,4 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float Level = 1.f;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TObjectPtr<UWidgetComponent> HealthBar;
 };
