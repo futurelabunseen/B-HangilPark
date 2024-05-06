@@ -23,7 +23,8 @@ public class Combat : ModuleRules
             "GameplayTasks",
             "GameplayTags",
             "Niagara",
-            "PhysicsCore"
+            "PhysicsCore",
+			"AIModule"
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

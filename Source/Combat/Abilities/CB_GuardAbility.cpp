@@ -14,20 +14,15 @@ void UCB_GuardAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	CommitAbility(Handle, ActorInfo, ActivationInfo);
-
 	BaseCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
-	const bool bIsGaurd = BaseCharacter->GetIsGuard();
-	const bool bHasTag = BaseCharacter->GetAbilitySystemComponent()->HasAnyMatchingGameplayTags(TagContainer);
-	// 우클릭 O, 태그 O, -
-	// 우클릭 O, 태그 X, add
-	// 우클릭 X, 태그 O, remove
-	// 우클릭 X, 태그 X, remove
-
-	if (bIsGaurd && !bHasTag)
-		UAbilitySystemBlueprintLibrary::AddLooseGameplayTags(BaseCharacter, TagContainer);
+	
+	if(BaseCharacter->GetIsGuard())
+	{
+		BaseCharacter->AddUniqueGameplayTag(STATE_GUARD);
+	}
 	else
 	{
-		UAbilitySystemBlueprintLibrary::RemoveLooseGameplayTags(BaseCharacter, TagContainer);
+		BaseCharacter->RemoveUniqueGameplayTag(STATE_GUARD);
 		EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 	}
 }
@@ -35,5 +30,6 @@ void UCB_GuardAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 void UCB_GuardAbility::CancelAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateCancelAbility)
 {
 	Super::CancelAbility(Handle, ActorInfo, ActivationInfo, bReplicateCancelAbility);
-	UAbilitySystemBlueprintLibrary::RemoveLooseGameplayTags(BaseCharacter, TagContainer);
+	BaseCharacter->RemoveUniqueGameplayTag(STATE_GUARD);
+
 }

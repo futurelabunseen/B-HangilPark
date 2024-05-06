@@ -133,19 +133,19 @@ private:
 
 private:
 	UPROPERTY()
-	AActor* OwnerActor;
+	TObjectPtr<AActor> OwnerActor;
 
 	UPROPERTY()
-	APawn* OwnerPawn;
+	TObjectPtr<APawn> OwnerPawn;
 
 	UPROPERTY()
-	APlayerController* OwnerPlayerController;
+	TObjectPtr<APlayerController> OwnerPlayerController;
 
 	UPROPERTY()
-	UWidgetComponent* TargetLockedOnWidgetComponent;
+	TObjectPtr<UWidgetComponent> TargetLockedOnWidgetComponent;
 
-	UPROPERTY()
-	AActor* LockedOnTargetActor;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<AActor> LockedOnTargetActor;
 
 	FTimerHandle LineOfSightBreakTimerHandle;
 	FTimerHandle SwitchingTargetTimerHandle;

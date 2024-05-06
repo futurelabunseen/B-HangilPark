@@ -8,6 +8,16 @@
 #include "CB_EnemyCharacter.generated.h"
 
 class UGameplayEffect;
+class UBehaviorTree;
+class ACB_AIController;
+class UCB_UserWidget;
+
+UENUM(BlueprintType)
+enum class EBossType : uint8
+{
+	Aggressive,
+	Defensive,
+};
 
 UCLASS()
 class COMBAT_API ACB_EnemyCharacter : public ACB_BaseCharacter
@@ -23,6 +33,11 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnMaxHealtChangedSignature OnMaxHealthChanged;
+	
+	virtual void DestroyAll() override;
+
+public:
+	FORCEINLINE UCB_UserWidget* GetOverlay() const { return BossOverlay; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -34,4 +49,18 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float Level = 1.f;
 
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UBehaviorTree> BehaviorTree;
+
+	UPROPERTY()
+	TObjectPtr<ACB_AIController> AIController;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	EBossType BossType = EBossType::Aggressive;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UCB_UserWidget> BossOverlayClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UCB_UserWidget> BossOverlay;
 };

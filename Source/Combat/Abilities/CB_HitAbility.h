@@ -41,7 +41,7 @@ protected:
 
 private:
 	float CheckTheta(const FGameplayAbilityTargetDataHandle& TargetDataHandle);
-	FORCEINLINE FName CheckSectionName(const float Theta) { return (0 <= Theta && Theta <= 90.f) ? FName("Fwd") : FName("Bwd"); }
+	FORCEINLINE FName CheckSectionName(const float Theta);
 
 private:
 	UPROPERTY()

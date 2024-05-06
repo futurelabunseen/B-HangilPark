@@ -191,7 +191,6 @@ void UCB_LockOnComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	if (!bTargetLocked || !LockedOnTargetActor)
 		return;
 
-	// 여기에서 수정해도 괜찮을듯?
 	SetControlRotationOnTarget(LockedOnTargetActor);
 
 	if (GetDistanceFromCharacter(LockedOnTargetActor) > MinimumDistanceToEnable)

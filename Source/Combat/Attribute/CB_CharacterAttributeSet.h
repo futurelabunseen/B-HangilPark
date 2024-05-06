@@ -16,11 +16,18 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOutOfHealthDelegate);
 
+namespace SPEED
+{
+	const float WALK = 200.f;
+	const float RUN = 450.f;
+};
+
 UCLASS()
 class COMBAT_API UCB_CharacterAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
-	friend class UCB_AttackDamageEffect;
+	friend class UCB_DamageCalculation;
+	friend class UCB_AttackDamage;
 public:
 	UCB_CharacterAttributeSet();
 

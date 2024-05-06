@@ -21,7 +21,9 @@ void UCB_EquipAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 	UAbilityTask_PlayMontageAndWait* PlayEquipTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
 		this, NAME_None, EquipMontage,1.f, SectionName);
 	PlayEquipTask->OnCompleted.AddUniqueDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
+	PlayEquipTask->OnBlendOut.AddUniqueDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
 	PlayEquipTask->OnInterrupted.AddUniqueDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
+	PlayEquipTask->OnCancelled.AddUniqueDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
 	PlayEquipTask->ReadyForActivation();
 }
 
@@ -29,12 +31,12 @@ void UCB_EquipAbility::SetValue()
 {
 	if (BaseCharacter->HasGameplayTag(STATE_EQUIPMENT_ON))
 	{
-		BaseCharacter->RemoveGameplayTag(STATE_EQUIPMENT_ON);
+		BaseCharacter->RemoveUniqueGameplayTag(STATE_EQUIPMENT_ON);
 		SectionName = FName("Off");
 	}
 	else
 	{
-		BaseCharacter->AddGameplayTag(STATE_EQUIPMENT_ON);
+		BaseCharacter->AddUniqueGameplayTag(STATE_EQUIPMENT_ON);
 		SectionName= FName("On");
 	}
 }

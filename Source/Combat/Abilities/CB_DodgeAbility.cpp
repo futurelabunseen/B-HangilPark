@@ -23,6 +23,9 @@ void UCB_DodgeAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	UAbilityTask_PlayMontageAndWait* PlayDodgeTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
 		this, NAME_None, DodgeMontage, 1.f, CheckSectionName(CheckTheta()));
 	PlayDodgeTask->OnCompleted.AddUniqueDynamic(this, &UCB_DodgeAbility::OnCompleteCallback);
+	PlayDodgeTask->OnBlendOut.AddUniqueDynamic(this, &UCB_DodgeAbility::OnCompleteCallback);
+	PlayDodgeTask->OnInterrupted.AddUniqueDynamic(this, &UCB_DodgeAbility::OnCompleteCallback);
+	PlayDodgeTask->OnCancelled.AddUniqueDynamic(this, &UCB_DodgeAbility::OnCompleteCallback);
 	PlayDodgeTask->ReadyForActivation();
 }
 

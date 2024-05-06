@@ -2,7 +2,6 @@
 
 #include "Attribute/CB_CharacterAttributeSet.h"
 #include "GameplayEffectExtension.h"
-
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Tags/StateTag.h"
 
@@ -19,6 +18,7 @@ void UCB_CharacterAttributeSet::PreAttributeChange(const FGameplayAttribute& Att
 
 	if (Attribute == GetStaminaAttribute())
 		NewValue = FMath::Clamp(NewValue, 0.0f, GetMaxStamina());
+
 }
 
 void UCB_CharacterAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
@@ -30,6 +30,7 @@ void UCB_CharacterAttributeSet::PostGameplayEffectExecute(const FGameplayEffectM
 
 	if (Data.EvaluatedData.Attribute == GetStaminaAttribute())
 		SetStamina(FMath::Clamp(GetStamina(), 0.0f, GetMaxStamina()));
+
 
 	if((GetHealth() <= 0.f)&& !bOutOfHealth) 
 	{

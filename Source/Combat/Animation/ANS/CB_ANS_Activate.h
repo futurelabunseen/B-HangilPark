@@ -6,8 +6,6 @@
 #include "Animation/AnimNotifies/AnimNotifyState.h"	
 #include "CB_ANS_Activate.generated.h"
 
-class USkeletalMeshComponent;
-class UAnimSequenceBase;
 class ACB_BaseCharacter;
 class ACB_Sword;
 
@@ -28,9 +26,6 @@ public:
 private:
 	UPROPERTY()
 	TMap<FString, FHitResult> HitActors;
-	// 마지막 ImpactPoint를 저장
-	// 1. TMultiMap
-	// 2. TArray<TPair<FString, FHitResult>>
 
 	UPROPERTY()
 	TObjectPtr<ACB_BaseCharacter> Character;

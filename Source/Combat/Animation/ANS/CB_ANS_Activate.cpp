@@ -44,7 +44,7 @@ void UCB_ANS_Activate::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenc
 			UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1),
 			false, ActorsToIgnore, EDrawDebugTrace::None, OutHit, true);
 
-		if (bResult && !HitActors.Find(OutHit.GetActor()->GetName()))
+		if (bResult) //&& !HitActors.Find(OutHit.GetActor()->GetName()))
 		{
 			// DrawDebugSphere(Character->GetWorld(), OutHit.ImpactPoint, 10.f, 20, FColor::Cyan, false, 1.f); 
 			// UE_LOG(LogTemp, Warning, TEXT("HitResult : %f, %f, %f"), OutHit.ImpactPoint.X, OutHit.ImpactPoint.Y, OutHit.ImpactPoint.Z);

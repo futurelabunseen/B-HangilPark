@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotifyState.h"
-#include "GameplayTagContainer.h"
 #include "CB_ANS_Branch.generated.h"
 
 UCLASS()

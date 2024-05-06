@@ -3,11 +3,18 @@
 #include "CB_EnemyCharacter.h"
 #include "AbilitySystemComponent.h"
 #include "Attribute/CB_CharacterAttributeSet.h"
+#include "AI/CB_AIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "BehaviorTree/BehaviorTree.h"
+
+#include "UI/Widgets/CB_UserWidget.h"
+#include "UI/Controller/CB_OverlayWidgetController.h"
 
 ACB_EnemyCharacter::ACB_EnemyCharacter()
 {
 	ASC = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("ASC"));
 	AttributeSet = CreateDefaultSubobject<UCB_CharacterAttributeSet>(TEXT("AttributeSet"));
+
 }
 
 void ACB_EnemyCharacter::SetOutLine(bool bIsShow)
@@ -33,11 +40,36 @@ void ACB_EnemyCharacter::PossessedBy(AController* NewController)
 		ASC->GiveAbility(Spec);
 	}
 
+	FGameplayEffectContextHandle EffectContext = ASC->MakeEffectContext();
+	EffectContext.AddSourceObject(this);
+
+	for (TSubclassOf<UGameplayEffect> GameplayEffect : Effects)
+	{
+		FGameplayEffectSpecHandle NewHandle = ASC->MakeOutgoingSpec(GameplayEffect, 1.f, EffectContext);
+		if (NewHandle.IsValid())
+			FActiveGameplayEffectHandle ActiveGEHandle = ASC->ApplyGameplayEffectSpecToTarget(
+				*NewHandle.Data.Get(), ASC.Get());
+	}
+
+	AIController = Cast<ACB_AIController>(NewController);
+	AIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
+	AIController->GetBlackboardComponent()->SetValueAsBool(FName("Aggressive"), BossType == EBossType::Aggressive);
+	AIController->RunBehaviorTree(BehaviorTree);
+}
+
+void ACB_EnemyCharacter::DestroyAll()
+{
+	Super::DestroyAll();
+
+	BossOverlay->RemoveFromParent();
 }
 
 void ACB_EnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	BossOverlay = CreateWidget<UCB_UserWidget>(GetWorld(), BossOverlayClass);
+	BossOverlay->SetWidgetController(this);
 
 	if (const UCB_CharacterAttributeSet* AS = Cast<UCB_CharacterAttributeSet>(AttributeSet))
 	{
@@ -55,4 +87,8 @@ void ACB_EnemyCharacter::BeginPlay()
 		OnHealthChanged.Broadcast(AS->GetHealth());
 		OnMaxHealthChanged.Broadcast(AS->GetMaxHealth());
 	}
+
+	FGameplayTagContainer Container;
+	Container.AddTag(STATE_EQUIPMENT);
+	ASC->TryActivateAbilitiesByTag(Container);
 }

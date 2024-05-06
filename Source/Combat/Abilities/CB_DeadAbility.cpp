@@ -6,6 +6,7 @@
 #include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "Tags/StateTag.h"
+#include "Kismet/GameplayStatics.h"
 
 UCB_DeadAbility::UCB_DeadAbility()
 {
@@ -23,7 +24,11 @@ void UCB_DeadAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	BaseCharacter->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
 	BaseCharacter->SetActorEnableCollision(false);
 
-	// 델리게이트를 통해 LockOn 및 HUD 해제
+	// 오버레이 제거
+	// 플레이어 락온 제거
+
+	ACB_BaseCharacter* Player = Cast<ACB_BaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	Player->LockOn();
 
 	FGameplayEventData Data;
 	UAbilityTask_WaitGameplayEvent* WaitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this,
@@ -35,11 +40,16 @@ void UCB_DeadAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 void UCB_DeadAbility::OnCompleteCallback()
 {
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
+	BaseCharacter->DestroyAll();
 }
 
 void UCB_DeadAbility::PlayMontage(FGameplayEventData Data)
 {
-	UAbilityTask_PlayMontageAndWait* PlayHitTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(this, NAME_None, DeadMontage);
-	PlayHitTask->OnCompleted.AddUniqueDynamic(this, &UCB_DeadAbility::OnCompleteCallback);
-	PlayHitTask->ReadyForActivation();
+	UAbilityTask_PlayMontageAndWait* PlayDeathTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(this, NAME_None, DeadMontage);
+	PlayDeathTask->OnCompleted.AddUniqueDynamic(this, &UCB_DeadAbility::OnCompleteCallback);
+	PlayDeathTask->OnBlendOut.AddUniqueDynamic(this, &UCB_DeadAbility::OnCompleteCallback);
+	PlayDeathTask->OnInterrupted.AddUniqueDynamic(this, &UCB_DeadAbility::OnCompleteCallback);
+	PlayDeathTask->OnCancelled.AddUniqueDynamic(this, &UCB_DeadAbility::OnCompleteCallback);
+	PlayDeathTask->ReadyForActivation();
+
 }

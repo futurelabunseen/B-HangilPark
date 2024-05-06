@@ -6,9 +6,6 @@
 #include "Animation/AnimNotifies/AnimNotifyState.h"
 #include "CB_ANS_DodgeCheck.generated.h"
 
-class USkeletalMeshComponent;
-class UAnimSequenceBase;
-
 UCLASS()
 class COMBAT_API UCB_ANS_DodgeCheck : public UAnimNotifyState
 {
