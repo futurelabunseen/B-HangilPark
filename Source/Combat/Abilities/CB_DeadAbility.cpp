@@ -24,9 +24,6 @@ void UCB_DeadAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	BaseCharacter->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
 	BaseCharacter->SetActorEnableCollision(false);
 
-	// 오버레이 제거
-	// 플레이어 락온 제거
-
 	ACB_BaseCharacter* Player = Cast<ACB_BaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	Player->LockOn();
 
@@ -40,11 +37,12 @@ void UCB_DeadAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 void UCB_DeadAbility::OnCompleteCallback()
 {
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
-	BaseCharacter->DestroyAll();
 }
 
 void UCB_DeadAbility::PlayMontage(FGameplayEventData Data)
 {
+	BaseCharacter->Dead();
+
 	UAbilityTask_PlayMontageAndWait* PlayDeathTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(this, NAME_None, DeadMontage);
 	PlayDeathTask->OnCompleted.AddUniqueDynamic(this, &UCB_DeadAbility::OnCompleteCallback);
 	PlayDeathTask->OnBlendOut.AddUniqueDynamic(this, &UCB_DeadAbility::OnCompleteCallback);

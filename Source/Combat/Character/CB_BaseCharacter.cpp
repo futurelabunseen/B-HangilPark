@@ -92,14 +92,18 @@ FVector ACB_BaseCharacter::GetWeaponSocketLocation(const FName SocketName)
 	return Weapon->GetWeaponMesh()->GetSocketLocation(SocketName);
 }
 
-void ACB_BaseCharacter::DestroyAll()
+void ACB_BaseCharacter::Dead()
 {
+	const static float DeadEventDelayTime = 2.0f;
 
-	ASC->CancelAllAbilities();
-	ASC->ClearAllAbilities();
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
 
-	Destroy();
-	if (GetWeapon())
-		GetWeapon()->Destroy();
-	
+		ASC->CancelAllAbilities();
+		ASC->ClearAllAbilities();
+
+		if (GetWeapon())
+			GetWeapon()->Destroy();
+		Destroy();
+		}), DeadEventDelayTime, false);
 }

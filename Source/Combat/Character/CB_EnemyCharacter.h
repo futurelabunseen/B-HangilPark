@@ -34,7 +34,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnMaxHealtChangedSignature OnMaxHealthChanged;
 	
-	virtual void DestroyAll() override;
+	virtual void Dead() override;
 
 public:
 	FORCEINLINE UCB_UserWidget* GetOverlay() const { return BossOverlay; }
@@ -63,4 +63,5 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<UCB_UserWidget> BossOverlay;
+
 };

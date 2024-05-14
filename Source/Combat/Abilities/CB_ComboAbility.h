@@ -27,6 +27,9 @@ public:
 protected:
 	UFUNCTION()
 	void OnCompleteCallback();
+	
+	UFUNCTION()
+	void OnCancelCallback();
 
 	UFUNCTION()
     void PlayMontage(FGameplayEventData Data);

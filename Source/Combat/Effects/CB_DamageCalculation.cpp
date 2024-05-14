@@ -18,14 +18,13 @@ void UCB_DamageCalculation::Execute_Implementation(const FGameplayEffectCustomEx
 	UAbilitySystemComponent* TargetASC = ExecutionParams.GetTargetAbilitySystemComponent();
 	if (SourceASC && TargetASC)
 	{
-
 		AActor* SourceActor = SourceASC->GetAvatarActor();
 		AActor* TargetActor = TargetASC->GetAvatarActor();
 
 		if (SourceActor && TargetActor)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Source Actor : %s"), *SourceActor->GetName());
-			UE_LOG(LogTemp, Warning, TEXT("Target Actor : %s"), *TargetActor->GetName());
+			/*UE_LOG(LogTemp, Warning, TEXT("Source Actor : %s"), *SourceActor->GetName());
+			UE_LOG(LogTemp, Warning, TEXT("Target Actor : %s"), *TargetActor->GetName());*/
 
 			float Damage = (SourceASC->HasMatchingGameplayTag(STATE_GUARD)) ? 10.f : 30.f;
 

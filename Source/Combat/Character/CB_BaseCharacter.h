@@ -41,8 +41,10 @@ public:
 	virtual FVector GetSocketLocation(const FName SocketName) override;
 	virtual FVector GetWeaponSocketLocation(const FName SocketName) override;
 
-	virtual void DestroyAll();
+	virtual void Dead();
 
+	FORCEINLINE bool GetIsGuard() const { return bIsGuard; }
+	void SetIsGuard(const bool IsGaurd);
 public:
 	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return ASC; }
 	FORCEINLINE ACB_BaseWeapon* GetWeapon() const { return Weapon; }
@@ -74,11 +76,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UCB_CharacterAttributeSet> AttributeSet = nullptr;
 
-public:
-	FORCEINLINE bool GetIsGuard() const { return bIsGuard; }
-	void SetIsGuard(const bool IsGaurd);
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool bIsGuard = false;
-
 };

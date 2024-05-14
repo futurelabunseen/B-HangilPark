@@ -44,13 +44,14 @@ void UCB_ANS_Activate::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenc
 			UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1),
 			false, ActorsToIgnore, EDrawDebugTrace::None, OutHit, true);
 
-		if (bResult) //&& !HitActors.Find(OutHit.GetActor()->GetName()))
+		if (bResult) // && !HitActors.Find(OutHit.GetActor()->GetName()))
 		{
 			// DrawDebugSphere(Character->GetWorld(), OutHit.ImpactPoint, 10.f, 20, FColor::Cyan, false, 1.f); 
 			// UE_LOG(LogTemp, Warning, TEXT("HitResult : %f, %f, %f"), OutHit.ImpactPoint.X, OutHit.ImpactPoint.Y, OutHit.ImpactPoint.Z);
 			HitActors.Emplace(OutHit.GetActor()->GetName(), OutHit);
 
 		}
+	
 	}
 }
 
@@ -71,6 +72,7 @@ void UCB_ANS_Activate::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequence
 		FGameplayAbilityTargetData_SingleTargetHit* TargetData = new FGameplayAbilityTargetData_SingleTargetHit(HitResult);
 		DataHandle.Add(TargetData);
 
+		// (ImpactPoint) 혹은 (공격 대상 위치)
 		FGameplayEventData Payload;
 		Payload.TargetData = DataHandle;
 		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitResult.GetActor(), STATE_HIT, Payload);

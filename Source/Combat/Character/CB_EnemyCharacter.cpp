@@ -57,9 +57,9 @@ void ACB_EnemyCharacter::PossessedBy(AController* NewController)
 	AIController->RunBehaviorTree(BehaviorTree);
 }
 
-void ACB_EnemyCharacter::DestroyAll()
+void ACB_EnemyCharacter::Dead()
 {
-	Super::DestroyAll();
+	Super::Dead();
 
 	BossOverlay->RemoveFromParent();
 }
