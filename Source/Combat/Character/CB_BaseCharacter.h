@@ -43,8 +43,12 @@ public:
 
 	virtual void Dead();
 
-	FORCEINLINE bool GetIsGuard() const { return bIsGuard; }
+	UFUNCTION(BlueprintCallable)
+	bool GetIsGuard() const { return bIsGuard; }
+	
+	UFUNCTION(BlueprintCallable)
 	void SetIsGuard(const bool IsGaurd);
+
 public:
 	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return ASC; }
 	FORCEINLINE ACB_BaseWeapon* GetWeapon() const { return Weapon; }

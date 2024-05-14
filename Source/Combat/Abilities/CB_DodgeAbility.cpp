@@ -5,6 +5,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Interface/CB_TrailInterface.h"
+#include "Tags/StateTag.h"
 
 UCB_DodgeAbility::UCB_DodgeAbility()
 {
@@ -19,6 +21,9 @@ void UCB_DodgeAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	CommitAbility(Handle, ActorInfo, ActivationInfo);
 
 	Character = CastChecked<ACharacter>(ActorInfo->AvatarActor.Get());
+	ICB_TrailInterface* Interface = Cast<ICB_TrailInterface>(Character);
+	if (Interface)
+		Interface->TrailStart(STATE_DODGE);
 
 	UAbilityTask_PlayMontageAndWait* PlayDodgeTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
 		this, NAME_None, DodgeMontage, 1.f, CheckSectionName(CheckTheta()));

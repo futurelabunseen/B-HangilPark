@@ -41,8 +41,6 @@ void UCB_DeadAbility::OnCompleteCallback()
 
 void UCB_DeadAbility::PlayMontage(FGameplayEventData Data)
 {
-	BaseCharacter->Dead();
-
 	UAbilityTask_PlayMontageAndWait* PlayDeathTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(this, NAME_None, DeadMontage);
 	PlayDeathTask->OnCompleted.AddUniqueDynamic(this, &UCB_DeadAbility::OnCompleteCallback);
 	PlayDeathTask->OnBlendOut.AddUniqueDynamic(this, &UCB_DeadAbility::OnCompleteCallback);
@@ -50,4 +48,5 @@ void UCB_DeadAbility::PlayMontage(FGameplayEventData Data)
 	PlayDeathTask->OnCancelled.AddUniqueDynamic(this, &UCB_DeadAbility::OnCompleteCallback);
 	PlayDeathTask->ReadyForActivation();
 
+	BaseCharacter->Dead();
 }

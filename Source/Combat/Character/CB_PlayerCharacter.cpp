@@ -11,6 +11,7 @@
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Components/CB_TrailComponent.h"
 
 ACB_PlayerCharacter::ACB_PlayerCharacter()
 {
@@ -23,6 +24,7 @@ ACB_PlayerCharacter::ACB_PlayerCharacter()
 	CameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
 
+	TrailComponent = CreateDefaultSubobject<UCB_TrailComponent>(TEXT("TrailComponent"));
 }
 
 void ACB_PlayerCharacter::PossessedBy(AController* NewController)
@@ -62,5 +64,10 @@ void ACB_PlayerCharacter::PossessedBy(AController* NewController)
 		if (ACB_HUD* Hud = Cast<ACB_HUD>(PC->GetHUD()))
 			Hud->InitOverlay(PC, PS, ASC, AS);
 	}
+}
+
+void ACB_PlayerCharacter::TrailStart(FGameplayTag Tag)
+{
+	TrailComponent->StartTrail(Tag);
 }
 

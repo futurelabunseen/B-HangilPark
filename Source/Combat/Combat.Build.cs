@@ -24,7 +24,8 @@ public class Combat : ModuleRules
             "GameplayTags",
             "Niagara",
             "PhysicsCore",
-			"AIModule"
+			"AIModule",
+            "MotionWarping"
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
