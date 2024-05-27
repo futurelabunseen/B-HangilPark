@@ -12,7 +12,6 @@ ACB_Trail::ACB_Trail()
 	RootComponent = PoseableMesh;
 }
 
-
 void ACB_Trail::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -37,7 +36,6 @@ void ACB_Trail::Init(USkeletalMeshComponent* Pawn)
 	if (PoseableMesh && Material)
 	{
 		PoseableMesh->CopyPoseFromSkeletalComponent(Pawn);
-
 		TArray<UMaterialInterface*> Mats = PoseableMesh->GetMaterials();
 
 		for (int i = 0; i < Mats.Num(); ++i)
@@ -45,7 +43,6 @@ void ACB_Trail::Init(USkeletalMeshComponent* Pawn)
 			Materials.Add(UKismetMaterialLibrary::CreateDynamicMaterialInstance(GetWorld(), Material));
 			PoseableMesh->SetMaterial(i, Materials[i]);
 		}
-
 		fQuarterAlpha = fAlphaCount = 0.5f;
 		bSpawned = true;
 	}

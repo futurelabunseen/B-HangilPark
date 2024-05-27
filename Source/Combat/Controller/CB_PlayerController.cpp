@@ -8,6 +8,7 @@
 #include "GameFramework/Character.h"
 #include "Character/CB_PlayerCharacter.h"
 #include "AbilitySystemComponent.h"
+#include "Camera/CB_LegacyCameraShake.h"
 
 void ACB_PlayerController::BeginPlay()
 {
@@ -117,4 +118,10 @@ void ACB_PlayerController::InputReleased(const FGameplayTag Tag)
 		if (GameplayAbilitySpec->IsActive())
 			ASC->AbilitySpecInputReleased(*GameplayAbilitySpec);
 	}
+}
+
+void ACB_PlayerController::DoCameraShake()
+{
+	if (IsValid(CameraShake))
+		PlayerCameraManager->StartCameraShake(CameraShake, 1.f);
 }

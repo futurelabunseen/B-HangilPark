@@ -6,17 +6,21 @@
 #include "GameFramework/PlayerController.h"
 #include "GameplayTagContainer.h"
 #include "Tags/StateTag.h"
+#include "Interface/CB_CameraShakeInterface.h"
 #include "CB_PlayerController.generated.h"
 
 struct FInputActionValue;
 class UCB_PDA_Input;
+class UCB_LegacyCameraShake;
 
 DECLARE_DELEGATE_OneParam(FLockChangeDelegate, float);
 
 UCLASS()
-class COMBAT_API ACB_PlayerController : public APlayerController
+class COMBAT_API ACB_PlayerController : public APlayerController, public ICB_CameraShakeInterface
 {
 	GENERATED_BODY()
+public:
+	virtual void DoCameraShake() override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -38,4 +42,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Data")
 	TObjectPtr<UCB_PDA_Input> InputData = nullptr;
 
+	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UCB_LegacyCameraShake> CameraShake;
 };

@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameplayCueNotify_Static.h"
-#include "CB_AttackHitCue.generated.h"
+#include "CB_HitCue.generated.h"
 
 class UParticleSystem;
 
 UCLASS()
-class COMBAT_API UCB_AttackHitCue : public UGameplayCueNotify_Static
+class COMBAT_API UCB_HitCue : public UGameplayCueNotify_Static
 {
 	GENERATED_BODY()
 public:
-	UCB_AttackHitCue();
+	UCB_HitCue();
 
 	virtual bool OnExecute_Implementation(AActor* Target,
 		const FGameplayCueParameters& Parameters) const override;

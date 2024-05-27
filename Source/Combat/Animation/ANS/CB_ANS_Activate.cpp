@@ -5,6 +5,7 @@
 #include "Weapon/CB_Sword.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Abilities/GameplayAbility.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "DrawDebugHelpers.h"
@@ -44,14 +45,11 @@ void UCB_ANS_Activate::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenc
 			UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1),
 			false, ActorsToIgnore, EDrawDebugTrace::None, OutHit, true);
 
-		if (bResult) // && !HitActors.Find(OutHit.GetActor()->GetName()))
+		if (bResult && HitActors.Find(OutHit.GetActor()) == ::INDEX_NONE)
 		{
-			// DrawDebugSphere(Character->GetWorld(), OutHit.ImpactPoint, 10.f, 20, FColor::Cyan, false, 1.f); 
-			// UE_LOG(LogTemp, Warning, TEXT("HitResult : %f, %f, %f"), OutHit.ImpactPoint.X, OutHit.ImpactPoint.Y, OutHit.ImpactPoint.Z);
-			HitActors.Emplace(OutHit.GetActor()->GetName(), OutHit);
-
+			HitActors.Emplace(OutHit.GetActor());
+			DoDamage(OutHit);
 		}
-	
 	}
 }
 
@@ -62,19 +60,48 @@ void UCB_ANS_Activate::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequence
 
 	if (Character)
 		Sword->TrailEnd();
+}
 
-	for (const auto& HitActor : HitActors)
-	{
-		// UE_LOG(LogTemp, Error, TEXT("Actor : %s, HitResult : %f, %f, %f"), *HitActor.Key, HitActor.Value.ImpactPoint.X, HitActor.Value.ImpactPoint.Y, HitActor.Value.ImpactPoint.Z);
-		// DrawDebugSphere(Character->GetWorld(), HitActor.Value.ImpactPoint, 10.f, 5, FColor::Orange, false, 1.f);
-		FHitResult HitResult = HitActor.Value;
-		FGameplayAbilityTargetDataHandle DataHandle;
-		FGameplayAbilityTargetData_SingleTargetHit* TargetData = new FGameplayAbilityTargetData_SingleTargetHit(HitResult);
-		DataHandle.Add(TargetData);
+void UCB_ANS_Activate::DoDamage(FHitResult& HitActor)
+{
+	FHitResult Hit;
+	TArray<AActor*> ActorsToIgnore;
+	ActorsToIgnore.Add(Sword);
+	ActorsToIgnore.Add(Character);
 
-		// (ImpactPoint) 혹은 (공격 대상 위치)
-		FGameplayEventData Payload;
-		Payload.TargetData = DataHandle;
-		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitResult.GetActor(), STATE_HIT, Payload);
-	}
+	FVector StartPoint = HitActor.GetActor()->GetActorLocation();
+	FVector EndPoint = Character->GetActorLocation();
+
+	UKismetSystemLibrary::LineTraceSingle(Character->GetWorld(), EndPoint, StartPoint,
+		UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1), 
+		true, ActorsToIgnore, EDrawDebugTrace::None, Hit, true);
+
+	FGameplayAbilityTargetDataHandle DataHandle;
+	FGameplayAbilityTargetData_SingleTargetHit* TargetData = new FGameplayAbilityTargetData_SingleTargetHit(HitActor);
+	DataHandle.Add(TargetData);
+	
+	FGameplayEventData Payload;
+	Payload.TargetData = DataHandle;
+	Payload.EventMagnitude = CheckTheta(Hit.GetActor(), Hit.ImpactPoint);
+	
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitActor.GetActor(), STATE_HIT, Payload);
+}
+
+float UCB_ANS_Activate::CheckTheta(AActor* HitActor, FVector& Vector)
+{
+	const FVector Forward = HitActor->GetActorForwardVector();
+
+	FVector Start = HitActor->GetActorLocation();
+	Start.Z = 0.f;
+	const FVector ImpactLowered(Vector.X, Vector.Y, Start.Z);
+	const FVector ToHit = (ImpactLowered - Start).GetSafeNormal();
+
+	const double CosTheta = FVector::DotProduct(Forward, ToHit);
+	double Theta = UKismetMathLibrary::DegAcos(CosTheta);
+
+	FVector Product = FVector::CrossProduct(Forward, ToHit);
+	float Sign = UKismetMathLibrary::SignOfFloat(Product.Z);
+
+	Theta *= Sign;
+	return Theta;
 }

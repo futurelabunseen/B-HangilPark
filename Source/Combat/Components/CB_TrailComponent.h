@@ -8,7 +8,7 @@
 
 namespace TimerRate
 {
-	const float AutomaticTrailRate = 0.05f;
+	const float AutomaticTrailRate = 0.15f;
 	const float SprintRate = 0.025f;
 };
 

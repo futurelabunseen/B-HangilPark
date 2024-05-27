@@ -3,16 +3,15 @@
 #include "Abilities/CB_HitAbility.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Character/CB_BaseCharacter.h"
-
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "Tags/StateTag.h"
-#include "Kismet/KismetMathLibrary.h"
+
+#include "Interface/CB_CameraShakeInterface.h"
 
 UCB_HitAbility::UCB_HitAbility()
 {
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 	bRetriggerInstancedAbility = true;
-
 }
 
 void UCB_HitAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, 
@@ -20,11 +19,13 @@ void UCB_HitAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	CommitAbility(Handle, ActorInfo, ActivationInfo);
+	
 	BaseCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
+	bIsBlocking = false;
 
+	FName SectionName = CheckSectionName(TriggerEventData->EventMagnitude);
 	PlayGameplayCue(TriggerEventData);
-
-	FName SectionName = CheckSectionName(CheckTheta(TriggerEventData->TargetData));
+	DoCameraShake();
 	UAbilityTask_PlayMontageAndWait* PlayHitTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
 		this, NAME_None, HitMontage, 1.f, SectionName);
 	PlayHitTask->OnCompleted.AddUniqueDynamic(this, &UCB_HitAbility::OnCompleteCallback);
@@ -39,21 +40,21 @@ void UCB_HitAbility::PlayGameplayCue(const FGameplayEventData* TriggerEventData)
 {
 	const FGameplayAbilityTargetDataHandle& TargetDataHandle = TriggerEventData->TargetData;
 	FHitResult HitResult = UAbilitySystemBlueprintLibrary::GetHitResultFromTargetData(TargetDataHandle, 0);
-
+	
 	FGameplayEffectSpecHandle EffectSpecHandle = MakeOutgoingGameplayEffectSpec(HitEffect);
 	if (EffectSpecHandle.IsValid())
 	{
-		ApplyGameplayEffectSpecToTarget(CurrentSpecHandle, CurrentActorInfo,
-			CurrentActivationInfo, EffectSpecHandle, TargetDataHandle);
+		ApplyGameplayEffectSpecToTarget(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, EffectSpecHandle, TargetDataHandle);
 
-		FGameplayEffectContextHandle CueContextHandle = UAbilitySystemBlueprintLibrary::
-			GetEffectContext(EffectSpecHandle);
+		FGameplayEffectContextHandle CueContextHandle = UAbilitySystemBlueprintLibrary::GetEffectContext(EffectSpecHandle);
 		CueContextHandle.AddHitResult(HitResult);
 		FGameplayCueParameters CueParam;
 		CueParam.EffectContext = CueContextHandle;
-		// Damage
-		BaseCharacter->GetAbilitySystemComponent()->ExecuteGameplayCue(GAMEPLAYCUE_ATTACKHIT, CueParam);
+	
+		FGameplayTag Tag = (bIsBlocking) ? GAMEPLAYCUE_BLOCKHIT: GAMEPLAYCUE_ATTACKHIT;
+		BaseCharacter->GetAbilitySystemComponent()->ExecuteGameplayCue(Tag, CueParam);
 	}
+
 }
 
 void UCB_HitAbility::OnCompleteCallback()
@@ -66,24 +67,34 @@ void UCB_HitAbility::OnCancelCallback()
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, true);
 }
 
-float UCB_HitAbility::CheckTheta(const FGameplayAbilityTargetDataHandle& TargetDataHandle)
+void UCB_HitAbility::DoCameraShake()
 {
-	const FVector Forward = BaseCharacter->GetActorForwardVector();
 
-	FHitResult HitResult = UAbilitySystemBlueprintLibrary::GetHitResultFromTargetData(TargetDataHandle, 0);
-	FVector Start = BaseCharacter->GetActorLocation();
-	Start.Z = 0.f;
-	const FVector ImpactLowered(HitResult.ImpactPoint.X, HitResult.ImpactPoint.Y, Start.Z);
-	const FVector ToHit = (ImpactLowered - Start).GetSafeNormal();
-
-	const double CosTheta = FVector::DotProduct(Forward, ToHit);
-	return UKismetMathLibrary::DegAcos(CosTheta);
+	ICB_CameraShakeInterface* Interface = Cast<ICB_CameraShakeInterface>(BaseCharacter->GetController());
+	if (Interface)
+		Interface->DoCameraShake();
 }
 
 FName UCB_HitAbility::CheckSectionName(const float Theta)
 {
-	FName Section = (0 <= Theta && Theta <= 110.f) ? FName("Fwd") : FName("Bwd");
-	if (Section == "Fwd" && BaseCharacter->HasGameplayTag(STATE_GUARD))
-		Section = FName("BlockHit");
-	return Section;
+	static const FHitData Sections[] = {
+		{ MakeTuple(-45, 45), FName("Fwd")},
+		{ MakeTuple(45, 135), FName("Right")},
+		{ MakeTuple(-135, -45), FName("Left")}
+	};
+
+	for (const auto& Section : Sections)
+	{
+		if (Section.Range.Key <= Theta && Theta < Section.Range.Value)
+		{
+			if (BaseCharacter->HasGameplayTag(STATE_GUARD))
+			{
+				bIsBlocking = true;
+				return FName("BlockHit");
+			}
+			else
+				return Section.Name;
+		}
+	}
+	return FName("Bwd");
 }

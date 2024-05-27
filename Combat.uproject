@@ -13,7 +13,8 @@
 				"GameplayAbilities",
 				"UMG",
 				"CoreUObject",
-				"AIModule"
+				"AIModule",
+				"GameplayCameras"
 			]
 		}
 	],

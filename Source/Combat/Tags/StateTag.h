@@ -16,4 +16,6 @@
 #define STATE_DEAD FGameplayTag::RequestGameplayTag(FName("State.Dead"))
 
 #define DATA_DAMAGE FGameplayTag::RequestGameplayTag(FName("Data.Damage"))
+
 #define GAMEPLAYCUE_ATTACKHIT FGameplayTag::RequestGameplayTag(FName("GameplayCue.AttackHit"))
+#define GAMEPLAYCUE_BLOCKHIT FGameplayTag::RequestGameplayTag(FName("GameplayCue.BlockHit"))

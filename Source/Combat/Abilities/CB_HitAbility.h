@@ -14,6 +14,7 @@ struct FHitData
 	FName Name;
 };
 
+
 class ACB_BaseCharacter;
 class UAnimMontage;
 class UGameplayEffect;
@@ -39,8 +40,9 @@ protected:
 	UFUNCTION()
 	void OnCancelCallback();
 
+	void DoCameraShake();
+
 private:
-	float CheckTheta(const FGameplayAbilityTargetDataHandle& TargetDataHandle);
 	FORCEINLINE FName CheckSectionName(const float Theta);
 
 private:
@@ -53,4 +55,5 @@ private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UGameplayEffect> HitEffect;
 
+	bool bIsBlocking = false;
 };

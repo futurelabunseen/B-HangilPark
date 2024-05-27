@@ -24,8 +24,13 @@ public:
 		const FAnimNotifyEventReference& EventReference) override;
 
 private:
+	void DoDamage(FHitResult& HitActor);
+
+	float CheckTheta(AActor* HitActor, FVector& Vector);
+
+private:
 	UPROPERTY()
-	TMap<FString, FHitResult> HitActors;
+	TArray<TObjectPtr<AActor>> HitActors;
 
 	UPROPERTY()
 	TObjectPtr<ACB_BaseCharacter> Character;

@@ -26,14 +26,14 @@ void ACB_EnemyCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	ASC->InitAbilityActorInfo(this, this); 
+	ASC->InitAbilityActorInfo(this, this);
 
 	FGameplayEffectContextHandle EffectContextHandle = ASC->MakeEffectContext();
 	EffectContextHandle.AddSourceObject(this);
 	FGameplayEffectSpecHandle EffectSpecHandle = ASC->MakeOutgoingSpec(InitStatEffect, Level, EffectContextHandle);
 	if (EffectSpecHandle.IsValid())
 		ASC->BP_ApplyGameplayEffectSpecToSelf(EffectSpecHandle);
-	
+
 	for (const auto& Ability : Abilities)
 	{
 		FGameplayAbilitySpec Spec(Ability);
@@ -52,9 +52,12 @@ void ACB_EnemyCharacter::PossessedBy(AController* NewController)
 	}
 
 	AIController = Cast<ACB_AIController>(NewController);
-	AIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
-	AIController->GetBlackboardComponent()->SetValueAsBool(FName("Aggressive"), BossType == EBossType::Aggressive);
-	AIController->RunBehaviorTree(BehaviorTree);
+	if (IsValid(AIController))
+	{
+		AIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
+		AIController->GetBlackboardComponent()->SetValueAsBool(FName("Aggressive"), BossType == EBossType::Aggressive);
+		AIController->RunBehaviorTree(BehaviorTree);
+	}
 }
 
 void ACB_EnemyCharacter::Dead()
