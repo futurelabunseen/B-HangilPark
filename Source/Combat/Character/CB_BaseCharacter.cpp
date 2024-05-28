@@ -6,6 +6,7 @@
 #include "Components/CB_LockOnComponent.h"
 #include "Tags/StateTag.h"
 #include "Weapon/CB_BaseWeapon.h"
+#include "Data/CB_DA_Weapon.h"
 
 ACB_BaseCharacter::ACB_BaseCharacter()
 {
@@ -29,12 +30,11 @@ void ACB_BaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (WeaponClass)
+	if (WeaponData->WeaponClass)
 	{
-		Weapon = GetWorld()->SpawnActor<ACB_BaseWeapon>(WeaponClass);
+		Weapon = GetWorld()->SpawnActor<ACB_BaseWeapon>(WeaponData->WeaponClass);
 		Weapon->Equip(GetMesh(), FName("HolsterSocket"), this, this);
 	}
-
 }
 
 void ACB_BaseCharacter::SetIsGuard(const bool IsGaurd)

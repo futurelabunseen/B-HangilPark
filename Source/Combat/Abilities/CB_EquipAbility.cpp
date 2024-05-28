@@ -4,6 +4,7 @@
 #include "Character/CB_BaseCharacter.h"
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Data/CB_DA_Weapon.h"
 
 UCB_EquipAbility::UCB_EquipAbility()
 {
@@ -17,9 +18,9 @@ void UCB_EquipAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 
 	BaseCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
 	SetValue();
-
+	
 	UAbilityTask_PlayMontageAndWait* PlayEquipTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
-		this, NAME_None, EquipMontage,1.f, SectionName);
+		this, NAME_None, BaseCharacter->GetWeaponData()->EquipMontage, 1.f, SectionName);
 	PlayEquipTask->OnCompleted.AddUniqueDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
 	PlayEquipTask->OnBlendOut.AddUniqueDynamic(this, &UCB_EquipAbility::OnCompleteCallback);
 	PlayEquipTask->OnInterrupted.AddUniqueDynamic(this, &UCB_EquipAbility::OnCompleteCallback);

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+#include "Tags/StateTag.h"
 #include "CB_DodgeAbility.generated.h"
 
 USTRUCT()
@@ -14,7 +15,7 @@ struct FData
 	FName Name;
 };
 
-class UAnimMontage;
+class ACB_BaseCharacter;
 
 UCLASS()
 class COMBAT_API UCB_DodgeAbility : public UGameplayAbility
@@ -36,10 +37,7 @@ private:
 	FName CheckSectionName(const float Theta);
 
 private:
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UAnimMontage> DodgeMontage;
-
 	UPROPERTY()
-	TObjectPtr<ACharacter> Character;
+	TObjectPtr<ACB_BaseCharacter> BaseCharacter;
 
 };

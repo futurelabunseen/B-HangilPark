@@ -4,6 +4,8 @@
 
 #define STATE_ATTACK_LIGHT FGameplayTag::RequestGameplayTag(FName("State.Attack.Light"))
 #define STATE_ATTACK_LIGHT_NEXT FGameplayTag::RequestGameplayTag(FName("State.Attack.Light.Next"))
+#define STATE_ATTACK_SKILL_Q FGameplayTag::RequestGameplayTag(FName("State.Attack.Skill.Q"))
+#define STATE_ATTACK_SKILL_E FGameplayTag::RequestGameplayTag(FName("State.Attack.Skill.E"))
 
 #define STATE_DODGE FGameplayTag::RequestGameplayTag(FName("State.Dodge"))
 #define STATE_JUMP FGameplayTag::RequestGameplayTag(FName("State.Jump"))
@@ -14,6 +16,7 @@
 #define STATE_GUARD FGameplayTag::RequestGameplayTag(FName("State.Guard"))
 #define STATE_HIT FGameplayTag::RequestGameplayTag(FName("State.Hit"))
 #define STATE_DEAD FGameplayTag::RequestGameplayTag(FName("State.Dead"))
+#define STATE_HEAL FGameplayTag::RequestGameplayTag(FName("State.Heal"))
 
 #define DATA_DAMAGE FGameplayTag::RequestGameplayTag(FName("Data.Damage"))
 

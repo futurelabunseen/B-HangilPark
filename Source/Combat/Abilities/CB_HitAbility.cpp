@@ -5,7 +5,6 @@
 #include "Character/CB_BaseCharacter.h"
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "Tags/StateTag.h"
-
 #include "Interface/CB_CameraShakeInterface.h"
 
 UCB_HitAbility::UCB_HitAbility()

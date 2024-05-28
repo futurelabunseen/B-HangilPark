@@ -6,7 +6,6 @@
 #include "Abilities/GameplayAbility.h"
 #include "CB_ComboAbility.generated.h"
 
-class UAnimMontage;
 class ACB_BaseCharacter;
 
 UCLASS()
@@ -39,11 +38,11 @@ private:
 
 private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UAnimMontage> ComboAttackMontage;
-
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	uint8 IsFirstAttack : 1;
 
 	UPROPERTY()
 	TObjectPtr<ACB_BaseCharacter> BaseCharacter;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	FName SectionName;
 };

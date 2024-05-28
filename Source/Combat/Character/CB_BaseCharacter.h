@@ -15,6 +15,7 @@ class UGameplayAbility;
 class UCB_LockOnComponent;
 class ACB_BaseWeapon;
 class UCB_CharacterAttributeSet;
+class UCB_DA_Weapon;
 
 namespace WalkSpeed
 {
@@ -52,6 +53,7 @@ public:
 public:
 	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return ASC; }
 	FORCEINLINE ACB_BaseWeapon* GetWeapon() const { return Weapon; }
+	FORCEINLINE UCB_DA_Weapon* GetWeaponData() const { return WeaponData; }
 	FORCEINLINE void AddUniqueGameplayTag(FGameplayTag Tag);
 	FORCEINLINE void RemoveUniqueGameplayTag(FGameplayTag Tag);
 
@@ -75,7 +77,7 @@ protected:
 	TObjectPtr<ACB_BaseWeapon> Weapon;
 
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<ACB_BaseWeapon> WeaponClass;
+	TObjectPtr<UCB_DA_Weapon> WeaponData;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UCB_CharacterAttributeSet> AttributeSet = nullptr;

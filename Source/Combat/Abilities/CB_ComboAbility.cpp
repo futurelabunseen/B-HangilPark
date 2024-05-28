@@ -6,6 +6,7 @@
 #include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
 #include "Tags/StateTag.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "Data/CB_DA_Weapon.h"
 
 UCB_ComboAbility::UCB_ComboAbility()
 {
@@ -70,7 +71,8 @@ void UCB_ComboAbility::PlayMontage(FGameplayEventData Data)
 		ImmediateRotateActor();
 
 	UAbilityTask_PlayMontageAndWait* PlayAttackTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
-		this, TEXT("None"), ComboAttackMontage);
+		this, NAME_None, BaseCharacter->GetWeaponData()->ComboAttackMontage, 1.f, SectionName);
+		
 	PlayAttackTask->OnCompleted.AddUniqueDynamic(this, &UCB_ComboAbility::OnCompleteCallback);
 	PlayAttackTask->OnBlendOut.AddUniqueDynamic(this, &UCB_ComboAbility::OnCancelCallback);
 	PlayAttackTask->OnInterrupted.AddUniqueDynamic(this, &UCB_ComboAbility::OnCancelCallback);

@@ -46,6 +46,15 @@ void ACB_PlayerController::SetupInputComponent()
 		&ACB_PlayerController::Guard, true);
 	EIC->BindAction(InputData->GuardAction, ETriggerEvent::Completed, this,
 		&ACB_PlayerController::Guard, false);
+
+	EIC->BindAction(InputData->HealAction, ETriggerEvent::Triggered, this,
+		&ACB_PlayerController::InputPressed, STATE_HEAL);
+
+	EIC->BindAction(InputData->QSkillAction, ETriggerEvent::Triggered, this,
+		&ACB_PlayerController::InputPressed, STATE_ATTACK_SKILL_Q);
+
+	EIC->BindAction(InputData->ESkillAction, ETriggerEvent::Triggered, this,
+		&ACB_PlayerController::InputPressed, STATE_ATTACK_SKILL_E);
 }
 
 void ACB_PlayerController::Move(const FInputActionValue& Value)
