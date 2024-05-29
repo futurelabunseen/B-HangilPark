@@ -20,5 +20,9 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UParticleSystem> ParticleSystem;
+	TObjectPtr<UParticleSystem> HitParticle;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TObjectPtr<USoundBase> HitSound;
+
 };

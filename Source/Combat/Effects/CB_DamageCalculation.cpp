@@ -5,10 +5,6 @@
 #include "Attribute/CB_CharacterAttributeSet.h"
 #include "Tags/StateTag.h"
 
-UCB_DamageCalculation::UCB_DamageCalculation()
-{
-
-}
 
 void UCB_DamageCalculation::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, OUT FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
 {
@@ -23,11 +19,7 @@ void UCB_DamageCalculation::Execute_Implementation(const FGameplayEffectCustomEx
 
 		if (SourceActor && TargetActor)
 		{
-			/*UE_LOG(LogTemp, Warning, TEXT("Source Actor : %s"), *SourceActor->GetName());
-			UE_LOG(LogTemp, Warning, TEXT("Target Actor : %s"), *TargetActor->GetName());*/
-
 			float Damage = (SourceASC->HasMatchingGameplayTag(STATE_GUARD)) ? 10.f : 30.f;
-
 			OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(UCB_CharacterAttributeSet::GetHealthAttribute(), EGameplayModOp::Additive, -Damage));
 		}
 	}

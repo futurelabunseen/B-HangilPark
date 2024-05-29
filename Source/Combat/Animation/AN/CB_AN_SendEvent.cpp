@@ -9,6 +9,4 @@ void UCB_AN_SendEvent::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBas
 
 	FGameplayEventData Payload;
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(MeshComp->GetOwner(), TriggerGameplayTag, Payload);
-
-	
 }

@@ -7,7 +7,7 @@
 
 UCB_HitCue::UCB_HitCue()
 {
-	ParticleSystem = CreateDefaultSubobject<UParticleSystem>(TEXT("ParticleSystem"));
+	HitParticle = CreateDefaultSubobject<UParticleSystem>(TEXT("HitParticle"));
 }
 
 bool UCB_HitCue::OnExecute_Implementation(AActor* Target, const FGameplayCueParameters& Parameters) const
@@ -16,8 +16,8 @@ bool UCB_HitCue::OnExecute_Implementation(AActor* Target, const FGameplayCuePara
 
 	if (HitResult)
 	{
-		UGameplayStatics::SpawnEmitterAtLocation(Target, ParticleSystem,
-			HitResult->ImpactPoint, FRotator::ZeroRotator, true);
+		UGameplayStatics::SpawnEmitterAtLocation(Target, HitParticle, HitResult->ImpactPoint);
+		UGameplayStatics::SpawnSoundAtLocation(Target, HitSound, HitResult->ImpactPoint);
 	}
 	return false;
 }

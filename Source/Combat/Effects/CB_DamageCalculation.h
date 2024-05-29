@@ -14,8 +14,7 @@ class COMBAT_API UCB_DamageCalculation : public UGameplayEffectExecutionCalculat
 {
 	GENERATED_BODY()
 public:
-	UCB_DamageCalculation();
-
-	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, OUT FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const override;
+	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, 
+		OUT FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const override;
 
 };

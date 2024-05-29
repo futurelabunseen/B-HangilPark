@@ -20,7 +20,7 @@ void UCB_HitAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 	CommitAbility(Handle, ActorInfo, ActivationInfo);
 	
 	BaseCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
-	bIsBlocking = false;
+	//bIsBlocking = false;
 
 	FName SectionName = CheckSectionName(TriggerEventData->EventMagnitude);
 	PlayGameplayCue(TriggerEventData);
@@ -68,7 +68,6 @@ void UCB_HitAbility::OnCancelCallback()
 
 void UCB_HitAbility::DoCameraShake()
 {
-
 	ICB_CameraShakeInterface* Interface = Cast<ICB_CameraShakeInterface>(BaseCharacter->GetController());
 	if (Interface)
 		Interface->DoCameraShake();
