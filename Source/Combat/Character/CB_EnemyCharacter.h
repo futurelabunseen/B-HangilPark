@@ -36,8 +36,7 @@ public:
 	
 	virtual void Dead() override;
 
-	UFUNCTION(BlueprintCallable)
-	void SetWarpTarget();
+	virtual void SetWarpTarget() override;
 
 	UFUNCTION(BlueprintCallable)
 	void SetTargetActor(AActor* InTarget) { TargetActor = InTarget; }
@@ -69,9 +68,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<UCB_UserWidget> BossOverlay;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TObjectPtr<class UMotionWarpingComponent> MotionWarpingComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<AActor> TargetActor;

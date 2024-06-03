@@ -7,6 +7,7 @@
 #include "Tags/StateTag.h"
 #include "Weapon/CB_BaseWeapon.h"
 #include "Data/CB_DA_Weapon.h"
+#include "MotionWarpingComponent.h"
 
 ACB_BaseCharacter::ACB_BaseCharacter()
 {
@@ -24,6 +25,7 @@ ACB_BaseCharacter::ACB_BaseCharacter()
 	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed::Run;
 
 	LockOnComponent = CreateDefaultSubobject<UCB_LockOnComponent>(TEXT("LockOnComponent"));
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
 }
 
 void ACB_BaseCharacter::BeginPlay()

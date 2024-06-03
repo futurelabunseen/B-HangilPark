@@ -18,6 +18,8 @@ void UCB_SkillAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 	CommitAbility(Handle, ActorInfo, ActivationInfo);
 
 	BaseCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
+	BaseCharacter->SetWarpTarget();
+
 	UAbilityTask_PlayMontageAndWait* PlaySkillTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
 		this, NAME_None, SkillMontage, 1.f);
 	PlaySkillTask->OnCompleted.AddUniqueDynamic(this, &UCB_SkillAbility::OnCompleteCallback);

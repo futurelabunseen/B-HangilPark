@@ -50,6 +50,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetIsGuard(const bool IsGaurd);
 
+	UFUNCTION(BlueprintCallable)
+	virtual void SetWarpTarget() { }
+
 public:
 	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return ASC; }
 	FORCEINLINE ACB_BaseWeapon* GetWeapon() const { return Weapon; }
@@ -84,4 +87,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool bIsGuard = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<class UMotionWarpingComponent> MotionWarpingComponent;
 };

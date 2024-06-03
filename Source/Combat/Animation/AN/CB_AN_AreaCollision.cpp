@@ -60,7 +60,7 @@ void UCB_AN_AreaCollision::DoDamage(TArray<AActor*> HitResults, TArray<AActor*> 
 		Payload.TargetData = DataHandle;
 		Payload.EventMagnitude = CheckTheta(Hit.GetActor(), Hit.ImpactPoint);
 
-		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Hit.GetActor(), STATE_HIT_SKILL, Payload);
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Hit.GetActor(), GameplayTag, Payload);
 	}
 }
 

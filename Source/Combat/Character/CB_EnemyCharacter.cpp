@@ -14,7 +14,6 @@ ACB_EnemyCharacter::ACB_EnemyCharacter()
 {
 	ASC = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("ASC"));
 	AttributeSet = CreateDefaultSubobject<UCB_CharacterAttributeSet>(TEXT("AttributeSet"));
-	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
 }
 
 void ACB_EnemyCharacter::SetOutLine(bool bIsShow)
@@ -98,6 +97,8 @@ void ACB_EnemyCharacter::BeginPlay()
 
 void ACB_EnemyCharacter::SetWarpTarget()
 {
+	Super::SetWarpTarget();
+	
 	if (IsValid(TargetActor))
 		MotionWarpingComponent->AddOrUpdateWarpTargetFromTransform(TEXT("Target"), TargetActor->GetActorTransform());
 }

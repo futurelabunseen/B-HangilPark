@@ -66,7 +66,7 @@ private:
 
 	void SetupLocalPlayerController();
 
-private:
+public:
 	FORCEINLINE bool GetTargetLockedStatus() const { return bTargetLocked; }
 	FORCEINLINE AActor* GetLockedOnTargetActor() const { return LockedOnTargetActor; }
 

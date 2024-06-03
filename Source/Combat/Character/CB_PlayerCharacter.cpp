@@ -12,6 +12,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/CB_TrailComponent.h"
+#include "Components/CB_LockOnComponent.h"
+#include "MotionWarpingComponent.h"
 
 ACB_PlayerCharacter::ACB_PlayerCharacter()
 {
@@ -69,4 +71,18 @@ void ACB_PlayerCharacter::PossessedBy(AController* NewController)
 void ACB_PlayerCharacter::TrailStart(FGameplayTag Tag)
 {
 	TrailComponent->StartTrail(Tag);
+}
+
+void ACB_PlayerCharacter::SetWarpTarget()
+{
+	Super::SetWarpTarget();
+	if (IsLocked())
+	{
+		FTransform Transform = LockOnComponent->GetLockedOnTargetActor()->GetActorTransform();
+		MotionWarpingComponent->AddOrUpdateWarpTargetFromTransform(TEXT("Target"), Transform);
+	}
+	else
+	{
+		MotionWarpingComponent->RemoveWarpTarget(TEXT("Target"));
+	}
 }

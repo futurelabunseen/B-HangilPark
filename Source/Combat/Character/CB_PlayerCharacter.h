@@ -24,6 +24,8 @@ public:
 
 	virtual void TrailStart(FGameplayTag Tag) override;
 
+	virtual void SetWarpTarget() override;
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent>	SpringArmComponent;
