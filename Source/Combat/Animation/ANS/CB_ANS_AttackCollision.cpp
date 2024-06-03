@@ -16,10 +16,8 @@ void UCB_ANS_AttackCollision::NotifyBegin(USkeletalMeshComponent* MeshComp, UAni
 	HitActors.Empty();
 	Character = Cast<ACB_BaseCharacter>(MeshComp->GetOwner());
 	if (Character)
-	{
 		Sword = Cast<ACB_Sword>(Character->GetWeapon());
-		Sword->TrailStart();
-	}
+	
 }
 
 void UCB_ANS_AttackCollision::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference)
@@ -50,14 +48,6 @@ void UCB_ANS_AttackCollision::NotifyTick(USkeletalMeshComponent* MeshComp, UAnim
 	}
 }
 
-void UCB_ANS_AttackCollision::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
-{
-	Super::NotifyEnd(MeshComp, Animation, EventReference);
-
-	if (Character)
-		Sword->TrailEnd();
-}
-
 void UCB_ANS_AttackCollision::DoDamage(FHitResult& HitActor)
 {
 	FHitResult Hit;
@@ -80,11 +70,14 @@ void UCB_ANS_AttackCollision::DoDamage(FHitResult& HitActor)
 	Payload.TargetData = DataHandle;
 	Payload.EventMagnitude = CheckTheta(Hit.GetActor(), Hit.ImpactPoint);
 
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitActor.GetActor(), STATE_HIT, Payload);
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitActor.GetActor(), STATE_HIT_LIGHT, Payload);
 }
 
 float UCB_ANS_AttackCollision::CheckTheta(AActor* HitActor, FVector& Vector)
 {
+	if (!IsValid(HitActor))
+		return -1.f;
+
 	const FVector Forward = HitActor->GetActorForwardVector();
 
 	FVector Start = HitActor->GetActorLocation();

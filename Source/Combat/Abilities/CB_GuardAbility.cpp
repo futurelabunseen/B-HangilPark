@@ -15,8 +15,8 @@ void UCB_GuardAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	CommitAbility(Handle, ActorInfo, ActivationInfo);
 	BaseCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
-	
-	if(BaseCharacter->GetIsGuard())
+
+	if (BaseCharacter->GetIsGuard())
 	{
 		BaseCharacter->AddUniqueGameplayTag(STATE_GUARD);
 	}

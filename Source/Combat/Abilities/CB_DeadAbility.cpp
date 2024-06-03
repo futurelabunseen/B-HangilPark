@@ -28,10 +28,15 @@ void UCB_DeadAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	Player->LockOn();
 
 	FGameplayEventData Data;
-	UAbilityTask_WaitGameplayEvent* WaitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this,
-		STATE_HIT, nullptr, true, true);
+
+	UAbilityTask_WaitGameplayEvent* WaitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(
+		this, STATE_HIT_LIGHT);
 	WaitEvent->EventReceived.AddUniqueDynamic(this, &UCB_DeadAbility::PlayMontage);
 	WaitEvent->ReadyForActivation();
+
+	if (!BaseCharacter->HasGameplayTag(STATE_HIT_LIGHT))
+		PlayMontage(Data);
+
 }
 
 void UCB_DeadAbility::OnCompleteCallback()

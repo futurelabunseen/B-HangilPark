@@ -70,4 +70,3 @@ void ACB_PlayerCharacter::TrailStart(FGameplayTag Tag)
 {
 	TrailComponent->StartTrail(Tag);
 }
-

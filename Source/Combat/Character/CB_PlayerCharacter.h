@@ -23,6 +23,7 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 
 	virtual void TrailStart(FGameplayTag Tag) override;
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent>	SpringArmComponent;

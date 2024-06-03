@@ -96,14 +96,19 @@ void ACB_BaseCharacter::Dead()
 {
 	const static float DeadEventDelayTime = 2.0f;
 
+	if (GetController())
+		GetController()->PawnPendingDestroy(this);
+		//GetController()->UnPossess();
+
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
-
 		ASC->CancelAllAbilities();
 		ASC->ClearAllAbilities();
 
+		
 		if (GetWeapon())
 			GetWeapon()->Destroy();
+
 		Destroy();
 		}), DeadEventDelayTime, false);
 }

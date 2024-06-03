@@ -59,6 +59,9 @@ void ACB_PlayerController::SetupInputComponent()
 
 void ACB_PlayerController::Move(const FInputActionValue& Value)
 {
+	if (!IsValid(GetCharacter()))
+		return;
+
 	const FVector2D MovementVector = Value.Get<FVector2D>();
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
@@ -72,6 +75,9 @@ void ACB_PlayerController::Move(const FInputActionValue& Value)
 
 void ACB_PlayerController::Look(const FInputActionValue& Value)
 {
+	if (!IsValid(GetCharacter()))
+		return;
+
 	const FVector2D LookAxisVector = Value.Get<FVector2D>();
 
 	GetCharacter()->AddControllerYawInput(LookAxisVector.X);
@@ -82,6 +88,8 @@ void ACB_PlayerController::Look(const FInputActionValue& Value)
 
 void ACB_PlayerController::LockOn()
 {
+	if (!IsValid(GetCharacter()))
+		return;
 	// 인터페이스로 처리
 	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
 	PlayerCharacter->LockOn();
@@ -89,13 +97,20 @@ void ACB_PlayerController::LockOn()
 
 void ACB_PlayerController::Guard(bool bIsActiave)
 {
+	if (!IsValid(GetCharacter()))
+		return;
 	// Delegate.Execute(bIsAcitve)로 처리할 예정
 	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
 	PlayerCharacter->SetIsGuard(bIsActiave);
+	if (!bIsActiave)
+		PlayerCharacter->RemoveUniqueGameplayTag(STATE_GUARD);
 }
 
 void ACB_PlayerController::InputPressed(const FGameplayTag Tag)
 {
+	if (!IsValid(GetCharacter()))
+		return;
+
 	FGameplayTagContainer Container;
 	Container.AddTag(Tag);
 
@@ -115,6 +130,9 @@ void ACB_PlayerController::InputPressed(const FGameplayTag Tag)
 
 void ACB_PlayerController::InputReleased(const FGameplayTag Tag)
 {
+	if (!IsValid(GetCharacter()))
+		return;
+
 	FGameplayTagContainer Container;
 	Container.AddTag(Tag);
 	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
@@ -131,6 +149,9 @@ void ACB_PlayerController::InputReleased(const FGameplayTag Tag)
 
 void ACB_PlayerController::DoCameraShake()
 {
+	if (!IsValid(GetCharacter()))
+		return;
+
 	if (IsValid(CameraShake))
 		PlayerCameraManager->StartCameraShake(CameraShake, 1.f);
 }

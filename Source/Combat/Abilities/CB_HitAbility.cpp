@@ -20,7 +20,7 @@ void UCB_HitAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 	CommitAbility(Handle, ActorInfo, ActivationInfo);
 	
 	BaseCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
-	//bIsBlocking = false;
+	bIsBlocking = false;
 
 	FName SectionName = CheckSectionName(TriggerEventData->EventMagnitude);
 	PlayGameplayCue(TriggerEventData);
@@ -43,7 +43,7 @@ void UCB_HitAbility::PlayGameplayCue(const FGameplayEventData* TriggerEventData)
 	FGameplayEffectSpecHandle EffectSpecHandle = MakeOutgoingGameplayEffectSpec(HitEffect);
 	if (EffectSpecHandle.IsValid())
 	{
-		ApplyGameplayEffectSpecToTarget(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, EffectSpecHandle, TargetDataHandle);
+		ApplyGameplayEffectSpecToOwner(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, EffectSpecHandle);
 
 		FGameplayEffectContextHandle CueContextHandle = UAbilitySystemBlueprintLibrary::GetEffectContext(EffectSpecHandle);
 		CueContextHandle.AddHitResult(HitResult);
