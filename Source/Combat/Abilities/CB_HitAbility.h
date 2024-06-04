@@ -32,8 +32,6 @@ public:
 		const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
 protected:
-	void PlayGameplayCue(const FGameplayEventData* TriggerEventData);
-
 	UFUNCTION()
 	void OnCompleteCallback();
 
@@ -44,6 +42,12 @@ protected:
 
 private:
 	FORCEINLINE FName CheckSectionName(const float Theta);
+
+	void ApplyGameplayEffect(const FGameplayEffectSpecHandle& EffectSpecHandle);
+	void PlayGameplayCue(const FGameplayEffectSpecHandle& EffectSpecHandle, const FHitResult& HitResult);
+
+	void PlayMontgage(const FName& SectionName);
+	bool ParryingCheck(const FName& SectionName);
 
 private:
 	UPROPERTY()
@@ -56,4 +60,7 @@ private:
 	TSubclassOf<UGameplayEffect> HitEffect;
 
 	bool bIsBlocking = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UGameplayEffect> ParryEffect;
 };

@@ -15,7 +15,7 @@ class COMBAT_API UBTService_FindNearestPlayer : public UBTService_BlueprintBase
 	GENERATED_BODY()
 	
 protected:
-	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSecond) override;
+	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)

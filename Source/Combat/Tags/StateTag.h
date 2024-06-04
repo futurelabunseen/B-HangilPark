@@ -19,8 +19,11 @@
 #define STATE_HIT_SKILL FGameplayTag::RequestGameplayTag(FName("State.Hit.SKill"))
 #define STATE_DEAD FGameplayTag::RequestGameplayTag(FName("State.Dead"))
 #define STATE_HEAL FGameplayTag::RequestGameplayTag(FName("State.Heal"))
+#define STATE_PARRY FGameplayTag::RequestGameplayTag(FName("State.Parry"))
 
 #define DATA_DAMAGE FGameplayTag::RequestGameplayTag(FName("Data.Damage"))
 
 #define GAMEPLAYCUE_ATTACKHIT FGameplayTag::RequestGameplayTag(FName("GameplayCue.AttackHit"))
 #define GAMEPLAYCUE_BLOCKHIT FGameplayTag::RequestGameplayTag(FName("GameplayCue.BlockHit"))
+
+#define STATE_DEBUFF_STUN FGameplayTag::RequestGameplayTag(FName("State.Debuff.Stun"))

@@ -12,7 +12,7 @@ void UCB_AN_HealActive::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBa
 	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(MeshComp->GetOwner());
 	if (ASC == nullptr)
 		return;
-	FGameplayEffectContextHandle EffectContextHandle = ASC->MakeEffectContext();
-	const FGameplayEffectSpecHandle EffectSpecHandle = ASC->MakeOutgoingSpec(HealEffectClass, 1.f, EffectContextHandle);
+
+	const FGameplayEffectSpecHandle EffectSpecHandle = ASC->MakeOutgoingSpec(HealEffectClass, 1.f, ASC->MakeEffectContext());
 	ASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 }

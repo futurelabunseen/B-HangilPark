@@ -68,6 +68,7 @@ void UCB_ANS_AttackCollision::DoDamage(FHitResult& HitActor)
 
 	FGameplayEventData Payload;
 	Payload.TargetData = DataHandle;
+	Payload.OptionalObject = Character;
 	Payload.EventMagnitude = CheckTheta(Hit.GetActor(), Hit.ImpactPoint);
 
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitActor.GetActor(), STATE_HIT_LIGHT, Payload);
