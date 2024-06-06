@@ -19,7 +19,6 @@ void UCB_ANS_Parrying::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequen
 		if (!bDuringGuard)
 			UAbilitySystemBlueprintLibrary::AddLooseGameplayTags(MeshComp->GetOwner(), ParryTags);
 	}
-	// 가드를 나중에 설정해주어야 함
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(MeshComp->GetOwner(), STATE_GUARD, Payload);
 }
 

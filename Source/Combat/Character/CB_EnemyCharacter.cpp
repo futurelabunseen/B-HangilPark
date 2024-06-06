@@ -14,6 +14,7 @@ ACB_EnemyCharacter::ACB_EnemyCharacter()
 {
 	ASC = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("ASC"));
 	AttributeSet = CreateDefaultSubobject<UCB_CharacterAttributeSet>(TEXT("AttributeSet"));
+
 }
 
 void ACB_EnemyCharacter::SetOutLine(bool bIsShow)
@@ -72,6 +73,10 @@ void ACB_EnemyCharacter::BeginPlay()
 
 	BossOverlay = CreateWidget<UCB_UserWidget>(GetWorld(), BossOverlayClass);
 	BossOverlay->SetWidgetController(this);
+	
+	UDataTable* InitData = ASC->DefaultStartingData[0].DefaultStartingTable;
+	if (IsValid(InitData))
+		AttributeSet->InitFromMetaDataTable(InitData);
 
 	if (const UCB_CharacterAttributeSet* AS = Cast<UCB_CharacterAttributeSet>(AttributeSet))
 	{

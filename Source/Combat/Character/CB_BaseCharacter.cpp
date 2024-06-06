@@ -26,6 +26,7 @@ ACB_BaseCharacter::ACB_BaseCharacter()
 
 	LockOnComponent = CreateDefaultSubobject<UCB_LockOnComponent>(TEXT("LockOnComponent"));
 	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
+
 }
 
 void ACB_BaseCharacter::BeginPlay()

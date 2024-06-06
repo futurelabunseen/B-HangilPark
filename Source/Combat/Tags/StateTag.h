@@ -17,6 +17,7 @@
 #define STATE_HIT FGameplayTag::RequestGameplayTag(FName("State.Hit"))
 #define STATE_HIT_LIGHT FGameplayTag::RequestGameplayTag(FName("State.Hit.Light"))
 #define STATE_HIT_SKILL FGameplayTag::RequestGameplayTag(FName("State.Hit.SKill"))
+#define STATE_HIT_SKILL_HEAVY FGameplayTag::RequestGameplayTag(FName("State.Hit.SKill.Heavy"))
 #define STATE_DEAD FGameplayTag::RequestGameplayTag(FName("State.Dead"))
 #define STATE_HEAL FGameplayTag::RequestGameplayTag(FName("State.Heal"))
 #define STATE_PARRY FGameplayTag::RequestGameplayTag(FName("State.Parry"))
