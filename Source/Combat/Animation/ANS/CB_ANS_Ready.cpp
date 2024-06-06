@@ -6,6 +6,9 @@
 void UCB_ANS_Ready::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 	float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {
+	Super::NotifyBegin(MeshComp, Animation, TotalDuration, EventReference);
+
+	FGameplayEventData Payload;
 	UAbilitySystemBlueprintLibrary::AddLooseGameplayTags(MeshComp->GetOwner(), AttackBeginTags);
 }
 

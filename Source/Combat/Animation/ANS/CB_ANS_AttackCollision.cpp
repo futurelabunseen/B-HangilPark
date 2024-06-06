@@ -7,7 +7,6 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Abilities/GameplayAbility.h"
 #include "AbilitySystemBlueprintLibrary.h"
-#include "DrawDebugHelpers.h"
 
 void UCB_ANS_AttackCollision::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {

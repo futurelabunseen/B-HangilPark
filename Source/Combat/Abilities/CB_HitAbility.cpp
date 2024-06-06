@@ -6,7 +6,6 @@
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "Tags/StateTag.h"
 #include "Interface/CB_CameraShakeInterface.h"
-#include "DrawDebugHelpers.h"
 
 #include "AbilitySystemComponent.h"
 
@@ -29,12 +28,7 @@ void UCB_HitAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 
 	FName SectionName = CheckSectionName(TriggerEventData->EventMagnitude);
 	if (ParryingCheck(SectionName))
-	{
-		UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Cast<AActor>(TriggerEventData->OptionalObject));
-		const FGameplayEffectSpecHandle ParryEffectSpecHandle = ASC->MakeOutgoingSpec(ParryEffect, 1.f, ASC->MakeEffectContext());
-		if (ParryEffectSpecHandle.IsValid())
-			ASC->ApplyGameplayEffectSpecToSelf(*ParryEffectSpecHandle.Data.Get());
-	}
+		DoTargetActorStun(CastChecked<ACB_BaseCharacter>(TriggerEventData->OptionalObject));
 	else
 		ApplyGameplayEffect(EffectSpecHandle);
 
@@ -111,6 +105,20 @@ bool UCB_HitAbility::ParryingCheck(const FName& SectionName)
 		return true;
 	else
 		return false;
+}
+
+void UCB_HitAbility::DoTargetActorStun(ACB_BaseCharacter* Target)
+{
+	GetWorld()->GetWorldSettings()->SetTimeDilation(0.3f);
+
+	const FGameplayEffectSpecHandle ParryEffectSpecHandle = Target->GetAbilitySystemComponent()->
+		MakeOutgoingSpec(ParryEffect, 1.f, BaseCharacter->GetAbilitySystemComponent()->MakeEffectContext());
+	if (ParryEffectSpecHandle.IsValid())
+		Target->GetAbilitySystemComponent()->ApplyGameplayEffectSpecToSelf(*ParryEffectSpecHandle.Data.Get());
+
+	UAnimInstance* AnimInstance = Target->GetMesh()->GetAnimInstance();
+	AnimInstance->StopAllMontages(0.0f);
+	AnimInstance->Montage_Play(ParryMontage, 1.0f);
 }
 
 void UCB_HitAbility::PlayMontgage(const FName& SectionName)

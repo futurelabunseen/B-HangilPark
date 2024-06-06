@@ -14,7 +14,6 @@ struct FHitData
 	FName Name;
 };
 
-
 class ACB_BaseCharacter;
 class UAnimMontage;
 class UGameplayEffect;
@@ -48,6 +47,7 @@ private:
 
 	void PlayMontgage(const FName& SectionName);
 	bool ParryingCheck(const FName& SectionName);
+	void DoTargetActorStun(ACB_BaseCharacter* Target);
 
 private:
 	UPROPERTY()
@@ -60,6 +60,9 @@ private:
 	TSubclassOf<UGameplayEffect> HitEffect;
 
 	bool bIsBlocking = false;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAnimMontage> ParryMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UGameplayEffect> ParryEffect;
