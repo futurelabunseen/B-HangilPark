@@ -65,6 +65,8 @@ void ACB_EnemyCharacter::Dead()
 	Super::Dead();
 
 	BossOverlay->RemoveFromParent();
+
+	// 텔레포트 스폰 액터를 여기에 할지
 }
 
 void ACB_EnemyCharacter::BeginPlay()

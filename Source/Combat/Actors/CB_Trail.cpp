@@ -9,7 +9,7 @@ ACB_Trail::ACB_Trail()
  	PrimaryActorTick.bCanEverTick = true;
 
 	PoseableMesh = CreateDefaultSubobject<UPoseableMeshComponent>(TEXT("PoseableMesh"));
-	RootComponent = PoseableMesh;
+	SetRootComponent(PoseableMesh);
 }
 
 void ACB_Trail::Tick(float DeltaTime)
