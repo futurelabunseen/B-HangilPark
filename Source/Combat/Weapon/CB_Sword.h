@@ -7,7 +7,6 @@
 #include "Tags/StateTag.h"
 #include "CB_Sword.generated.h"
 
-class UBoxComponent;
 class UNiagaraComponent;
 
 UCLASS()

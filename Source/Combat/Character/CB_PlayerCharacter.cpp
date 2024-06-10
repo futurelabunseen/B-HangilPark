@@ -14,6 +14,7 @@
 #include "Components/CB_TrailComponent.h"
 #include "Components/CB_LockOnComponent.h"
 #include "MotionWarpingComponent.h"
+#include "Gamemode/CB_GameMode.h"
 
 ACB_PlayerCharacter::ACB_PlayerCharacter()
 {
@@ -84,4 +85,18 @@ void ACB_PlayerCharacter::SetWarpTarget()
 	{
 		MotionWarpingComponent->RemoveWarpTarget(TEXT("Target"));
 	}
+}
+
+void ACB_PlayerCharacter::Dead()
+{
+	Super::Dead();
+
+	// 나중에 재시작할지 프로그램을 종료할지 Widget으로 처리
+
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
+		ACB_GameMode* GameMode = Cast<ACB_GameMode>(GetWorld()->GetAuthGameMode());
+		GameMode->RestartGame();
+
+		}), 2.5f, false);
 }

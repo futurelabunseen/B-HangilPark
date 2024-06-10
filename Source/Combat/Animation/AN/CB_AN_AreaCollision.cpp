@@ -66,14 +66,14 @@ void UCB_AN_AreaCollision::DoDamage(TArray<AActor*> HitResults, TArray<AActor*> 
 
 float UCB_AN_AreaCollision::CheckTheta(AActor* HitActor, FVector& Vector)
 {
-	const FVector Forward = HitActor->GetActorForwardVector();
+	FVector Forward = HitActor->GetActorForwardVector();
 
 	FVector Start = HitActor->GetActorLocation();
 	Start.Z = 0.f;
-	const FVector ImpactLowered(Vector.X, Vector.Y, Start.Z);
-	const FVector ToHit = (ImpactLowered - Start).GetSafeNormal();
+	FVector ImpactLowered(Vector.X, Vector.Y, Start.Z);
+	FVector ToHit = (ImpactLowered - Start).GetSafeNormal();
 
-	const double CosTheta = FVector::DotProduct(Forward, ToHit);
+	double CosTheta = FVector::DotProduct(Forward, ToHit);
 	double Theta = UKismetMathLibrary::DegAcos(CosTheta);
 
 	FVector Product = FVector::CrossProduct(Forward, ToHit);

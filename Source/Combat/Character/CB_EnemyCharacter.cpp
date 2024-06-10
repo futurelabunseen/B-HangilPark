@@ -9,12 +9,12 @@
 #include "UI/Widgets/CB_UserWidget.h"
 #include "UI/Controller/CB_OverlayWidgetController.h"
 #include "MotionWarpingComponent.h"
+#include "GameInstance/CB_GameInstance.h"
 
 ACB_EnemyCharacter::ACB_EnemyCharacter()
 {
 	ASC = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("ASC"));
 	AttributeSet = CreateDefaultSubobject<UCB_CharacterAttributeSet>(TEXT("AttributeSet"));
-
 }
 
 void ACB_EnemyCharacter::SetOutLine(bool bIsShow)
@@ -66,7 +66,15 @@ void ACB_EnemyCharacter::Dead()
 
 	BossOverlay->RemoveFromParent();
 
-	// 텔레포트 스폰 액터를 여기에 할지
+	UCB_GameInstance* GameInstance = Cast<UCB_GameInstance>(GetWorld()->GetGameInstance());
+	GameInstance->IncWinCnt();
+	
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
+		FVector Location = GetActorLocation();
+		Location.Z = 50.f;
+		GetWorld()->SpawnActor<AActor>(Teleport, Location, FRotator(), FActorSpawnParameters());
+		}), 2.5f, false);
 }
 
 void ACB_EnemyCharacter::BeginPlay()

@@ -101,14 +101,12 @@ void ACB_BaseCharacter::Dead()
 
 	if (GetController())
 		GetController()->PawnPendingDestroy(this);
-		//GetController()->UnPossess();
 
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
 		ASC->CancelAllAbilities();
 		ASC->ClearAllAbilities();
 
-		
 		if (GetWeapon())
 			GetWeapon()->Destroy();
 

@@ -29,16 +29,19 @@ void UCB_DeadAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 
 	FGameplayEventData Data;
 
-	// ÀÌ½´
-	UAbilityTask_WaitGameplayEvent* WaitEvent2 = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this, STATE_HIT_SKILL_HEAVY);
-	WaitEvent2->EventReceived.AddUniqueDynamic(this, &UCB_DeadAbility::PlayMontage);
-	WaitEvent2->ReadyForActivation();
-
-	UAbilityTask_WaitGameplayEvent* WaitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this, STATE_HIT_LIGHT);
-	WaitEvent->EventReceived.AddUniqueDynamic(this, &UCB_DeadAbility::PlayMontage);
-	WaitEvent->ReadyForActivation();
-
-	if (!BaseCharacter->HasGameplayTag(STATE_HIT_LIGHT))
+	if (BaseCharacter->HasGameplayTag(STATE_HIT_LIGHT))
+	{
+		UAbilityTask_WaitGameplayEvent* WaitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this, STATE_HIT_LIGHT);
+		WaitEvent->EventReceived.AddUniqueDynamic(this, &UCB_DeadAbility::PlayMontage);
+		WaitEvent->ReadyForActivation();
+	}
+	else if (BaseCharacter->HasGameplayTag(STATE_HIT_SKILL_HEAVY))
+	{
+		UAbilityTask_WaitGameplayEvent* WaitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this, STATE_HIT_SKILL_HEAVY);
+		WaitEvent->EventReceived.AddUniqueDynamic(this, &UCB_DeadAbility::PlayMontage);
+		WaitEvent->ReadyForActivation();
+	}
+	else
 		PlayMontage(Data);
 
 }
