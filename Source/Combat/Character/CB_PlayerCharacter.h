@@ -26,7 +26,7 @@ public:
 
 	virtual void SetWarpTarget() override;
 
-	virtual void Dead() override;
+	// virtual void Dead() override;
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Camera", meta = (AllowPrivateAccess = "true"))

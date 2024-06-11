@@ -26,24 +26,24 @@ void UCB_DeadAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 
 	ACB_BaseCharacter* Player = Cast<ACB_BaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	Player->LockOn();
+	
+	UE_LOG(LogTemp, Warning, TEXT("HasGameplayTag(STATE_HIT) : %d"),
+		BaseCharacter->HasGameplayTag(STATE_HIT));
 
-	FGameplayEventData Data;
-
-	if (BaseCharacter->HasGameplayTag(STATE_HIT_LIGHT))
+	// It will keep listening as long as OnlyTriggerOnce = false
+	// If OnlyMatchExact = false it will trigger for nested tags
+	if (BaseCharacter->HasGameplayTag(STATE_HIT))
 	{
-		UAbilityTask_WaitGameplayEvent* WaitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this, STATE_HIT_LIGHT);
-		WaitEvent->EventReceived.AddUniqueDynamic(this, &UCB_DeadAbility::PlayMontage);
-		WaitEvent->ReadyForActivation();
-	}
-	else if (BaseCharacter->HasGameplayTag(STATE_HIT_SKILL_HEAVY))
-	{
-		UAbilityTask_WaitGameplayEvent* WaitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(this, STATE_HIT_SKILL_HEAVY);
+		UAbilityTask_WaitGameplayEvent* WaitEvent = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(
+			this, STATE_HIT, nullptr, false, false);
 		WaitEvent->EventReceived.AddUniqueDynamic(this, &UCB_DeadAbility::PlayMontage);
 		WaitEvent->ReadyForActivation();
 	}
 	else
+	{
+		FGameplayEventData Data;
 		PlayMontage(Data);
-
+	}
 }
 
 void UCB_DeadAbility::OnCompleteCallback()

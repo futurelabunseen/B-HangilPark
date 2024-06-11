@@ -4,7 +4,6 @@
 #include "GameplayEffectExtension.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Tags/StateTag.h"
-#include "Character/CB_BaseCharacter.h"
 
 UCB_CharacterAttributeSet::UCB_CharacterAttributeSet()
 {

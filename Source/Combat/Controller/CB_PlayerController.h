@@ -22,6 +22,9 @@ class COMBAT_API ACB_PlayerController : public APlayerController, public ICB_Cam
 public:
 	virtual void DoCameraShake() override;
 
+	UFUNCTION(BlueprintCallable)
+	void SetPlayerInputMode(bool bInputMode);
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;

@@ -18,7 +18,7 @@ public:
 	UFUNCTION()
 	int32 GetWinCnt() const { return WinCnt; }
 	
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void IncWinCnt() { ++WinCnt; }
 
 private:

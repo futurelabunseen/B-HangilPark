@@ -12,10 +12,10 @@ UCB_DotCue::UCB_DotCue()
 bool UCB_DotCue::OnExecute_Implementation(AActor* Target, const FGameplayCueParameters& Parameters) const
 {
 	const FHitResult* HitResult = Parameters.EffectContext.GetHitResult();
-	FVector Location = Target->GetActorLocation();
-	
+
 	if (HitResult)
 	{
+		FVector Location = Target->GetActorLocation();
 		UGameplayStatics::SpawnEmitterAtLocation(Target, HitParticle, Location);
 		UGameplayStatics::SpawnSoundAtLocation(Target, HitSound, Location);
 	}

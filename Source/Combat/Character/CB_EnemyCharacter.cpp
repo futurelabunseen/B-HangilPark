@@ -10,6 +10,7 @@
 #include "UI/Controller/CB_OverlayWidgetController.h"
 #include "MotionWarpingComponent.h"
 #include "GameInstance/CB_GameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 ACB_EnemyCharacter::ACB_EnemyCharacter()
 {
@@ -60,22 +61,22 @@ void ACB_EnemyCharacter::PossessedBy(AController* NewController)
 	}
 }
 
-void ACB_EnemyCharacter::Dead()
-{
-	Super::Dead();
-
-	BossOverlay->RemoveFromParent();
-
-	UCB_GameInstance* GameInstance = Cast<UCB_GameInstance>(GetWorld()->GetGameInstance());
-	GameInstance->IncWinCnt();
-	
-	FTimerHandle TimerHandle;
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
-		FVector Location = GetActorLocation();
-		Location.Z = 50.f;
-		GetWorld()->SpawnActor<AActor>(Teleport, Location, FRotator(), FActorSpawnParameters());
-		}), 2.5f, false);
-}
+//void ACB_EnemyCharacter::Dead()
+//{
+//	Super::Dead();
+//
+//	BossOverlay->RemoveFromParent();
+//
+//	UCB_GameInstance* GameInstance = Cast<UCB_GameInstance>(GetWorld()->GetGameInstance());
+//	GameInstance->IncWinCnt();
+//	
+//	FTimerHandle TimerHandle;
+//	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
+//		FVector Location = GetActorLocation();
+//		Location.Z = 50.f;
+//		GetWorld()->SpawnActor<AActor>(Teleport, Location, FRotator(), FActorSpawnParameters());
+//		}), 2.5f, false);
+//}
 
 void ACB_EnemyCharacter::BeginPlay()
 {
@@ -84,10 +85,12 @@ void ACB_EnemyCharacter::BeginPlay()
 	BossOverlay = CreateWidget<UCB_UserWidget>(GetWorld(), BossOverlayClass);
 	BossOverlay->SetWidgetController(this);
 	
-	UDataTable* InitData = ASC->DefaultStartingData[0].DefaultStartingTable;
-	if (IsValid(InitData))
+	if (ASC->DefaultStartingData.Num() > 0)
+	{
+		UDataTable* InitData = ASC->DefaultStartingData[0].DefaultStartingTable;		
 		AttributeSet->InitFromMetaDataTable(InitData);
-
+	}
+	
 	if (const UCB_CharacterAttributeSet* AS = Cast<UCB_CharacterAttributeSet>(AttributeSet))
 	{
 		ASC->GetGameplayAttributeValueChangeDelegate(AS->GetHealthAttribute()).AddLambda(
@@ -108,6 +111,10 @@ void ACB_EnemyCharacter::BeginPlay()
 	FGameplayTagContainer Container;
 	Container.AddTag(STATE_EQUIPMENT);
 	ASC->TryActivateAbilitiesByTag(Container);
+
+	ACB_BaseCharacter* Player = Cast<ACB_BaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	SetTargetActor(Player);
+	BossOverlay->AddToViewport();
 }
 
 void ACB_EnemyCharacter::SetWarpTarget()

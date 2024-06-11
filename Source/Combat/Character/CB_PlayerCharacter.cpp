@@ -87,16 +87,16 @@ void ACB_PlayerCharacter::SetWarpTarget()
 	}
 }
 
-void ACB_PlayerCharacter::Dead()
-{
-	Super::Dead();
-
-	// 나중에 재시작할지 프로그램을 종료할지 Widget으로 처리
-
-	FTimerHandle TimerHandle;
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
-		ACB_GameMode* GameMode = Cast<ACB_GameMode>(GetWorld()->GetAuthGameMode());
-		GameMode->RestartGame();
-
-		}), 2.5f, false);
-}
+//void ACB_PlayerCharacter::Dead()
+//{
+//	Super::Dead();
+//
+//	// 나중에 재시작할지 프로그램을 종료할지 Widget으로 처리
+//
+//	FTimerHandle TimerHandle;
+//	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
+//		ACB_GameMode* GameMode = Cast<ACB_GameMode>(GetWorld()->GetAuthGameMode());
+//		GameMode->RestartGame();
+//
+//		}), 2.5f, false);
+//}

@@ -111,6 +111,11 @@ void UCB_HitAbility::DoTargetActorStun(ACB_BaseCharacter* Target)
 {
 	GetWorld()->GetWorldSettings()->SetTimeDilation(0.3f);
 
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
+		GetWorld()->GetWorldSettings()->SetTimeDilation(1.f);
+		}), .15f, false);
+
 	const FGameplayEffectSpecHandle ParryEffectSpecHandle = Target->GetAbilitySystemComponent()->
 		MakeOutgoingSpec(ParryEffect, 1.f, BaseCharacter->GetAbilitySystemComponent()->MakeEffectContext());
 	if (ParryEffectSpecHandle.IsValid())

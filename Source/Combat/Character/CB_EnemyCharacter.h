@@ -34,7 +34,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnMaxHealtChangedSignature OnMaxHealthChanged;
 	
-	virtual void Dead() override;
+	// virtual void Dead() override;
 
 	virtual void SetWarpTarget() override;
 

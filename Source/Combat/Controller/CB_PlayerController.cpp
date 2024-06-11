@@ -155,3 +155,13 @@ void ACB_PlayerController::DoCameraShake()
 	if (IsValid(CameraShake))
 		PlayerCameraManager->StartCameraShake(CameraShake, 1.f);
 }
+
+void ACB_PlayerController::SetPlayerInputMode(bool bInputMode)
+{
+	FInputModeDataBase* InputMode = (bInputMode)
+		? static_cast<FInputModeDataBase*>(new FInputModeUIOnly())
+		: static_cast<FInputModeDataBase*>(new FInputModeGameOnly());
+
+	SetInputMode(*InputMode);
+	bShowMouseCursor = bInputMode;
+}

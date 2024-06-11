@@ -20,7 +20,7 @@ void ACB_GameMode::BeginPlay()
 	Super::BeginPlay();
 	static const uint8 BossCnt = 2; 
 	UCB_GameInstance* Instance = Cast<UCB_GameInstance>(GetGameInstance());
-	UE_LOG(LogTemp, Warning, TEXT("%d"), Instance->GetWinCnt());
+	//UE_LOG(LogTemp, Warning, TEXT("%d"), Instance->GetWinCnt());
 
 	
 	if (Instance->GetWinCnt() == BossCnt)

@@ -66,6 +66,9 @@ void UCB_AN_AreaCollision::DoDamage(TArray<AActor*> HitResults, TArray<AActor*> 
 
 float UCB_AN_AreaCollision::CheckTheta(AActor* HitActor, FVector& Vector)
 {
+	if (!IsValid(HitActor))
+		return 0.f;
+
 	FVector Forward = HitActor->GetActorForwardVector();
 
 	FVector Start = HitActor->GetActorLocation();
