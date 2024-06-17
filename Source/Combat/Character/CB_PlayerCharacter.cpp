@@ -93,6 +93,9 @@ void ACB_PlayerCharacter::Dead()
 	ACB_PlayerController* PC = CastChecked<ACB_PlayerController>(GetController());
 	PC->SetPlayerInputMode(true);
 
+	if (IsLocked())
+		LockOn();
+
 	if (IsValid(DiedOverlayClass))
 	{
 		DiedOverlay = CreateWidget(GetWorld(), DiedOverlayClass);

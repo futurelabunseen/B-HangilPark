@@ -18,6 +18,6 @@ void UCB_GameInstance::ClearThisLevel(const FString& LevelName)
 
 bool UCB_GameInstance::IsMapClear(const FString& LevelName)
 {
-	// FindRef()는 null 검사와 같은 안전 확인 절차 없이 호출해도 안전합니다. [출처 : https://jhtop0419.tistory.com/46]
+	// FindRef()는 null 검사와 같은 안전 확인 절차 없이 호출해도 안전합니다.[출처 : https://jhtop0419.tistory.com/46]
 	return CheckLevelClear.FindRef(LevelName);
 }
