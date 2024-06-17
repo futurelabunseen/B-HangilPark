@@ -27,8 +27,6 @@ void UCB_AN_AreaCollision::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenc
 			UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1),
 			false, ActorsToIgnore, EDrawDebugTrace::None, OutHits, true);
 
-		DrawDebugSphere(Character->GetWorld(), Origin, SkillRadius, 20, FColor::Orange, false, 1.f);
-
 		TArray<AActor*> HitResults;
 		for (auto OutHit : OutHits)
 		{

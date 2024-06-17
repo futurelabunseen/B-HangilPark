@@ -4,6 +4,8 @@
 #include "Gamemode/CB_GameMode.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameInstance/CB_GameInstance.h"
+#include "Controller/CB_PlayerController.h"
+#include "Blueprint/UserWidget.h"
 
 void ACB_GameMode::AsyncLevelLoad(const FString& LevelDir, const FString& LevelName)
 {
@@ -18,15 +20,23 @@ void ACB_GameMode::AsyncLevelLoad(const FString& LevelDir, const FString& LevelN
 void ACB_GameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	static const uint8 BossCnt = 2; 
-	UCB_GameInstance* Instance = Cast<UCB_GameInstance>(GetGameInstance());
-	//UE_LOG(LogTemp, Warning, TEXT("%d"), Instance->GetWinCnt());
+	GameWinCheck();
+}
 
-	
-	if (Instance->GetWinCnt() == BossCnt)
+void ACB_GameMode::GameWinCheck()
+{
+	UCB_GameInstance* Instance = Cast<UCB_GameInstance>(GetGameInstance());
+	if (Instance->GameWinCheck())
 	{
-		// ½Â¸® À§Á¬ È£Ãâ
-		UE_LOG(LogTemp, Error, TEXT("Win!"));
+		ACB_PlayerController* Controller = Cast<ACB_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+		Controller->SetPlayerInputMode(true);
+
+		if (IsValid(WinOverlayClass))
+		{
+			WinOverlay = CreateWidget(GetWorld(), WinOverlayClass);
+			if (IsValid(WinOverlay))
+				WinOverlay->AddToViewport();
+		}
 	}
 }
 

@@ -15,6 +15,7 @@
 #include "Components/CB_LockOnComponent.h"
 #include "MotionWarpingComponent.h"
 #include "Gamemode/CB_GameMode.h"
+#include "Blueprint/UserWidget.h"
 
 ACB_PlayerCharacter::ACB_PlayerCharacter()
 {
@@ -87,16 +88,15 @@ void ACB_PlayerCharacter::SetWarpTarget()
 	}
 }
 
-//void ACB_PlayerCharacter::Dead()
-//{
-//	Super::Dead();
-//
-//	// 나중에 재시작할지 프로그램을 종료할지 Widget으로 처리
-//
-//	FTimerHandle TimerHandle;
-//	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
-//		ACB_GameMode* GameMode = Cast<ACB_GameMode>(GetWorld()->GetAuthGameMode());
-//		GameMode->RestartGame();
-//
-//		}), 2.5f, false);
-//}
+void ACB_PlayerCharacter::Dead()
+{
+	ACB_PlayerController* PC = CastChecked<ACB_PlayerController>(GetController());
+	PC->SetPlayerInputMode(true);
+
+	if (IsValid(DiedOverlayClass))
+	{
+		DiedOverlay = CreateWidget(GetWorld(), DiedOverlayClass);
+		if (IsValid(DiedOverlay))
+			DiedOverlay->AddToViewport();
+	}
+}

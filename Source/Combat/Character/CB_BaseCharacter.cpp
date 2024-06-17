@@ -38,8 +38,6 @@ void ACB_BaseCharacter::BeginPlay()
 		Weapon = GetWorld()->SpawnActor<ACB_BaseWeapon>(WeaponData->WeaponClass);
 		Weapon->Equip(GetMesh(), FName("HolsterSocket"), this, this);
 	}
-
-	
 }
 
 void ACB_BaseCharacter::SetIsGuard(const bool IsGaurd)
@@ -97,17 +95,3 @@ FVector ACB_BaseCharacter::GetWeaponSocketLocation(const FName SocketName)
 	return Weapon->GetWeaponMesh()->GetSocketLocation(SocketName);
 }
 
-void ACB_BaseCharacter::Dead_Implementation()
-{
-	const static float DeadEventDelayTime = 2.0f;
-
-	FTimerHandle TimerHandle;
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
-		ASC->CancelAllAbilities();
-
-		if (GetWeapon())
-			GetWeapon()->Destroy();
-
-		Destroy();
-		}), DeadEventDelayTime, false);
-}

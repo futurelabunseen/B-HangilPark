@@ -15,13 +15,27 @@ class COMBAT_API UCB_GameInstance : public UGameInstance
 	GENERATED_BODY()
 	
 public:
-	UFUNCTION()
+	UCB_GameInstance();
+
+	UFUNCTION(BlueprintCallable)
 	int32 GetWinCnt() const { return WinCnt; }
 	
 	UFUNCTION(BlueprintCallable)
 	void IncWinCnt() { ++WinCnt; }
 
+	void ClearThisLevel(const FString& LevelName);
+
+	UFUNCTION(BlueprintCallable)
+	bool IsMapClear(const FString& LevelName);
+
+	FORCEINLINE bool GameWinCheck() const { return (MaxWin == WinCnt); }
+
 private:
 	UPROPERTY()
 	int32 WinCnt = 0;
+
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	TMap<FString, bool> CheckLevelClear;
+	
+	const uint8 MaxWin = 2;
 };

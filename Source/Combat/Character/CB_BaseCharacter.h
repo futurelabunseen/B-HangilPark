@@ -42,9 +42,7 @@ public:
 	virtual FVector GetSocketLocation(const FName SocketName) override;
 	virtual FVector GetWeaponSocketLocation(const FName SocketName) override;
 
-	UFUNCTION(BlueprintNativeEvent)
-	void Dead();
-	// virtual void Dead();
+	virtual void Dead() { }
 
 	UFUNCTION(BlueprintCallable)
 	bool GetIsGuard() const { return bIsGuard; }

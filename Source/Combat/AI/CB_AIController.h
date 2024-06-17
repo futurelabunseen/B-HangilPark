@@ -18,6 +18,9 @@ class COMBAT_API ACB_AIController : public AAIController
 public:
 	ACB_AIController();
 
+	UFUNCTION(BlueprintCallable)
+	void StopAI();
+
 protected:
 	UPROPERTY()
 	TObjectPtr<UBehaviorTreeComponent> BehaviorTreeComponent;

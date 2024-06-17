@@ -34,7 +34,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnMaxHealtChangedSignature OnMaxHealthChanged;
 	
-	// virtual void Dead() override;
+	virtual void Dead() override;
 
 	virtual void SetWarpTarget() override;
 
@@ -57,7 +57,8 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UBehaviorTree> BehaviorTree;
 
-	UPROPERTY()
+	//UPROPERTY()
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	TObjectPtr<ACB_AIController> AIController;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

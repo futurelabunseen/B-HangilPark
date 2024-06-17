@@ -26,7 +26,7 @@ public:
 
 	virtual void SetWarpTarget() override;
 
-	// virtual void Dead() override;
+	virtual void Dead() override;
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Camera", meta = (AllowPrivateAccess = "true"))
@@ -37,4 +37,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCB_TrailComponent> TrailComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UUserWidget> DiedOverlayClass;
+
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UUserWidget> DiedOverlay;
 };

@@ -11,6 +11,7 @@
 #include "MotionWarpingComponent.h"
 #include "GameInstance/CB_GameInstance.h"
 #include "Kismet/GameplayStatics.h"
+#include "Weapon/CB_BaseWeapon.h"
 
 ACB_EnemyCharacter::ACB_EnemyCharacter()
 {
@@ -61,23 +62,6 @@ void ACB_EnemyCharacter::PossessedBy(AController* NewController)
 	}
 }
 
-//void ACB_EnemyCharacter::Dead()
-//{
-//	Super::Dead();
-//
-//	BossOverlay->RemoveFromParent();
-//
-//	UCB_GameInstance* GameInstance = Cast<UCB_GameInstance>(GetWorld()->GetGameInstance());
-//	GameInstance->IncWinCnt();
-//	
-//	FTimerHandle TimerHandle;
-//	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
-//		FVector Location = GetActorLocation();
-//		Location.Z = 50.f;
-//		GetWorld()->SpawnActor<AActor>(Teleport, Location, FRotator(), FActorSpawnParameters());
-//		}), 2.5f, false);
-//}
-
 void ACB_EnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -87,8 +71,9 @@ void ACB_EnemyCharacter::BeginPlay()
 	
 	if (ASC->DefaultStartingData.Num() > 0)
 	{
-		UDataTable* InitData = ASC->DefaultStartingData[0].DefaultStartingTable;		
-		AttributeSet->InitFromMetaDataTable(InitData);
+		UDataTable* InitData = ASC->DefaultStartingData[0].DefaultStartingTable;
+		if (IsValid(InitData))
+			AttributeSet->InitFromMetaDataTable(InitData);
 	}
 	
 	if (const UCB_CharacterAttributeSet* AS = Cast<UCB_CharacterAttributeSet>(AttributeSet))
@@ -115,6 +100,32 @@ void ACB_EnemyCharacter::BeginPlay()
 	ACB_BaseCharacter* Player = Cast<ACB_BaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	SetTargetActor(Player);
 	BossOverlay->AddToViewport();
+}
+
+void ACB_EnemyCharacter::Dead()
+{
+	const FString& MapName = UGameplayStatics::GetCurrentLevelName(GetWorld());
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *MapName);
+
+	BossOverlay->RemoveFromParent();
+
+	UCB_GameInstance* GameInstance = Cast<UCB_GameInstance>(GetWorld()->GetGameInstance());
+	GameInstance->IncWinCnt();
+	GameInstance->ClearThisLevel(MapName);
+
+	AIController->StopAI();
+
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
+		if (GetWeapon())
+			GetWeapon()->Destroy();
+
+		Destroy();
+
+		FVector Location = GetActorLocation();
+		Location.Z -= 115.f;
+		GetWorld()->SpawnActor<AActor>(Teleport, Location, FRotator(), FActorSpawnParameters());
+	}), 2.f, false);
 }
 
 void ACB_EnemyCharacter::SetWarpTarget()

@@ -21,6 +21,14 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	void GameWinCheck();
+
 	void AsyncLevelLoadFinished(const FString& LevelName);
 
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UUserWidget> WinOverlayClass;
+
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UUserWidget> WinOverlay;
 };

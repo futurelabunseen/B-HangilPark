@@ -27,9 +27,6 @@ void UCB_DeadAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	ACB_BaseCharacter* Player = Cast<ACB_BaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	Player->LockOn();
 	
-	UE_LOG(LogTemp, Warning, TEXT("HasGameplayTag(STATE_HIT) : %d"),
-		BaseCharacter->HasGameplayTag(STATE_HIT));
-
 	// It will keep listening as long as OnlyTriggerOnce = false
 	// If OnlyMatchExact = false it will trigger for nested tags
 	if (BaseCharacter->HasGameplayTag(STATE_HIT))
