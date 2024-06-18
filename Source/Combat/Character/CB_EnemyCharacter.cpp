@@ -68,14 +68,14 @@ void ACB_EnemyCharacter::BeginPlay()
 
 	BossOverlay = CreateWidget<UCB_UserWidget>(GetWorld(), BossOverlayClass);
 	BossOverlay->SetWidgetController(this);
-	
+
 	if (ASC->DefaultStartingData.Num() > 0)
 	{
 		UDataTable* InitData = ASC->DefaultStartingData[0].DefaultStartingTable;
 		if (IsValid(InitData))
 			AttributeSet->InitFromMetaDataTable(InitData);
 	}
-	
+
 	if (const UCB_CharacterAttributeSet* AS = Cast<UCB_CharacterAttributeSet>(AttributeSet))
 	{
 		ASC->GetGameplayAttributeValueChangeDelegate(AS->GetHealthAttribute()).AddLambda(
@@ -92,14 +92,18 @@ void ACB_EnemyCharacter::BeginPlay()
 		OnHealthChanged.Broadcast(AS->GetHealth());
 		OnMaxHealthChanged.Broadcast(AS->GetMaxHealth());
 	}
-
+	
 	FGameplayTagContainer Container;
 	Container.AddTag(STATE_EQUIPMENT);
 	ASC->TryActivateAbilitiesByTag(Container);
+	
 
-	ACB_BaseCharacter* Player = Cast<ACB_BaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	SetTargetActor(Player);
-	BossOverlay->AddToViewport();
+	if (bIsOverlayActive)
+	{
+		ACB_BaseCharacter* Player = Cast<ACB_BaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		SetTargetActor(Player);
+		BossOverlay->AddToViewport();
+	}
 }
 
 void ACB_EnemyCharacter::Dead()

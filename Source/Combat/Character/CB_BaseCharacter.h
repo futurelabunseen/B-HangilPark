@@ -90,4 +90,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<class UMotionWarpingComponent> MotionWarpingComponent;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	bool bIsOverlayActive = true;
 };
