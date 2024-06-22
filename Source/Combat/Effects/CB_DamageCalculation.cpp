@@ -21,6 +21,11 @@ void UCB_DamageCalculation::Execute_Implementation(const FGameplayEffectCustomEx
 		{
 			float Damage = (SourceASC->HasMatchingGameplayTag(STATE_GUARD)) ? 10.f : 30.f;
 			OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(UCB_CharacterAttributeSet::GetHealthAttribute(), EGameplayModOp::Additive, -Damage));
+
+			if(SourceASC->HasMatchingGameplayTag(STATE_GUARD))
+				OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(
+					UCB_CharacterAttributeSet::GetStaminaAttribute(), EGameplayModOp::Additive, -Damage));
+
 		}
 	}
 }

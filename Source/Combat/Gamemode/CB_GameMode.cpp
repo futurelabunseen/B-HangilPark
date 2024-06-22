@@ -9,6 +9,8 @@
 
 void ACB_GameMode::AsyncLevelLoad(const FString& LevelDir, const FString& LevelName)
 {
+	LoadingOverlayActivate();
+
 	LoadPackageAsync(LevelDir + LevelName,
 		FLoadPackageAsyncDelegate::CreateLambda([=, this](
 			const FName& PackageName, UPackage* LoadedPackage, EAsyncLoadingResult::Type Result) {
@@ -21,6 +23,16 @@ void ACB_GameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	GameWinCheck();
+}
+
+void ACB_GameMode::LoadingOverlayActivate()
+{
+	if (IsValid(LoadingOverlayClass))
+	{
+		LoadingOverlay = CreateWidget(GetWorld(), LoadingOverlayClass);
+		if (IsValid(LoadingOverlay))
+			LoadingOverlay->AddToViewport();
+	}
 }
 
 void ACB_GameMode::GameWinCheck()
