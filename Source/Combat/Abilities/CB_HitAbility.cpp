@@ -26,9 +26,10 @@ void UCB_HitAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 	FHitResult HitResult = UAbilitySystemBlueprintLibrary::GetHitResultFromTargetData(TriggerEventData->TargetData, 0);
 	FGameplayEffectSpecHandle EffectSpecHandle = MakeOutgoingGameplayEffectSpec(HitEffect);
 
+	ACB_BaseCharacter* Target = Cast<ACB_BaseCharacter>(TriggerEventData->OptionalObject);
 	FName SectionName = CheckSectionName(TriggerEventData->EventMagnitude);
-	if (ParryingCheck(SectionName))
-		DoTargetActorStun(CastChecked<ACB_BaseCharacter>(TriggerEventData->OptionalObject));
+	if (ParryingCheck(SectionName) && IsValid(Target))
+		DoTargetActorStun(Target);
 	else
 		ApplyGameplayEffect(EffectSpecHandle);
 
