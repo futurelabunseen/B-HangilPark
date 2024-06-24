@@ -25,6 +25,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetPlayerInputMode(bool bInputMode);
 
+	UFUNCTION(BlueprintCallable)
+	void ShowOverlay(bool bIsShow);
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
@@ -42,7 +45,7 @@ public:
 	FLockChangeDelegate LockChangeDelegate;
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Data")
+	UPROPERTY(EditAnywhere, Category = "Data", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCB_PDA_Input> InputData = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"))

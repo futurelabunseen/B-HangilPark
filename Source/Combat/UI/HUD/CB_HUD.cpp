@@ -31,5 +31,5 @@ void ACB_HUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyste
 
 	OverlayWidget->SetWidgetController(WidgetController);
 	WidgetController->BroadcastInitialValues();
-	Widget->AddToViewport();
+	OverlayWidget->AddToViewport();
 }

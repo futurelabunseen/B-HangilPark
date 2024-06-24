@@ -41,6 +41,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetTargetActor(AActor* InTarget) { TargetActor = InTarget; }
 	
+
+	UFUNCTION(BlueprintCallable)
+	void ActivateEnemy();
+
 public:
 	FORCEINLINE UCB_UserWidget* GetOverlay() const { return BossOverlay; }
 	

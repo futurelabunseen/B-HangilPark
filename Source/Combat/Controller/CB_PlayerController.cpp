@@ -9,6 +9,8 @@
 #include "Character/CB_PlayerCharacter.h"
 #include "AbilitySystemComponent.h"
 #include "Camera/CB_LegacyCameraShake.h"
+#include "UI/HUD/CB_HUD.h"
+#include "UI/Widgets/CB_UserWidget.h"
 
 void ACB_PlayerController::BeginPlay()
 {
@@ -90,7 +92,6 @@ void ACB_PlayerController::LockOn()
 {
 	if (!IsValid(GetCharacter()))
 		return;
-	// 인터페이스로 처리
 	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
 	PlayerCharacter->LockOn();
 }
@@ -99,11 +100,12 @@ void ACB_PlayerController::Guard(bool bIsActiave)
 {
 	if (!IsValid(GetCharacter()))
 		return;
-	// Delegate.Execute(bIsAcitve)로 처리할 예정
 	ACB_PlayerCharacter* PlayerCharacter = Cast<ACB_PlayerCharacter>(GetCharacter());
 	PlayerCharacter->SetIsGuard(bIsActiave);
+
 	if (!bIsActiave)
 		PlayerCharacter->RemoveUniqueGameplayTag(STATE_GUARD);
+
 }
 
 void ACB_PlayerController::InputPressed(const FGameplayTag Tag)
@@ -164,4 +166,14 @@ void ACB_PlayerController::SetPlayerInputMode(bool bInputMode)
 
 	SetInputMode(*InputMode);
 	bShowMouseCursor = bInputMode;
+}
+
+void ACB_PlayerController::ShowOverlay(bool bIsShow)
+{
+	ACB_HUD* Hud = Cast<ACB_HUD>(GetHUD());
+	if (bIsShow)
+		Hud->OverlayWidget->AddToViewport();
+	else
+		Hud->OverlayWidget->RemoveFromParent();
+	
 }

@@ -20,16 +20,15 @@ void UCB_HitAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	CommitAbility(Handle, ActorInfo, ActivationInfo);
-	BaseCharacter = CastChecked<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
+	BaseCharacter = Cast<ACB_BaseCharacter>(ActorInfo->AvatarActor.Get());
 	bIsBlocking = false;
 
 	FHitResult HitResult = UAbilitySystemBlueprintLibrary::GetHitResultFromTargetData(TriggerEventData->TargetData, 0);
 	FGameplayEffectSpecHandle EffectSpecHandle = MakeOutgoingGameplayEffectSpec(HitEffect);
 
-	ACB_BaseCharacter* Target = Cast<ACB_BaseCharacter>(TriggerEventData->OptionalObject);
 	FName SectionName = CheckSectionName(TriggerEventData->EventMagnitude);
-	if (ParryingCheck(SectionName) && IsValid(Target))
-		DoTargetActorStun(Target);
+	if (ParryingCheck(SectionName))
+		DoTargetActorStun(Cast<ACB_BaseCharacter>(TriggerEventData->OptionalObject));
 	else
 		ApplyGameplayEffect(EffectSpecHandle);
 
@@ -110,6 +109,9 @@ bool UCB_HitAbility::ParryingCheck(const FName& SectionName)
 
 void UCB_HitAbility::DoTargetActorStun(ACB_BaseCharacter* Target)
 {
+	if (!IsValid(Target))
+		return;
+
 	GetWorld()->GetWorldSettings()->SetTimeDilation(0.3f);
 
 	FTimerHandle TimerHandle;

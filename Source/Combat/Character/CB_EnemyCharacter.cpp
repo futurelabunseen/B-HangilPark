@@ -58,7 +58,7 @@ void ACB_EnemyCharacter::PossessedBy(AController* NewController)
 	{
 		AIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
 		AIController->GetBlackboardComponent()->SetValueAsBool(FName("Aggressive"), BossType == EBossType::Aggressive);
-		AIController->RunBehaviorTree(BehaviorTree);
+		// AIController->RunBehaviorTree(BehaviorTree);
 	}
 }
 
@@ -97,13 +97,12 @@ void ACB_EnemyCharacter::BeginPlay()
 	Container.AddTag(STATE_EQUIPMENT);
 	ASC->TryActivateAbilitiesByTag(Container);
 	
-
-	if (bIsOverlayActive)
+	/*if (bIsOverlayActive)
 	{
 		ACB_BaseCharacter* Player = Cast<ACB_BaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 		SetTargetActor(Player);
 		BossOverlay->AddToViewport();
-	}
+	}*/
 }
 
 void ACB_EnemyCharacter::Dead()
@@ -138,4 +137,18 @@ void ACB_EnemyCharacter::SetWarpTarget()
 	
 	if (IsValid(TargetActor))
 		MotionWarpingComponent->AddOrUpdateWarpTargetFromTransform(TEXT("Target"), TargetActor->GetActorTransform());
+}
+
+void ACB_EnemyCharacter::ActivateEnemy()
+{
+	if (IsValid(AIController))
+	{
+		AIController->RunBehaviorTree(BehaviorTree);
+	}
+	if (bIsOverlayActive)
+	{
+		ACB_BaseCharacter* Player = Cast<ACB_BaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		SetTargetActor(Player);
+		BossOverlay->AddToViewport();
+	}
 }

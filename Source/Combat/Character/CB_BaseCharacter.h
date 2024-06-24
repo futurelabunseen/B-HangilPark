@@ -57,8 +57,10 @@ public:
 	FORCEINLINE virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return ASC; }
 	FORCEINLINE ACB_BaseWeapon* GetWeapon() const { return Weapon; }
 	FORCEINLINE UCB_DA_Weapon* GetWeaponData() const { return WeaponData; }
-	FORCEINLINE void AddUniqueGameplayTag(FGameplayTag Tag);
-	FORCEINLINE void RemoveUniqueGameplayTag(FGameplayTag Tag);
+	UFUNCTION()
+	void AddUniqueGameplayTag(FGameplayTag Tag);
+	UFUNCTION()
+	void RemoveUniqueGameplayTag(FGameplayTag Tag);
 
 protected:
 	virtual void BeginPlay() override;

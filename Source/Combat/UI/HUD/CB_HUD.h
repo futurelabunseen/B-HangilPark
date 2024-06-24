@@ -17,8 +17,9 @@ class COMBAT_API ACB_HUD : public AHUD
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UCB_UserWidget>  OverlayWidget;
+
 
 	UCB_OverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WCParams);
 
