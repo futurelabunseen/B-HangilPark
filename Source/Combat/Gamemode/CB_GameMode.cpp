@@ -37,6 +37,7 @@ void ACB_GameMode::LoadingOverlayActivate()
 
 void ACB_GameMode::GameWinCheck()
 {
+	// 인스턴스 데이터는 게임 종료까지 유지
 	UCB_GameInstance* Instance = Cast<UCB_GameInstance>(GetGameInstance());
 	if (Instance->GameWinCheck())
 	{

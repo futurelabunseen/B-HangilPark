@@ -58,7 +58,6 @@ void ACB_EnemyCharacter::PossessedBy(AController* NewController)
 	{
 		AIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
 		AIController->GetBlackboardComponent()->SetValueAsBool(FName("Aggressive"), BossType == EBossType::Aggressive);
-		// AIController->RunBehaviorTree(BehaviorTree);
 	}
 }
 
@@ -97,26 +96,23 @@ void ACB_EnemyCharacter::BeginPlay()
 	Container.AddTag(STATE_EQUIPMENT);
 	ASC->TryActivateAbilitiesByTag(Container);
 	
-	/*if (bIsOverlayActive)
-	{
-		ACB_BaseCharacter* Player = Cast<ACB_BaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-		SetTargetActor(Player);
-		BossOverlay->AddToViewport();
-	}*/
 }
 
 void ACB_EnemyCharacter::Dead()
 {
 	const FString& MapName = UGameplayStatics::GetCurrentLevelName(GetWorld());
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *MapName);
 
 	BossOverlay->RemoveFromParent();
 
-	UCB_GameInstance* GameInstance = Cast<UCB_GameInstance>(GetWorld()->GetGameInstance());
-	GameInstance->IncWinCnt();
-	GameInstance->ClearThisLevel(MapName);
+	if (bIsBoss)
+	{
+		UCB_GameInstance* GameInstance = Cast<UCB_GameInstance>(GetWorld()->GetGameInstance());
+		GameInstance->IncWinCnt();
+		GameInstance->ClearThisLevel(MapName);
+	}
 
-	AIController->StopAI();
+	if (IsValid(AIController))
+		AIController->StopAI();
 
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
@@ -134,7 +130,6 @@ void ACB_EnemyCharacter::Dead()
 void ACB_EnemyCharacter::SetWarpTarget()
 {
 	Super::SetWarpTarget();
-	
 	if (IsValid(TargetActor))
 		MotionWarpingComponent->AddOrUpdateWarpTargetFromTransform(TEXT("Target"), TargetActor->GetActorTransform());
 }
@@ -145,7 +140,7 @@ void ACB_EnemyCharacter::ActivateEnemy()
 	{
 		AIController->RunBehaviorTree(BehaviorTree);
 	}
-	if (bIsOverlayActive)
+	if (bIsBoss)
 	{
 		ACB_BaseCharacter* Player = Cast<ACB_BaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 		SetTargetActor(Player);

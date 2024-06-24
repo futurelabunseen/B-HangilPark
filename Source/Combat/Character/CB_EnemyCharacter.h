@@ -41,7 +41,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetTargetActor(AActor* InTarget) { TargetActor = InTarget; }
 	
-
 	UFUNCTION(BlueprintCallable)
 	void ActivateEnemy();
 
@@ -79,4 +78,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AActor> Teleport;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	bool bIsBoss = true;
 };
