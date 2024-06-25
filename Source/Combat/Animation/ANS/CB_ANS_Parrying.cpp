@@ -3,7 +3,7 @@
 #include "CB_ANS_Parrying.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
-#include "Tags/StateTag.h"
+#include "Data/StateTag.h"
 
 void UCB_ANS_Parrying::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 	float TotalDuration, const FAnimNotifyEventReference& EventReference)

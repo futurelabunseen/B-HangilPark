@@ -57,7 +57,7 @@ void ACB_EnemyCharacter::PossessedBy(AController* NewController)
 	if (IsValid(AIController))
 	{
 		AIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
-		AIController->GetBlackboardComponent()->SetValueAsBool(FName("Aggressive"), BossType == EBossType::Aggressive);
+		AIController->GetBlackboardComponent()->SetValueAsEnum(FName("EnemyState"), (uint8)EEnemyState::EES_Idle);
 	}
 }
 

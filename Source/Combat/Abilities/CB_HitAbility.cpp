@@ -4,7 +4,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Character/CB_BaseCharacter.h"
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
-#include "Tags/StateTag.h"
+#include "Data/StateTag.h"
 #include "Interface/CB_CameraShakeInterface.h"
 
 #include "AbilitySystemComponent.h"

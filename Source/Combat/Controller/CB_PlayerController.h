@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "GameplayTagContainer.h"
-#include "Tags/StateTag.h"
+#include "Data/StateTag.h"
 #include "Interface/CB_CameraShakeInterface.h"
 #include "CB_PlayerController.generated.h"
 

@@ -3,7 +3,7 @@
 
 #include "Effects/CB_DamageCalculation.h"
 #include "Attribute/CB_CharacterAttributeSet.h"
-#include "Tags/StateTag.h"
+#include "Data/StateTag.h"
 
 
 void UCB_DamageCalculation::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, OUT FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const

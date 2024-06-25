@@ -4,7 +4,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/CB_LockOnComponent.h"
-#include "Tags/StateTag.h"
+#include "Data/StateTag.h"
 #include "Weapon/CB_BaseWeapon.h"
 #include "Data/CB_DA_Weapon.h"
 #include "MotionWarpingComponent.h"

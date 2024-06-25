@@ -3,7 +3,7 @@
 #include "Abilities/CB_GuardAbility.h"
 #include "Character/CB_BaseCharacter.h"
 #include "AbilitySystemBlueprintLibrary.h"
-#include "Tags/StateTag.h"
+#include "Data/StateTag.h"
 
 UCB_GuardAbility::UCB_GuardAbility()
 {

@@ -4,7 +4,7 @@
 #include "Character/CB_BaseCharacter.h"
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 #include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
-#include "Tags/StateTag.h"
+#include "Data/StateTag.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Data/CB_DA_Weapon.h"
 

@@ -1,12 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AI/BT/BTService_IsStun.h"
+#include "BTService_IsStun.h"
 #include "AIController.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
-#include "Tags/StateTag.h"
-//#include "BehaviorTree/BTFunctionLibrary.h"
+#include "Data/StateTag.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 void UBTService_IsStun::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)

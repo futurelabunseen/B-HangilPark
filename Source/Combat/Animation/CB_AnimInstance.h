@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "../Tags/StateTag.h"
+#include "Data/StateTag.h"
 #include "CB_AnimInstance.generated.h"
 
 class ACB_BaseCharacter;

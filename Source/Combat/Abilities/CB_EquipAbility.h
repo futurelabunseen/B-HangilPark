@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
-#include "Tags/StateTag.h"
+#include "Data/StateTag.h"
 #include "CB_EquipAbility.generated.h"
 
 class ACB_BaseCharacter;

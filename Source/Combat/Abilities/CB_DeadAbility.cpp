@@ -5,7 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
-#include "Tags/StateTag.h"
+#include "Data/StateTag.h"
 #include "Kismet/GameplayStatics.h"
 
 UCB_DeadAbility::UCB_DeadAbility()

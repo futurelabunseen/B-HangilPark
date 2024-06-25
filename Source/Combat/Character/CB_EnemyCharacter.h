@@ -5,19 +5,13 @@
 #include "CoreMinimal.h"
 #include "CB_BaseCharacter.h"
 #include "UI/Controller/CB_OverlayWidgetController.h"
+#include "Data/EnemyState.h"
 #include "CB_EnemyCharacter.generated.h"
 
 class UGameplayEffect;
 class UBehaviorTree;
 class ACB_AIController;
 class UCB_UserWidget;
-
-UENUM(BlueprintType)
-enum class EBossType : uint8
-{
-	Aggressive,
-	Defensive,
-};
 
 UCLASS()
 class COMBAT_API ACB_EnemyCharacter : public ACB_BaseCharacter
@@ -60,12 +54,8 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UBehaviorTree> BehaviorTree;
 
-	//UPROPERTY()
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<ACB_AIController> AIController;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	EBossType BossType = EBossType::Aggressive;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UCB_UserWidget> BossOverlayClass;
@@ -81,4 +71,5 @@ protected:
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	bool bIsBoss = true;
+
 };

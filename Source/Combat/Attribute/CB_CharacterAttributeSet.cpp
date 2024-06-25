@@ -3,7 +3,7 @@
 #include "Attribute/CB_CharacterAttributeSet.h"
 #include "GameplayEffectExtension.h"
 #include "AbilitySystemBlueprintLibrary.h"
-#include "Tags/StateTag.h"
+#include "Data/StateTag.h"
 
 UCB_CharacterAttributeSet::UCB_CharacterAttributeSet()
 {

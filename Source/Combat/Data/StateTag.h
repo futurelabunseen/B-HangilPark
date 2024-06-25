@@ -2,6 +2,7 @@
 
 #pragma once
 
+#define STATE_ATTACK FGameplayTag::RequestGameplayTag(FName("State.Attack"))
 #define STATE_ATTACK_LIGHT FGameplayTag::RequestGameplayTag(FName("State.Attack.Light"))
 #define STATE_ATTACK_LIGHT_NEXT FGameplayTag::RequestGameplayTag(FName("State.Attack.Light.Next"))
 #define STATE_ATTACK_SKILL_Q FGameplayTag::RequestGameplayTag(FName("State.Attack.Skill.Q"))

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Weapon/CB_BaseWeapon.h"
-#include "Tags/StateTag.h"
+#include "Data/StateTag.h"
 #include "CB_Sword.generated.h"
 
 class UNiagaraComponent;
