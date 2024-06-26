@@ -28,6 +28,9 @@ public:
 
 	virtual void Dead() override;
 
+protected:
+	virtual void BeginPlay() override;
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent>	SpringArmComponent;
@@ -43,4 +46,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UUserWidget> DiedOverlay;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UUserWidget> CommandOverlayClass;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UUserWidget> CommandOverlay;
 };

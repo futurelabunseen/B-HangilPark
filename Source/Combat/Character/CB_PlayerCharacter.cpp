@@ -63,7 +63,6 @@ void ACB_PlayerCharacter::PossessedBy(AController* NewController)
 		PC->LockChangeDelegate.BindUFunction(this, FName("LockChange"));
 
 		UCB_CharacterAttributeSet* AS = CastChecked<UCB_CharacterAttributeSet>(PS->GetAttributeSet());
-		// 나중에 컨트롤러에서 관리하도록 설정
 		if (ACB_HUD* Hud = Cast<ACB_HUD>(PC->GetHUD()))
 			Hud->InitOverlay(PC, PS, ASC, AS);
 	}
@@ -101,5 +100,18 @@ void ACB_PlayerCharacter::Dead()
 		DiedOverlay = CreateWidget(GetWorld(), DiedOverlayClass);
 		if (IsValid(DiedOverlay))
 			DiedOverlay->AddToViewport();
+	}
+}
+
+void ACB_PlayerCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	const int32 ZOrder = -1;
+
+	if (IsValid(CommandOverlayClass))
+	{
+		CommandOverlay = CreateWidget(GetWorld(), CommandOverlayClass);
+		if (IsValid(CommandOverlay))
+			CommandOverlay->AddToViewport(ZOrder);
 	}
 }

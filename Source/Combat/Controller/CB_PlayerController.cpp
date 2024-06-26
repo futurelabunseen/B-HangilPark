@@ -11,6 +11,7 @@
 #include "Camera/CB_LegacyCameraShake.h"
 #include "UI/HUD/CB_HUD.h"
 #include "UI/Widgets/CB_UserWidget.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 void ACB_PlayerController::BeginPlay()
 {
@@ -57,6 +58,8 @@ void ACB_PlayerController::SetupInputComponent()
 
 	EIC->BindAction(InputData->ESkillAction, ETriggerEvent::Triggered, this,
 		&ACB_PlayerController::InputPressed, STATE_ATTACK_SKILL_E);
+
+	EIC->BindAction(InputData->ExitAction, ETriggerEvent::Triggered, this, &ACB_PlayerController::ExitGame);
 }
 
 void ACB_PlayerController::Move(const FInputActionValue& Value)
@@ -174,6 +177,10 @@ void ACB_PlayerController::ShowOverlay(bool bIsShow)
 	if (bIsShow)
 		Hud->OverlayWidget->AddToViewport();
 	else
-		Hud->OverlayWidget->RemoveFromParent();
-	
+		Hud->OverlayWidget->RemoveFromParent();	
+}
+
+void ACB_PlayerController::ExitGame()
+{
+	UKismetSystemLibrary::QuitGame(GetWorld(), nullptr, EQuitPreference::Quit, false);
 }

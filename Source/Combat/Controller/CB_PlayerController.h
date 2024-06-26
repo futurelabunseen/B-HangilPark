@@ -28,6 +28,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ShowOverlay(bool bIsShow);
 
+	
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
@@ -40,6 +41,8 @@ private:
 
 	void InputPressed(const FGameplayTag Tag);
 	void InputReleased(const FGameplayTag Tag);
+
+	void ExitGame();
 
 public:
 	FLockChangeDelegate LockChangeDelegate;

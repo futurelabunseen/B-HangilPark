@@ -54,4 +54,7 @@ private:
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> ESkillAction;
+
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> ExitAction;
 };

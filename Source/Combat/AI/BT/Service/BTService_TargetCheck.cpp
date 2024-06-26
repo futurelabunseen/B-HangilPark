@@ -3,6 +3,7 @@
 
 #include "BTService_TargetCheck.h"
 #include "AIController.h"
+#include "Character/CB_EnemyCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
@@ -12,10 +13,11 @@
 void UBTService_TargetCheck::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
-	APawn* OwningPawn = OwnerComp.GetAIOwner()->GetPawn();
+	ACB_EnemyCharacter* OwningPawn = Cast<ACB_EnemyCharacter>(OwnerComp.GetAIOwner()->GetPawn());
 	const FName& KeyName = TEXT("EnemyState");
 	uint8 EnumValue;
-	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OwningPawn);
+	
+	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OwningPawn->GetTargetActor());
 
 	
 	if (ASC->HasMatchingGameplayTag(STATE_ATTACK_LIGHT))

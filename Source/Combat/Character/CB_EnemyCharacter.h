@@ -32,6 +32,9 @@ public:
 
 	virtual void SetWarpTarget() override;
 
+	UFUNCTION()
+	AActor* GetTargetActor() const { return TargetActor; }
+
 	UFUNCTION(BlueprintCallable)
 	void SetTargetActor(AActor* InTarget) { TargetActor = InTarget; }
 	
