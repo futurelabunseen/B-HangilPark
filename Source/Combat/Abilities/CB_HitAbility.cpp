@@ -25,6 +25,13 @@ void UCB_HitAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 
 	FHitResult HitResult = UAbilitySystemBlueprintLibrary::GetHitResultFromTargetData(TriggerEventData->TargetData, 0);
 	FGameplayEffectSpecHandle EffectSpecHandle = MakeOutgoingGameplayEffectSpec(HitEffect);
+	
+	FGameplayTagContainer Container;
+	Container.AddTag(STATE_ATTACK_LIGHT_FIRST);
+	Container.AddTag(STATE_ATTACK_LIGHT_SECOND);
+	Container.AddTag(STATE_ATTACK_LIGHT_THIRD);
+
+	BaseCharacter->GetAbilitySystemComponent()->CancelAbilities(&Container);
 
 	FName SectionName = CheckSectionName(TriggerEventData->EventMagnitude);
 	if (ParryingCheck(SectionName))
@@ -112,10 +119,12 @@ void UCB_HitAbility::DoTargetActorStun(ACB_BaseCharacter* Target)
 	if (!IsValid(Target))
 		return;
 
+	// BaseCharacter 컨트롤러 끄기
 	GetWorld()->GetWorldSettings()->SetTimeDilation(0.3f);
 
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, FTimerDelegate::CreateLambda([&]() {
+		// 컨트롤러 ON
 		GetWorld()->GetWorldSettings()->SetTimeDilation(1.f);
 		}), .15f, false);
 

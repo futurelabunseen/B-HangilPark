@@ -5,6 +5,9 @@
 #define STATE_ATTACK FGameplayTag::RequestGameplayTag(FName("State.Attack"))
 #define STATE_ATTACK_LIGHT FGameplayTag::RequestGameplayTag(FName("State.Attack.Light"))
 #define STATE_ATTACK_LIGHT_NEXT FGameplayTag::RequestGameplayTag(FName("State.Attack.Light.Next"))
+#define STATE_ATTACK_LIGHT_FIRST FGameplayTag::RequestGameplayTag(FName("State.Attack.Light.First"))
+#define STATE_ATTACK_LIGHT_SECOND FGameplayTag::RequestGameplayTag(FName("State.Attack.Light.Second"))
+#define STATE_ATTACK_LIGHT_THIRD FGameplayTag::RequestGameplayTag(FName("State.Attack.Light.Third"))
 #define STATE_ATTACK_SKILL_Q FGameplayTag::RequestGameplayTag(FName("State.Attack.Skill.Q"))
 #define STATE_ATTACK_SKILL_E FGameplayTag::RequestGameplayTag(FName("State.Attack.Skill.E"))
 

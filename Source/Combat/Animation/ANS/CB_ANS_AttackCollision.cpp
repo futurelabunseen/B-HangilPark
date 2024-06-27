@@ -35,7 +35,7 @@ void UCB_ANS_AttackCollision::NotifyTick(USkeletalMeshComponent* MeshComp, UAnim
 
 		// ForDuration, None
 		bool bResult = UKismetSystemLibrary::BoxTraceSingle(Character,
-			Start, End, FVector(15.f), Start.Rotation(),
+			Start, End, FVector(30.f), Start.Rotation(),
 			UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1),
 			false, ActorsToIgnore, EDrawDebugTrace::None, OutHit, true);
 

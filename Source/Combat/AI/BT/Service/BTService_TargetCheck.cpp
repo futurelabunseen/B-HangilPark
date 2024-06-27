@@ -19,7 +19,6 @@ void UBTService_TargetCheck::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 	
 	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OwningPawn->GetTargetActor());
 
-	
 	if (ASC->HasMatchingGameplayTag(STATE_ATTACK_LIGHT))
 		EnumValue = (uint8)EEnemyState::EES_Guard;
 	else if (ASC->HasMatchingGameplayTag(STATE_ATTACK_SKILL_Q) || 

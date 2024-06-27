@@ -49,7 +49,14 @@ void ACB_BaseCharacter::SetIsGuard(const bool IsGaurd)
 void ACB_BaseCharacter::LockOn()
 {
 	if (IsValid(LockOnComponent))
+	{
+		if(IsLocked())
+			MotionWarpingComponent->RemoveWarpTarget(TEXT("Target"));
+
 		LockOnComponent->TargetActor();
+		
+	}
+
 }
 
 bool ACB_BaseCharacter::IsLocked()
